@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-07-12 15:36:19
+ * @LastEditTime: 2021-07-13 10:25:16
  */
 import Koa from "koa";
 import { Context } from "koatty_container";
@@ -59,6 +59,10 @@ export interface KoattyContext extends AppContext {
     getMetaData: (key: string) => unknown;
     setMetaData: (key: string, value: unknown) => Map<string, unknown>;
 }
+/**
+ * KoattyNext
+ */
+export type KoattyNext = Koa.Next;
 
 /**
  * Create KoattyContext
