@@ -7,7 +7,7 @@
     "eslint": "eslint --ext .ts,.js ./",
     "prepublishOnly": "npm test && npm run build",
     "release": "standard-version",
-    "test": "npm run eslint && npm run build && jest --passWithNoTests",
+    "test": "npm run eslint && jest --passWithNoTests",
     "test:cov": "jest --collectCoverage --detectOpenHandles",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },

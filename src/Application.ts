@@ -7,18 +7,18 @@
 import Koa from "koa";
 import * as Helper from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
-import { IncomingMessage, ServerResponse } from 'http';
 import { Application } from "koatty_container";
 import { isPrevent } from "koatty_trace";
 import { KoattyContext, CreateContext } from "./Context";
+import { KoattyRouter } from "./Router";
+import { KoattyServer } from "./Server";
 
 /**
+ * InitOptions
  *
- *
- * @export
  * @interface InitOptions
  */
-export interface InitOptions {
+interface InitOptions {
     appPath?: string;
     appDebug?: boolean;
     rootPath?: string;
@@ -37,6 +37,8 @@ export class Koatty extends Koa implements Application {
     public tracer: any; // cls-hooked.Namespace;
     public options: InitOptions;
     public context: KoattyContext;
+    public server: KoattyServer;
+    public router: KoattyRouter;
 
     public appPath: string;
     public rootPath: string;
@@ -177,9 +179,19 @@ export class Koatty extends Koa implements Application {
      * @returns {*}  {KoattyContext}
      * @memberof Koatty
      */
-    public createContext(req: IncomingMessage, res: ServerResponse): KoattyContext {
+    public createContext(req: any, res: any): KoattyContext {
         this.context = CreateContext(super.createContext(req, res));
         return this.context;
+    }
+
+    /**
+     * listening and start server
+     *
+     * @returns {*}  {*}
+     * @memberof Koatty
+     */
+    public listen(): any {
+        return null;
     }
 
     /**
