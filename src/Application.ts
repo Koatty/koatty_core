@@ -85,6 +85,11 @@ export class Koatty extends Koa implements Application {
      * @memberof Koatty
      */
     setMetaData(key: string, value: any) {
+        // private
+        if (key.startsWith("_")) {
+            Helper.define(this, key, value);
+            return this.handelMap;
+        }
         return this.handelMap.set(key, value);
     }
 
@@ -95,6 +100,10 @@ export class Koatty extends Koa implements Application {
      * @memberof Koatty
      */
     getMetaData(key: string): any {
+        // private
+        if (key.startsWith("_")) {
+            return Reflect.get(this, key);
+        }
         return this.handelMap.get(key);
     }
 
@@ -154,7 +163,6 @@ export class Koatty extends Koa implements Application {
                 return value[keys[1]];
             }
             return caches[type][name];
-
         } catch (err) {
             Logger.Error(err);
             return null;
