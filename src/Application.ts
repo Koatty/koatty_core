@@ -77,12 +77,11 @@ export interface KoattyRouterOptions {
      * account when matching routes.
      */
     strict?: boolean;
-    // gRPC proto file
-    protoFile?: string;
     // Server protocol, 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
     protocol: string;
+    // Other extended configuration
+    ext?: any;
 }
-
 
 /**
  * Router interface
