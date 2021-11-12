@@ -4,6 +4,7 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
+import fs from "fs";
 import Koa from "koa";
 import * as Helper from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
@@ -77,9 +78,18 @@ export interface KoattyRouterOptions {
      * account when matching routes.
      */
     strict?: boolean;
-    // Server protocol, 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
+    /**
+     * Server protocol, 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
+     */
     protocol: string;
-    // Other extended configuration
+    /**
+     * gRPC protocol file
+     */
+    protoFile?: string;
+    // 
+    /**
+     * Other extended configuration
+     */
     ext?: any;
 }
 
@@ -147,12 +157,6 @@ export class Koatty extends Koa implements Application {
 
         // catch error
         this.captureError();
-        // path check
-        if (Helper.isEmpty(this.rootPath) ||
-            Helper.isEmpty(this.appPath) ||
-            Helper.isEmpty(this.thinkPath)) {
-            throw new Error("rootPath and appPath not defined");
-        }
     }
 
     /**
@@ -274,22 +278,34 @@ export class Koatty extends Koa implements Application {
      * @memberof Koatty
      */
     public listen(serve: any, listeningListener?: any): any {
-        const protocol = this.config("protocol") || "http"; // 'http' | 'https' | 'grpc' | 'ws' | 'wss'
+        const protocol = this.config("protocol") || "http";
         const port = process.env.PORT || process.env.APPPORT || this.config('app_port') || 3000;
         const hostname = process.env.IP || process.env.HOSTNAME?.replace(/-/g, '.') || this.config('app_host') || 'localhost';
         const options: ListeningOptions = {
             hostname: hostname,
             port: port,
             protocol: protocol,
-            // listenUrl: `${protocol}://${hostname || '127.0.0.1'}:${port}/`,
             ext: {
-                // key: "",
-                // cert: "",
-                // protoFile: "",
-            },
+                key: "",
+                cert: "",
+                protoFile: "",
+            }
         }
-        // serve and start
-        serve(this, options, listeningListener);
+        const pm = new Set(["https", "http2", "wss"])
+        if (pm.has(protocol)) {
+            const keyFile = this.config("key_file") ?? "";
+            const crtFile = this.config("crt_file") ?? "";
+            options.ext.key = fs.readFileSync(keyFile).toString();
+            options.ext.cert = fs.readFileSync(crtFile).toString();
+        }
+        if (protocol === "https" || protocol === "http2") {
+            options.port = options.port == 80 ? 443 : options.port;
+        }
+        if (protocol === "grpc") {
+            const proto = this.config("protoFile", "router");
+            options.ext.protoFile = proto;
+        }
+        serve(this, options, listeningListener(this, options));
         return null;
     }
 
