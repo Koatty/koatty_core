@@ -10,19 +10,88 @@ import { DefaultLogger as Logger } from "koatty_logger";
 import { Application } from "koatty_container";
 import { isPrevent } from "koatty_trace";
 import { KoattyContext, CreateContext } from "./Context";
-import { KoattyRouter } from "./Router";
-import { KoattyServer } from "./Server";
 
 /**
  * InitOptions
  *
  * @interface InitOptions
  */
-interface InitOptions {
+export interface InitOptions {
     appPath?: string;
     appDebug?: boolean;
     rootPath?: string;
     thinkPath?: string;
+}
+
+/**
+ * listening options
+ *
+ * @interface ListeningOptions
+ */
+export interface ListeningOptions {
+    hostname: string;
+    port: number;
+    protocol: string; // http|https|grpc|ws|wss
+    ext?: any; // Other extended configuration
+}
+
+
+/**
+ * interface Server
+ *
+ * @export
+ * @interface KoattyServer
+ */
+export interface KoattyServer {
+    Start: (openTrace: boolean, listenCallback: () => void) => void;
+    Stop: () => void;
+}
+
+/**
+ * KoattyRouterOptions
+ *
+ * @export
+ * @interface KoattyRouterOptions
+ */
+export interface KoattyRouterOptions {
+    prefix: string;
+    /**
+     * Methods which should be supported by the router.
+     */
+    methods?: string[];
+    routerPath?: string;
+    /**
+     * Whether or not routing should be case-sensitive.
+     */
+    sensitive?: boolean;
+    /**
+     * Whether or not routes should matched strictly.
+     *
+     * If strict matching is enabled, the trailing slash is taken into
+     * account when matching routes.
+     */
+    strict?: boolean;
+    // gRPC proto file
+    protoFile?: string;
+    // Server protocol,  http|https|grpc|ws|wss
+    protocol: string;
+}
+
+
+/**
+ * Router interface
+ *
+ * @export
+ * @interface KoattyRouter
+ */
+export interface KoattyRouter {
+    app: Koatty;
+    options: any;
+    router: any;
+
+    SetRouter: (path: string, func: Function, method?: any) => void;
+    ListRouter: () => any;
+    LoadRouter: (list: any[]) => void;
 }
 
 /**
@@ -70,8 +139,15 @@ export class Koatty extends Koa implements Application {
         this.handelMap = new Map<string, unknown>();
         // constructor
         this.init();
+
         // catch error
         this.captureError();
+        // path check
+        if (Helper.isEmpty(this.rootPath) ||
+            Helper.isEmpty(this.appPath) ||
+            Helper.isEmpty(this.thinkPath)) {
+            throw new Error("rootPath and appPath not defined");
+        }
     }
 
     /**
@@ -187,10 +263,28 @@ export class Koatty extends Koa implements Application {
     /**
      * listening and start server
      *
-     * @returns {*}  {*}
+     * @param {Function} serve (app: Koatty, options: ListeningOptions, listenCallback: () => void) => void
+     * @param {Function} [listeningListener] () => void
+     * @returns {void}  void
      * @memberof Koatty
      */
-    public listen(): any {
+    public listen(serve: any, listeningListener?: any): any {
+        const protocol = this.config("protocol") || "http"; // 'http' | 'https' | 'grpc' | 'ws' | 'wss'
+        const port = process.env.PORT || process.env.APPPORT || this.config('app_port') || 3000;
+        const hostname = process.env.IP || process.env.HOSTNAME?.replace(/-/g, '.') || this.config('app_host') || 'localhost';
+        const options: ListeningOptions = {
+            hostname: hostname,
+            port: port,
+            protocol: protocol,
+            // listenUrl: `${protocol}://${hostname || '127.0.0.1'}:${port}/`,
+            ext: {
+                // key: "",
+                // cert: "",
+                // protoFile: "",
+            },
+        }
+        // serve and start
+        serve(this, options, listeningListener);
         return null;
     }
 
