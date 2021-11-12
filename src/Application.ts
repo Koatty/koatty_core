@@ -31,7 +31,8 @@ export interface InitOptions {
 export interface ListeningOptions {
     hostname: string;
     port: number;
-    protocol: string; // http|https|grpc|ws|wss
+    protocol: string; // 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
+    trace?: boolean; // Full stack debug & trace, default: false
     ext?: any; // Other extended configuration
 }
 
@@ -43,6 +44,11 @@ export interface ListeningOptions {
  * @interface KoattyServer
  */
 export interface KoattyServer {
+    app: Koatty;
+    options: any;
+    server: any;
+    status: number;
+
     Start: (openTrace: boolean, listenCallback: () => void) => void;
     Stop: () => void;
 }
@@ -73,7 +79,7 @@ export interface KoattyRouterOptions {
     strict?: boolean;
     // gRPC proto file
     protoFile?: string;
-    // Server protocol,  http|https|grpc|ws|wss
+    // Server protocol, 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
     protocol: string;
 }
 
