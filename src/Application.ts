@@ -4,13 +4,14 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import fs from "fs";
 import Koa from "koa";
+import { ServerResponse } from "http";
 import * as Helper from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
 import { Application } from "koatty_container";
-import { isPrevent } from "koatty_trace";
-import { KoattyContext, CreateContext } from "./Context";
+import { isPrevent } from "koatty_exception";
+import { KoattyContext, CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
+import { KoattyMetadata } from "./Metadata";
 
 /**
  * InitOptions
@@ -50,8 +51,13 @@ export interface KoattyServer {
     server: any;
     status: number;
 
-    Start: (openTrace: boolean, listenCallback: () => void) => void;
+    Start: (listenCallback: () => void) => void;
     Stop: () => void;
+    /**
+     * gRPC service register
+     * @param {ServiceImplementation} impl
+     */
+    RegisterService?: (impl: any) => void;
 }
 
 /**
@@ -79,10 +85,6 @@ export interface KoattyRouterOptions {
      */
     strict?: boolean;
     /**
-     * Server protocol, 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
-     */
-    protocol: string;
-    /**
      * gRPC protocol file
      */
     protoFile?: string;
@@ -105,12 +107,12 @@ export interface KoattyRouter {
     router: any;
 
     SetRouter: (path: string, func: Function, method?: any) => void;
-    ListRouter: () => any;
     LoadRouter: (list: any[]) => void;
+    ListRouter?: () => any;
 }
 
 /**
- * Application
+ * Application 
  * @export
  * @class Koatty
  * @extends {Koa}
@@ -118,7 +120,7 @@ export interface KoattyRouter {
  */
 export class Koatty extends Koa implements Application {
     public env: string;
-    public tracer: any; // cls-hooked.Namespace;
+    public version: string;
     public options: InitOptions;
     public context: KoattyContext;
     public server: KoattyServer;
@@ -129,7 +131,7 @@ export class Koatty extends Koa implements Application {
     public thinkPath: string;
     public appDebug: boolean;
 
-    private handelMap: Map<string, unknown>;
+    private metadata: KoattyMetadata;
 
     /**
      * Creates an instance of Koatty.
@@ -151,10 +153,9 @@ export class Koatty extends Koa implements Application {
         this.appPath = appPath;
         this.rootPath = rootPath;
         this.thinkPath = thinkPath;
-        this.handelMap = new Map<string, unknown>();
+        this.metadata = new KoattyMetadata();
         // constructor
         this.init();
-
         // catch error
         this.captureError();
     }
@@ -171,13 +172,13 @@ export class Koatty extends Koa implements Application {
      * @param {*} value
      * @memberof Koatty
      */
-    setMetaData(key: string, value: any) {
+    setMetaData(key: string, value: any): any {
         // private
         if (key.startsWith("_")) {
             Helper.define(this, key, value);
-            return this.handelMap;
+            return;
         }
-        return this.handelMap.set(key, value);
+        this.metadata.set(key, value);
     }
 
     /**
@@ -191,7 +192,7 @@ export class Koatty extends Koa implements Application {
         if (key.startsWith("_")) {
             return Reflect.get(this, key);
         }
-        return this.handelMap.get(key);
+        return this.metadata.get(key);
     }
 
     /**
@@ -259,54 +260,45 @@ export class Koatty extends Koa implements Application {
     /**
      * Create Context
      *
-     * @param {IncomingMessage} req
-     * @param {ServerResponse} res
-     * @returns {*}  {KoattyContext}
+     * @param {*} req
+     * @param {*} res
+     * @param {string} [protocol]
+     * @returns {KoattyContext}  {*}
      * @memberof Koatty
      */
-    public createContext(req: any, res: any): KoattyContext {
-        this.context = CreateContext(super.createContext(req, res));
+    public createContext(req: any, res: any, protocol?: string): KoattyContext {
+        let context, resp;
+        switch (protocol) {
+            case "ws":
+            case "wss":
+                resp = new ServerResponse(req);
+                context = super.createContext(req, resp);
+                this.context = CreateWsContext(CreateContext(context), res);
+                break;
+            case "grpc":
+                resp = new ServerResponse(req);
+                context = super.createContext(req, resp);
+                this.context = CreateGrpcContext(CreateContext(context), res);
+                break;
+            default:
+                context = super.createContext(req, res);
+                this.context = CreateContext(context);
+                break;
+        }
+
         return this.context;
     }
 
     /**
      * listening and start server
      *
-     * @param {Function} serve (app: Koatty, options: ListeningOptions, listenCallback: () => void) => void
+     * @param {Function} server KoattyServer
      * @param {Function} [listeningListener] () => void
      * @returns {void}  void
      * @memberof Koatty
      */
-    public listen(serve: any, listeningListener?: any): any {
-        const protocol = this.config("protocol") || "http";
-        const port = process.env.PORT || process.env.APPPORT || this.config('app_port') || 3000;
-        const hostname = process.env.IP || process.env.HOSTNAME?.replace(/-/g, '.') || this.config('app_host') || 'localhost';
-        const options: ListeningOptions = {
-            hostname: hostname,
-            port: port,
-            protocol: protocol,
-            ext: {
-                key: "",
-                cert: "",
-                protoFile: "",
-            }
-        }
-        const pm = new Set(["https", "http2", "wss"])
-        if (pm.has(protocol)) {
-            const keyFile = this.config("key_file") ?? "";
-            const crtFile = this.config("crt_file") ?? "";
-            options.ext.key = fs.readFileSync(keyFile).toString();
-            options.ext.cert = fs.readFileSync(crtFile).toString();
-        }
-        if (protocol === "https" || protocol === "http2") {
-            options.port = options.port == 80 ? 443 : options.port;
-        }
-        if (protocol === "grpc") {
-            const proto = this.config("protoFile", "router");
-            options.ext.protoFile = proto;
-        }
-        serve(this, options, listeningListener(this, options));
-        return null;
+    public listen(server: any, listeningListener?: any): any {
+        return server.Start(listeningListener);
     }
 
     /**
