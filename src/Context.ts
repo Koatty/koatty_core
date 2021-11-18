@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-18 18:28:53
+ * @LastEditTime: 2021-11-18 21:23:12
  */
 import Koa from "koa";
 import { Context } from "koatty_container";
@@ -178,7 +178,6 @@ export function CreateGrpcContext(ctx: KoattyContext, call: IRpcServerUnaryCall<
         }
         const cmd = handler.path || '';
         // originalPath
-        ctx.path = cmd;
         ctx.setMetaData("originalPath", cmd);
     }
     ctx.setMetaData("_body", call.request);
