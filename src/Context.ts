@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-19 15:59:38
+ * @LastEditTime: 2021-11-20 02:02:22
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -140,7 +140,7 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
     });
 
     // metadata
-    Helper.define(context, "metadata", new KoattyMetadata());
+    context.metadata = new KoattyMetadata();
     // getMetaData
     Helper.define(context, "getMetaData", function (key: string) {
         const value = context.metadata.get(key);
@@ -186,7 +186,7 @@ export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<an
     // context.call = call;
     Helper.define(context, "call", call);
     // metadata
-    Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
+    context.metadata = KoattyMetadata.from(call.metadata.toJSON());
 
     if (context.call) {
         let handler: any = {};
