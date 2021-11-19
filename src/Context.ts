@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-20 02:02:22
+ * @LastEditTime: 2021-11-20 02:08:41
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -124,7 +124,7 @@ export type KoattyNext = Koa.Next;
 function initBaseContext(ctx: Koa.Context): KoattyContext {
     const context: KoattyContext = Object.create(ctx);
     // throw
-    Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
+    context.throw = function (statusOrMessage: HttpStatusCode | string,
         codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
         if (typeof statusOrMessage !== "string") {
             if (HttpStatusCodeMap.has(statusOrMessage)) {
@@ -137,28 +137,28 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
             codeOrMessage = 1;
         }
         throw new Exception(<string>statusOrMessage, codeOrMessage, status);
-    });
+    };
 
     // metadata
     context.metadata = new KoattyMetadata();
     // getMetaData
-    Helper.define(context, "getMetaData", function (key: string) {
+    context.getMetaData = function (key: string) {
         const value = context.metadata.get(key);
         if (value.length === 1) {
             return value[0];
         }
         return value;
-    });
+    };
 
     // setMetaData
-    Helper.define(context, "setMetaData", function (key: string, value: any) {
+    context.setMetaData = function (key: string, value: any) {
         context.metadata.set(key, value);
-    });
+    };
 
     // sendMetadata
-    Helper.define(context, "sendMetadata", function (data: KoattyMetadata) {
+    context.sendMetadata = function (data: KoattyMetadata) {
         context.set(data.toJSON());
-    });
+    };
 
     return context;
 }
@@ -203,9 +203,9 @@ export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<an
     context.setMetaData("_body", call.request);
 
     // sendMetadata
-    Helper.define(context, "sendMetadata", function (data: KoattyMetadata) {
+    context.sendMetadata = function (data: KoattyMetadata) {
         context.call.sendMetadata(data);
-    });
+    };
 
     return context;
 }
