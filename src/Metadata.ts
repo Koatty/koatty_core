@@ -3,8 +3,10 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-18 17:50:20
- * @LastEditTime: 2021-11-18 18:21:02
+ * @LastEditTime: 2021-11-18 22:16:30
  */
+
+import { Metadata } from "@grpc/grpc-js";
 
 /**
  * KoattyMetadata
@@ -12,7 +14,7 @@
  * @export
  * @class KoattyMetadata
  */
-export class KoattyMetadata {
+export class KoattyMetadata extends Metadata {
     protected internalRepr = new Map<string, any[]>();
     /**
      * Set the given value for the given key

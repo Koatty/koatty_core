@@ -3,11 +3,13 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-18 21:23:12
+ * @LastEditTime: 2021-11-19 15:59:38
  */
 import Koa from "koa";
+import { WebSocket } from "ws";
+import * as Helper from "koatty_lib";
 import { Context } from "koatty_container";
-import { Exception, GrpcStatusCode, GrpcStatusCodeMap, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
+import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
 import { ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream } from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { KoattyMetadata } from "./Metadata";
@@ -49,7 +51,7 @@ export interface KoattyContext extends AppContext {
      */
     state: any;
 
-    status: HttpStatusCode | GrpcStatusCode;
+    status: HttpStatusCode;
     metadata: KoattyMetadata;
     /**
      * gRPC ServerCallImpl
@@ -60,12 +62,29 @@ export interface KoattyContext extends AppContext {
     call?: IRpcServerCall<any, any>;
 
     /**
+     * gRPC ServerCallback
+     *
+     * @type {IRpcServerCallback<any>}
+     * @memberof KoattyContext
+     */
+    rpcCallback?: IRpcServerCallback<any>;
+
+    /**
      * websocket instance
      *
      * @type {*}
      * @memberof KoattyContext
      */
-    websocket?: any; // ws.WebSocket
+    websocket?: WebSocket; // ws.WebSocket
+
+    /**
+     * send metadata to http request header. 
+     * then gRPC request to send metadata
+     *
+     * @memberof KoattyContext
+     */
+    sendMetadata?: (data: KoattyMetadata) => void;
+
     /**
      * Request body parser
      *
@@ -79,6 +98,7 @@ export interface KoattyContext extends AppContext {
      * @memberof KoattyContext
      */
     queryParser?: () => Object;
+
     /**
      * Replace ctx.throw
      *
@@ -90,7 +110,7 @@ export interface KoattyContext extends AppContext {
     throw(message: string, code?: number, status?: any): never;
     /**
     * context metadata
-    *
+    * 
     * @memberof Context
     */
     getMetaData: (key: string) => unknown;
@@ -103,8 +123,8 @@ export type KoattyNext = Koa.Next;
 
 function initBaseContext(ctx: Koa.Context): KoattyContext {
     const context: KoattyContext = Object.create(ctx);
-
-    context.throw = function (statusOrMessage: HttpStatusCode | string,
+    // throw
+    Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
         codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
         if (typeof statusOrMessage !== "string") {
             if (HttpStatusCodeMap.has(statusOrMessage)) {
@@ -117,18 +137,29 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
             codeOrMessage = 1;
         }
         throw new Exception(<string>statusOrMessage, codeOrMessage, status);
-    };
-    context.metadata = new KoattyMetadata();
-    context.getMetaData = function (key: string) {
+    });
+
+    // metadata
+    Helper.define(context, "metadata", new KoattyMetadata());
+    // getMetaData
+    Helper.define(context, "getMetaData", function (key: string) {
         const value = context.metadata.get(key);
         if (value.length === 1) {
             return value[0];
         }
         return value;
-    };
-    context.setMetaData = function (key: string, value: any) {
+    });
+
+    // setMetaData
+    Helper.define(context, "setMetaData", function (key: string, value: any) {
         context.metadata.set(key, value);
-    };
+    });
+
+    // sendMetadata
+    Helper.define(context, "sendMetadata", function (data: KoattyMetadata) {
+        context.set(data.toJSON());
+    });
+
     return context;
 }
 
@@ -150,39 +181,33 @@ export function CreateContext(ctx: Koa.Context): KoattyContext {
  * @param {IRpcServerCallback<any>} [callback]
  * @returns {*}  {KoattyGrpcContext}
  */
-export function CreateGrpcContext(ctx: KoattyContext, call: IRpcServerUnaryCall<any, any>): KoattyContext {
-    ctx.throw = function (statusOrMessage: GrpcStatusCode | string,
-        codeOrMessage: string | number = 1, status?: GrpcStatusCode): never {
-        if (typeof statusOrMessage !== "string") {
-            if (GrpcStatusCodeMap.has(statusOrMessage)) {
-                status = statusOrMessage;
-                statusOrMessage = GrpcStatusCodeMap.get(statusOrMessage);
-            }
-        }
-        if (typeof codeOrMessage === "string") {
-            statusOrMessage = codeOrMessage;
-            codeOrMessage = 2;
-        }
-        throw new Exception(<string>statusOrMessage, codeOrMessage, status);
-    };
-    ctx.call = call;
-    ctx.metadata = KoattyMetadata.from(call.metadata.toJSON());
+export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>): KoattyContext {
+    const context = initBaseContext(ctx);
+    // context.call = call;
+    Helper.define(context, "call", call);
+    // metadata
+    Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
 
-    if (ctx.call) {
+    if (context.call) {
         let handler: any = {};
-        if (Object.hasOwnProperty.call(ctx.call, "handler")) {
-            handler = Reflect.get(ctx.call, "handler") || {};
-        } else if (Object.hasOwnProperty.call(ctx.call, "call")) {
-            const call = Reflect.get(ctx.call, "call") || {};
+        if (Object.hasOwnProperty.call(context.call, "handler")) {
+            handler = Reflect.get(context.call, "handler") || {};
+        } else if (Object.hasOwnProperty.call(context.call, "call")) {
+            const call = Reflect.get(context.call, "call") || {};
             handler = call.handler || {};
         }
         const cmd = handler.path || '';
         // originalPath
-        ctx.setMetaData("originalPath", cmd);
+        context.setMetaData("originalPath", cmd);
     }
-    ctx.setMetaData("_body", call.request);
+    context.setMetaData("_body", call.request);
 
-    return ctx;
+    // sendMetadata
+    Helper.define(context, "sendMetadata", function (data: KoattyMetadata) {
+        context.call.sendMetadata(data);
+    });
+
+    return context;
 }
 
 /**
@@ -190,11 +215,13 @@ export function CreateGrpcContext(ctx: KoattyContext, call: IRpcServerUnaryCall<
  *
  * @export
  * @param {KoattyContext} ctx
- * @param {*} data
+ * @param {Buffer | ArrayBuffer | Buffer[]} data
  * @returns {*}  {KoattyContext}
  */
-export function CreateWsContext(ctx: KoattyContext, data: any): KoattyContext {
-    ctx.setMetaData("_body", data);
+export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
+    const context = initBaseContext(ctx);
 
-    return ctx;
+    context.setMetaData("_body", data.toString());
+
+    return context;
 }

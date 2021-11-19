@@ -273,12 +273,12 @@ export class Koatty extends Koa implements Application {
             case "wss":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateWsContext(CreateContext(context), res);
+                this.context = CreateWsContext(context, res);
                 break;
             case "grpc":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateGrpcContext(CreateContext(context), res);
+                this.context = CreateGrpcContext(context, res);
                 break;
             default:
                 context = super.createContext(req, res);
