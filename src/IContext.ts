@@ -3,14 +3,13 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2021-11-23 11:41:55
+ * @LastEditTime: 2021-11-23 14:13:48
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
 import { Context } from "koatty_container";
 import { ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream } from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
-import { KoattyLogger } from "./IApplication";
 import { HttpStatusCode } from "koatty_exception";
 import { KoattyMetadata } from "./Metadata";
 
@@ -44,8 +43,6 @@ type AppContext = Koa.Context & Context;
  * @extends {Koa.Context}
  */
 export interface KoattyContext extends AppContext {
-    // logger
-    logger: KoattyLogger;
     /**
      * state
      *

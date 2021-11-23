@@ -2,10 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.3.36](https://github.com/koatty/koatty_core/compare/v1.3.32...v1.3.36) (2021-11-23)
-
-### [1.3.32](https://github.com/koatty/koatty_core/compare/v1.3.30...v1.3.32) (2021-11-23)
-
 ### [1.3.30](https://github.com/koatty/koatty_core/compare/v1.2.2...v1.3.30) (2021-11-19)
 
 ### [1.3.26](https://github.com/koatty/koatty_core/compare/v1.2.2...v1.3.26) (2021-11-19)

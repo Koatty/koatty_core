@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2021-11-23 11:11:25
+ * @LastEditTime: 2021-11-23 12:55:09
  */
 
 import { Koatty } from "./Application";
@@ -104,67 +104,4 @@ export interface KoattyRouter {
     SetRouter: (path: string, func: Function, method?: any) => void;
     LoadRouter: (list: any[]) => void;
     ListRouter?: () => any;
-}
-
-/**
- * KoattyLogger
- *
- * @export
- * @interface KoattyLogger
- */
-export interface KoattyLogger {
-    /**
-     * log Debug
-     *
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Debug(...args: any[]): void;
-    /**
-     * log Info
-     *
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Info(...args: any[]): void;
-    /**
-     * log Warn
-     *
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Warn(...args: any[]): void;
-    /**
-     * log Success
-     *
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Success(...args: any[]): void;
-    /**
-     * log Error
-     *
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Error(...args: any[]): void;
-
-    /**
-     * log Custom
-     *
-     * Logger.Custom('msg')
-     *
-     * Logger.Custom('name', 'msg')
-     *
-     * Logger.Custom('name', 'color', 'msg')
-     *
-     * Logger.Custom('name', 'color', 'msg1', 'msg2'...)
-     *
-     * @param {...any[]} args
-     * @returns {*}
-     * @memberof KoattyLogger
-     */
-    Custom(...args: any[]): void;
-    Custom(name: string, ...args: any[]): void;
-    Custom(name: string, color: string, msg: string, ...args: any[]): void;
 }

@@ -3,24 +3,21 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-23 11:45:38
+ * @LastEditTime: 2021-11-23 14:13:57
  */
 import Koa from "koa";
 import * as Helper from "koatty_lib";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
 import { KoattyMetadata } from "./Metadata";
 import { IRpcServerUnaryCall, KoattyContext } from "./IContext";
-import { KoattyLogger } from "./IApplication";
-
 
 /**
  * initialize Context
  *
  * @param {Koa.Context} ctx
- * @param {KoattyLogger} logger
  * @returns {*}  {KoattyContext}
  */
-function initBaseContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext {
+function initBaseContext(ctx: Koa.Context): KoattyContext {
     const context: KoattyContext = Object.create(ctx);
     // throw
     context.throw = function (statusOrMessage: HttpStatusCode | string,
@@ -37,8 +34,6 @@ function initBaseContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext 
         }
         throw new Exception(<string>statusOrMessage, codeOrMessage, status);
     };
-    // logger
-    context.logger = logger;
 
     // metadata
     context.metadata = new KoattyMetadata();
@@ -68,11 +63,10 @@ function initBaseContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext 
  * Create KoattyContext
  *
  * @param {Koa.Context} ctx
- * @param {KoattyLogger} logger
  * @returns {*}  {KoattyContext}
  */
-export function CreateContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext {
-    return initBaseContext(ctx, logger);
+export function CreateContext(ctx: Koa.Context): KoattyContext {
+    return initBaseContext(ctx);
 }
 
 /**
@@ -81,11 +75,10 @@ export function CreateContext(ctx: Koa.Context, logger: KoattyLogger): KoattyCon
  * @export
  * @param {IRpcServerCall<any, any>} call
  * @param {IRpcServerCallback<any>} [callback]
- * @param {KoattyLogger} logger
  * @returns {*}  {KoattyGrpcContext}
  */
-export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>, logger: KoattyLogger): KoattyContext {
-    const context = initBaseContext(ctx, logger);
+export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>): KoattyContext {
+    const context = initBaseContext(ctx);
     // context.call = call;
     Helper.define(context, "call", call);
     // metadata
@@ -119,11 +112,10 @@ export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<an
  * @export
  * @param {KoattyContext} ctx
  * @param {Buffer | ArrayBuffer | Buffer[]} data
- * @param {KoattyLogger} logger
  * @returns {*}  {KoattyContext}
  */
-export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[], logger: KoattyLogger): KoattyContext {
-    const context = initBaseContext(ctx, logger);
+export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
+    const context = initBaseContext(ctx);
 
     context.setMetaData("_body", data.toString());
 

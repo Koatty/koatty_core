@@ -7,12 +7,12 @@
 import Koa from "koa";
 import { ServerResponse } from "http";
 import * as Helper from "koatty_lib";
-import { DefaultLogger } from "koatty_logger";
+import { DefaultLogger as Logger } from "koatty_logger";
 import { Application, Container } from "koatty_container";
 import { isPrevent } from "koatty_exception";
 import { CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
 import { KoattyMetadata } from "./Metadata";
-import { InitOptions, KoattyLogger, KoattyRouter, KoattyServer } from "./IApplication";
+import { InitOptions, KoattyRouter, KoattyServer } from "./IApplication";
 import { KoattyContext } from "./IContext";
 
 /**
@@ -30,7 +30,6 @@ export class Koatty extends Koa implements Application {
     public context: KoattyContext;
     public server: KoattyServer;
     public router: KoattyRouter;
-    public logger: KoattyLogger;
 
     public appPath: string;
     public rootPath: string;
@@ -59,7 +58,6 @@ export class Koatty extends Koa implements Application {
         this.appPath = appPath;
         this.rootPath = rootPath;
         this.thinkPath = thinkPath;
-        this.logger = DefaultLogger;
         this.metadata = new KoattyMetadata();
         // constructor
         this.init();
@@ -111,7 +109,7 @@ export class Koatty extends Koa implements Application {
      */
     public use(fn: Function): any {
         if (!Helper.isFunction) {
-            this.logger.Error('The paramter is not a function.');
+            Logger.Error('The paramter is not a function.');
             return;
         }
         return super.use(<any>fn);
@@ -126,7 +124,7 @@ export class Koatty extends Koa implements Application {
      */
     public useExp(fn: Function): any {
         if (!Helper.isFunction) {
-            this.logger.Error('The paramter is not a function.');
+            Logger.Error('The paramter is not a function.');
             return;
         }
         fn = parseExp(fn);
@@ -159,7 +157,7 @@ export class Koatty extends Koa implements Application {
             }
             return caches[type][name];
         } catch (err) {
-            this.logger.Error(err);
+            Logger.Error(err);
             return null;
         }
     }
@@ -180,16 +178,16 @@ export class Koatty extends Koa implements Application {
             case "wss":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateWsContext(context, res, this.logger);
+                this.context = CreateWsContext(context, res);
                 break;
             case "grpc":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateGrpcContext(context, res, this.logger);
+                this.context = CreateGrpcContext(context, res);
                 break;
             default:
                 context = super.createContext(req, res);
-                this.context = CreateContext(context, this.logger);
+                this.context = CreateContext(context);
                 break;
         }
 
@@ -218,14 +216,14 @@ export class Koatty extends Koa implements Application {
         this.removeAllListeners('error');
         this.on('error', (err: Error) => {
             if (!isPrevent(err)) {
-                this.logger.Error(err);
+                Logger.Error(err);
             }
             return;
         });
         // warning
         process.removeAllListeners('warning');
         process.on('warning', (warning) => {
-            this.logger.Warn(warning);
+            Logger.Warn(warning);
             return;
         });
 
@@ -233,7 +231,7 @@ export class Koatty extends Koa implements Application {
         process.removeAllListeners('unhandledRejection');
         process.on('unhandledRejection', (reason: Error) => {
             if (!isPrevent(reason)) {
-                this.logger.Error(reason);
+                Logger.Error(reason);
             }
             return;
         });
@@ -241,11 +239,11 @@ export class Koatty extends Koa implements Application {
         process.removeAllListeners('uncaughtException');
         process.on('uncaughtException', (err) => {
             if (err.message.indexOf('EADDRINUSE') > -1) {
-                this.logger.Error(Helper.toString(err));
+                Logger.Error(Helper.toString(err));
                 process.exit(-1);
             }
             if (!isPrevent(err)) {
-                this.logger.Error(err);
+                Logger.Error(err);
             }
             return;
         });
