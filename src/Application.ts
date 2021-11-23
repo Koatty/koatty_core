@@ -10,9 +10,10 @@ import * as Helper from "koatty_lib";
 import { DefaultLogger } from "koatty_logger";
 import { Application, Container } from "koatty_container";
 import { isPrevent } from "koatty_exception";
-import { KoattyContext, CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
+import { CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
 import { KoattyMetadata } from "./Metadata";
 import { InitOptions, KoattyLogger, KoattyRouter, KoattyServer } from "./IApplication";
+import { KoattyContext } from "./IContext";
 
 /**
  * Application 
@@ -179,16 +180,16 @@ export class Koatty extends Koa implements Application {
             case "wss":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateWsContext(context, res);
+                this.context = CreateWsContext(context, res, this.logger);
                 break;
             case "grpc":
                 resp = new ServerResponse(req);
                 context = super.createContext(req, resp);
-                this.context = CreateGrpcContext(context, res);
+                this.context = CreateGrpcContext(context, res, this.logger);
                 break;
             default:
                 context = super.createContext(req, res);
-                this.context = CreateContext(context);
+                this.context = CreateContext(context, this.logger);
                 break;
         }
 

@@ -3,125 +3,24 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-20 02:08:41
+ * @LastEditTime: 2021-11-23 11:45:38
  */
 import Koa from "koa";
-import { WebSocket } from "ws";
 import * as Helper from "koatty_lib";
-import { Context } from "koatty_container";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
-import { ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream } from "@grpc/grpc-js";
-import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { KoattyMetadata } from "./Metadata";
-// export
-export type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;
-export type IRpcServerReadableStream<RequestType, ResponseType> = ServerReadableStream<RequestType, ResponseType>;
-export type IRpcServerWriteableStream<RequestType, ResponseType> = ServerWritableStream<RequestType, ResponseType>;
-export type IRpcServerDuplexStream<RequestType, ResponseType> = ServerDuplexStream<RequestType, ResponseType>
+import { IRpcServerUnaryCall, KoattyContext } from "./IContext";
+import { KoattyLogger } from "./IApplication";
 
-// redefine ServerCall
-export type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<RequestType, ResponseType>
-    | IRpcServerReadableStream<RequestType, ResponseType>
-    | IRpcServerWriteableStream<RequestType, ResponseType>
-    | IRpcServerDuplexStream<RequestType, ResponseType>;
-// redefine ServerCallImpl
-export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
-
-// redefine ServerCallback
-export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>
 
 /**
- * AppContext
- */
-type AppContext = Koa.Context & Context;
-
-/**
- * Koatty Context.
+ * initialize Context
  *
- * @export
- * @interface KoattyContext
- * @extends {Koa.Context}
+ * @param {Koa.Context} ctx
+ * @param {KoattyLogger} logger
+ * @returns {*}  {KoattyContext}
  */
-export interface KoattyContext extends AppContext {
-    /**
-     * state
-     *
-     * @type {Koa.DefaultState}
-     * @memberof KoattyContext
-     */
-    state: any;
-
-    status: HttpStatusCode;
-    metadata: KoattyMetadata;
-    /**
-     * gRPC ServerCallImpl
-     *
-     * @type {IRpcServerCallImpl}
-     * @memberof KoattyContext
-     */
-    call?: IRpcServerCall<any, any>;
-
-    /**
-     * gRPC ServerCallback
-     *
-     * @type {IRpcServerCallback<any>}
-     * @memberof KoattyContext
-     */
-    rpcCallback?: IRpcServerCallback<any>;
-
-    /**
-     * websocket instance
-     *
-     * @type {*}
-     * @memberof KoattyContext
-     */
-    websocket?: WebSocket; // ws.WebSocket
-
-    /**
-     * send metadata to http request header. 
-     * then gRPC request to send metadata
-     *
-     * @memberof KoattyContext
-     */
-    sendMetadata?: (data: KoattyMetadata) => void;
-
-    /**
-     * Request body parser
-     *
-     * @memberof KoattyContext
-     */
-    bodyParser?: () => Promise<Object>;
-
-    /**
-     * QueryString parser
-     *
-     * @memberof KoattyContext
-     */
-    queryParser?: () => Object;
-
-    /**
-     * Replace ctx.throw
-     *
-     * @type {(status: number, message?: string)}
-     * @type {(message: string, code?: number, status?: HttpStatusCode)}
-     * @memberof Context
-     */
-    throw(status: number, message?: string): never;
-    throw(message: string, code?: number, status?: any): never;
-    /**
-    * context metadata
-    * 
-    * @memberof Context
-    */
-    getMetaData: (key: string) => unknown;
-    setMetaData: (key: string, value: any) => any;
-}
-/**
- * KoattyNext
- */
-export type KoattyNext = Koa.Next;
-
-function initBaseContext(ctx: Koa.Context): KoattyContext {
+function initBaseContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext {
     const context: KoattyContext = Object.create(ctx);
     // throw
     context.throw = function (statusOrMessage: HttpStatusCode | string,
@@ -138,6 +37,8 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
         }
         throw new Exception(<string>statusOrMessage, codeOrMessage, status);
     };
+    // logger
+    context.logger = logger;
 
     // metadata
     context.metadata = new KoattyMetadata();
@@ -167,10 +68,11 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
  * Create KoattyContext
  *
  * @param {Koa.Context} ctx
+ * @param {KoattyLogger} logger
  * @returns {*}  {KoattyContext}
  */
-export function CreateContext(ctx: Koa.Context): KoattyContext {
-    return initBaseContext(ctx);
+export function CreateContext(ctx: Koa.Context, logger: KoattyLogger): KoattyContext {
+    return initBaseContext(ctx, logger);
 }
 
 /**
@@ -179,10 +81,11 @@ export function CreateContext(ctx: Koa.Context): KoattyContext {
  * @export
  * @param {IRpcServerCall<any, any>} call
  * @param {IRpcServerCallback<any>} [callback]
+ * @param {KoattyLogger} logger
  * @returns {*}  {KoattyGrpcContext}
  */
-export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>): KoattyContext {
-    const context = initBaseContext(ctx);
+export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>, logger: KoattyLogger): KoattyContext {
+    const context = initBaseContext(ctx, logger);
     // context.call = call;
     Helper.define(context, "call", call);
     // metadata
@@ -216,10 +119,11 @@ export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<an
  * @export
  * @param {KoattyContext} ctx
  * @param {Buffer | ArrayBuffer | Buffer[]} data
+ * @param {KoattyLogger} logger
  * @returns {*}  {KoattyContext}
  */
-export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
-    const context = initBaseContext(ctx);
+export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[], logger: KoattyLogger): KoattyContext {
+    const context = initBaseContext(ctx, logger);
 
     context.setMetaData("_body", data.toString());
 
