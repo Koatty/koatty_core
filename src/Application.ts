@@ -7,109 +7,12 @@
 import Koa from "koa";
 import { ServerResponse } from "http";
 import * as Helper from "koatty_lib";
-import { DefaultLogger as Logger } from "koatty_logger";
-import { Application } from "koatty_container";
+import { DefaultLogger } from "koatty_logger";
+import { Application, Container } from "koatty_container";
 import { isPrevent } from "koatty_exception";
 import { KoattyContext, CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
 import { KoattyMetadata } from "./Metadata";
-
-/**
- * InitOptions
- *
- * @interface InitOptions
- */
-export interface InitOptions {
-    appPath?: string;
-    appDebug?: boolean;
-    rootPath?: string;
-    thinkPath?: string;
-}
-
-/**
- * listening options
- *
- * @interface ListeningOptions
- */
-export interface ListeningOptions {
-    hostname: string;
-    port: number;
-    protocol: string; // 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss'
-    trace?: boolean; // Full stack debug & trace, default: false
-    ext?: any; // Other extended configuration
-}
-
-
-/**
- * interface Server
- *
- * @export
- * @interface KoattyServer
- */
-export interface KoattyServer {
-    app: Koatty;
-    options: any;
-    server: any;
-    status: number;
-
-    Start: (listenCallback: () => void) => void;
-    Stop: () => void;
-    /**
-     * gRPC service register
-     * @param {ServiceImplementation} impl
-     */
-    RegisterService?: (impl: any) => void;
-}
-
-/**
- * KoattyRouterOptions
- *
- * @export
- * @interface KoattyRouterOptions
- */
-export interface KoattyRouterOptions {
-    prefix: string;
-    /**
-     * Methods which should be supported by the router.
-     */
-    methods?: string[];
-    routerPath?: string;
-    /**
-     * Whether or not routing should be case-sensitive.
-     */
-    sensitive?: boolean;
-    /**
-     * Whether or not routes should matched strictly.
-     *
-     * If strict matching is enabled, the trailing slash is taken into
-     * account when matching routes.
-     */
-    strict?: boolean;
-    /**
-     * gRPC protocol file
-     */
-    protoFile?: string;
-    // 
-    /**
-     * Other extended configuration
-     */
-    ext?: any;
-}
-
-/**
- * Router interface
- *
- * @export
- * @interface KoattyRouter
- */
-export interface KoattyRouter {
-    app: Koatty;
-    options: any;
-    router: any;
-
-    SetRouter: (path: string, func: Function, method?: any) => void;
-    LoadRouter: (list: any[]) => void;
-    ListRouter?: () => any;
-}
+import { InitOptions, KoattyLogger, KoattyRouter, KoattyServer } from "./IApplication";
 
 /**
  * Application 
@@ -122,9 +25,11 @@ export class Koatty extends Koa implements Application {
     public env: string;
     public version: string;
     public options: InitOptions;
+    public container: Container;
     public context: KoattyContext;
     public server: KoattyServer;
     public router: KoattyRouter;
+    public logger: KoattyLogger;
 
     public appPath: string;
     public rootPath: string;
@@ -153,6 +58,7 @@ export class Koatty extends Koa implements Application {
         this.appPath = appPath;
         this.rootPath = rootPath;
         this.thinkPath = thinkPath;
+        this.logger = DefaultLogger;
         this.metadata = new KoattyMetadata();
         // constructor
         this.init();
@@ -204,7 +110,7 @@ export class Koatty extends Koa implements Application {
      */
     public use(fn: Function): any {
         if (!Helper.isFunction) {
-            Logger.Error('The paramter is not a function.');
+            this.logger.Error('The paramter is not a function.');
             return;
         }
         return super.use(<any>fn);
@@ -219,7 +125,7 @@ export class Koatty extends Koa implements Application {
      */
     public useExp(fn: Function): any {
         if (!Helper.isFunction) {
-            Logger.Error('The paramter is not a function.');
+            this.logger.Error('The paramter is not a function.');
             return;
         }
         fn = parseExp(fn);
@@ -252,7 +158,7 @@ export class Koatty extends Koa implements Application {
             }
             return caches[type][name];
         } catch (err) {
-            Logger.Error(err);
+            this.logger.Error(err);
             return null;
         }
     }
@@ -311,14 +217,14 @@ export class Koatty extends Koa implements Application {
         this.removeAllListeners('error');
         this.on('error', (err: Error) => {
             if (!isPrevent(err)) {
-                Logger.Error(err);
+                this.logger.Error(err);
             }
             return;
         });
         // warning
         process.removeAllListeners('warning');
         process.on('warning', (warning) => {
-            Logger.Warn(warning);
+            this.logger.Warn(warning);
             return;
         });
 
@@ -326,7 +232,7 @@ export class Koatty extends Koa implements Application {
         process.removeAllListeners('unhandledRejection');
         process.on('unhandledRejection', (reason: Error) => {
             if (!isPrevent(reason)) {
-                Logger.Error(reason);
+                this.logger.Error(reason);
             }
             return;
         });
@@ -334,11 +240,11 @@ export class Koatty extends Koa implements Application {
         process.removeAllListeners('uncaughtException');
         process.on('uncaughtException', (err) => {
             if (err.message.indexOf('EADDRINUSE') > -1) {
-                Logger.Error(Helper.toString(err));
+                this.logger.Error(Helper.toString(err));
                 process.exit(-1);
             }
             if (!isPrevent(err)) {
-                Logger.Error(err);
+                this.logger.Error(err);
             }
             return;
         });
