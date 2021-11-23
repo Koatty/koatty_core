@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.3.30",
+  "version": "1.3.32",
   "description": "Koatty framework core",
   "scripts": {
     "build": "del-cli --force dist && tsc",
