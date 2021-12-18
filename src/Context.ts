@@ -3,22 +3,47 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-11-23 14:13:57
+ * @LastEditTime: 2021-12-18 22:59:13
  */
 import Koa from "koa";
-import * as Helper from "koatty_lib";
-import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
+import { WebSocket } from "ws";
+import { Helper } from "koatty_lib";
+import { ServerResponse } from "http";
+import { Koatty } from "./Application";
 import { KoattyMetadata } from "./Metadata";
-import { IRpcServerUnaryCall, KoattyContext } from "./IContext";
+import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
+import { IRpcServerCallback, IRpcServerUnaryCall, KoattyContext } from "./IContext";
+
+// DefaultContext
+type DefaultContext = Koa.BaseContext & Koa.DefaultContext;
+
 
 /**
- * initialize Context
+ * initialize Base Context
  *
- * @param {Koa.Context} ctx
+ * @param {Koatty} app
+ * @param {DefaultContext} ctx
+ * @param {Koa.BaseRequest} req
+ * @param {ServerResponse} res
  * @returns {*}  {KoattyContext}
  */
-function initBaseContext(ctx: Koa.Context): KoattyContext {
-    const context: KoattyContext = Object.create(ctx);
+function initBaseContext(app: Koatty, ctx: DefaultContext, req: Koa.BaseRequest, res: ServerResponse): KoattyContext {
+    const context = Object.create(ctx);
+    const request = context.request = Object.create(req);
+    const response = context.response = Object.create(res);
+
+    context.req = request.req = response.req = req;
+    context.res = request.res = response.res = res;
+    request.ctx = response.ctx = context;
+    request.response = response;
+    response.request = request;
+    context.originalUrl = request.originalUrl = req.url;
+    context.state = {};
+
+    // delete app.context
+    app.context = null;
+    context.app = request.app = response.app = app;
+
     // throw
     context.throw = function (statusOrMessage: HttpStatusCode | string,
         codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
@@ -60,64 +85,85 @@ function initBaseContext(ctx: Koa.Context): KoattyContext {
 }
 
 /**
- * Create KoattyContext
+ *  Create KoattyContext
  *
- * @param {Koa.Context} ctx
+ * @export
+ * @param {Koatty} app
+ * @param {DefaultContext} ctx
+ * @param {*} req
+ * @param {*} res
+ * @param {string} [protocol]
  * @returns {*}  {KoattyContext}
  */
-export function CreateContext(ctx: Koa.Context): KoattyContext {
-    return initBaseContext(ctx);
+export function CreateContext(app: Koatty, ctx: DefaultContext, req: any, res: any, protocol?: string): KoattyContext {
+    let context, resp;
+    switch (protocol) {
+        case "ws":
+        case "wss":
+            resp = new ServerResponse(req);
+            context = initBaseContext(app, ctx, req, resp);
+            return createWsContext(context, res, res);
+        case "grpc":
+            resp = new ServerResponse(req);
+            context = initBaseContext(app, ctx, req, resp);
+            return createGrpcContext(context, res, res);
+        default:
+            return initBaseContext(app, ctx, req, res);
+    }
 }
 
 /**
- * Create KoattyGrpcContext
+ * Create Koatty gRPC Context
  *
- * @export
- * @param {IRpcServerCall<any, any>} call
- * @param {IRpcServerCallback<any>} [callback]
- * @returns {*}  {KoattyGrpcContext}
+ *
+ * @param {KoattyContext} ctx
+ * @param {IRpcServerUnaryCall<any, any>} call
+ * @param {IRpcServerCallback<any>} rpcCallback
+ * @returns {*}  {KoattyContext}
  */
-export function CreateGrpcContext(ctx: Koa.Context, call: IRpcServerUnaryCall<any, any>): KoattyContext {
-    const context = initBaseContext(ctx);
-    // context.call = call;
-    Helper.define(context, "call", call);
+function createGrpcContext(ctx: KoattyContext, call: IRpcServerUnaryCall<any, any>, callback: IRpcServerCallback<any>): KoattyContext {
+    // 
+    Helper.define(ctx, "rpc", {
+        call,
+        callback
+    });
     // metadata
-    context.metadata = KoattyMetadata.from(call.metadata.toJSON());
+    ctx.metadata = KoattyMetadata.from(call.metadata.toJSON());
 
-    if (context.call) {
+    if (ctx.rpc.call) {
         let handler: any = {};
-        if (Object.hasOwnProperty.call(context.call, "handler")) {
-            handler = Reflect.get(context.call, "handler") || {};
-        } else if (Object.hasOwnProperty.call(context.call, "call")) {
-            const call = Reflect.get(context.call, "call") || {};
+        if (Object.hasOwnProperty.call(ctx.rpc.call, "handler")) {
+            handler = Reflect.get(ctx.rpc.call, "handler") || {};
+        } else if (Object.hasOwnProperty.call(ctx.rpc.call, "call")) {
+            const call = Reflect.get(ctx.rpc.call, "call") || {};
             handler = call.handler || {};
         }
         const cmd = handler.path || '';
         // originalPath
-        context.setMetaData("originalPath", cmd);
+        ctx.setMetaData("originalPath", cmd);
     }
-    context.setMetaData("_body", call.request);
+    ctx.setMetaData("_body", call.request);
 
     // sendMetadata
-    context.sendMetadata = function (data: KoattyMetadata) {
-        context.call.sendMetadata(data);
+    ctx.sendMetadata = function (data: KoattyMetadata) {
+        ctx.rpc.call.sendMetadata(data);
     };
 
-    return context;
+    return ctx;
 }
 
+
 /**
- * Create KoattyWsContext
+ * Create Koatty Websocket Context
  *
- * @export
  * @param {KoattyContext} ctx
- * @param {Buffer | ArrayBuffer | Buffer[]} data
+ * @param {WebSocket} socket
+ * @param {(Buffer | ArrayBuffer | Buffer[])} data
  * @returns {*}  {KoattyContext}
  */
-export function CreateWsContext(ctx: Koa.Context, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
-    const context = initBaseContext(ctx);
+function createWsContext(ctx: KoattyContext, socket: WebSocket, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
+    Helper.define(ctx, "websocket", socket);
+    ctx.setMetaData("_body", data.toString());
 
-    context.setMetaData("_body", data.toString());
-
-    return context;
+    return ctx;
 }

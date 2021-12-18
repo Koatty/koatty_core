@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2021-11-23 14:13:48
+ * @LastEditTime: 2021-12-18 22:06:45
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -53,21 +53,20 @@ export interface KoattyContext extends AppContext {
 
     status: HttpStatusCode;
     metadata: KoattyMetadata;
-    /**
-     * gRPC ServerCallImpl
-     *
-     * @type {IRpcServerCallImpl}
-     * @memberof KoattyContext
-     */
-    call?: IRpcServerCall<any, any>;
 
     /**
-     * gRPC ServerCallback
+     * gRPC ServerImpl
      *
-     * @type {IRpcServerCallback<any>}
+     * @type {{
+     *         call: IRpcServerCall<any, any>;
+     *         callback?: IRpcServerCallback<any>;
+     *     }}
      * @memberof KoattyContext
      */
-    rpcCallback?: IRpcServerCallback<any>;
+    rpc?: {
+        call: IRpcServerCall<any, any>;
+        callback?: IRpcServerCallback<any>;
+    }
 
     /**
      * websocket instance
@@ -84,20 +83,6 @@ export interface KoattyContext extends AppContext {
      * @memberof KoattyContext
      */
     sendMetadata?: (data: KoattyMetadata) => void;
-
-    /**
-     * Request body parser
-     *
-     * @memberof KoattyContext
-     */
-    bodyParser?: () => Promise<Object>;
-
-    /**
-     * QueryString parser
-     *
-     * @memberof KoattyContext
-     */
-    queryParser?: () => Object;
 
     /**
      * Replace ctx.throw

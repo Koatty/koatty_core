@@ -5,15 +5,17 @@
  * @ version: 2020-07-06 11:21:37
  */
 import Koa from "koa";
-import { ServerResponse } from "http";
-import * as Helper from "koatty_lib";
+import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
-import { Application, Container } from "koatty_container";
 import { isPrevent } from "koatty_exception";
-import { CreateContext, CreateGrpcContext, CreateWsContext } from "./Context";
+import { CreateContext } from "./Context";
 import { KoattyMetadata } from "./Metadata";
-import { InitOptions, KoattyRouter, KoattyServer } from "./IApplication";
 import { KoattyContext } from "./IContext";
+import { Application, Container } from "koatty_container";
+import {
+    InitOptions,
+    KoattyRouter, KoattyServer
+} from "./IApplication";
 
 /**
  * Application 
@@ -27,7 +29,6 @@ export class Koatty extends Koa implements Application {
     public version: string;
     public options: InitOptions;
     public container: Container;
-    public context: KoattyContext;
     public server: KoattyServer;
     public router: KoattyRouter;
 
@@ -172,26 +173,7 @@ export class Koatty extends Koa implements Application {
      * @memberof Koatty
      */
     public createContext(req: any, res: any, protocol?: string): KoattyContext {
-        let context, resp;
-        switch (protocol) {
-            case "ws":
-            case "wss":
-                resp = new ServerResponse(req);
-                context = super.createContext(req, resp);
-                this.context = CreateWsContext(context, res);
-                break;
-            case "grpc":
-                resp = new ServerResponse(req);
-                context = super.createContext(req, resp);
-                this.context = CreateGrpcContext(context, res);
-                break;
-            default:
-                context = super.createContext(req, res);
-                this.context = CreateContext(context);
-                break;
-        }
-
-        return this.context;
+        return CreateContext(this, this.context, req, res, protocol);
     }
 
     /**
