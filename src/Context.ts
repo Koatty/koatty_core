@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-12-18 22:59:13
+ * @LastEditTime: 2021-12-19 10:36:57
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -42,7 +42,7 @@ function initBaseContext(app: Koatty, ctx: DefaultContext, req: Koa.BaseRequest,
 
     // delete app.context
     app.context = null;
-    context.app = request.app = response.app = app;
+    // context.app = request.app = response.app = app;
 
     // throw
     context.throw = function (statusOrMessage: HttpStatusCode | string,
@@ -104,9 +104,9 @@ export function CreateContext(app: Koatty, ctx: DefaultContext, req: any, res: a
             context = initBaseContext(app, ctx, req, resp);
             return createWsContext(context, res, res);
         case "grpc":
-            resp = new ServerResponse(req);
-            context = initBaseContext(app, ctx, req, resp);
-            return createGrpcContext(context, res, res);
+            resp = new ServerResponse(req.request);
+            context = initBaseContext(app, ctx, req.request, resp);
+            return createGrpcContext(context, req, res);
         default:
             return initBaseContext(app, ctx, req, res);
     }
