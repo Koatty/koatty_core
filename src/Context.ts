@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-12-19 10:36:57
+ * @LastEditTime: 2021-12-19 21:29:11
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -102,7 +102,7 @@ export function CreateContext(app: Koatty, ctx: DefaultContext, req: any, res: a
         case "wss":
             resp = new ServerResponse(req);
             context = initBaseContext(app, ctx, req, resp);
-            return createWsContext(context, res, res);
+            return createWsContext(context, req.data, res);
         case "grpc":
             resp = new ServerResponse(req.request);
             context = initBaseContext(app, ctx, req.request, resp);
@@ -157,11 +157,11 @@ function createGrpcContext(ctx: KoattyContext, call: IRpcServerUnaryCall<any, an
  * Create Koatty Websocket Context
  *
  * @param {KoattyContext} ctx
- * @param {WebSocket} socket
  * @param {(Buffer | ArrayBuffer | Buffer[])} data
+ * @param {WebSocket} socket
  * @returns {*}  {KoattyContext}
  */
-function createWsContext(ctx: KoattyContext, socket: WebSocket, data: Buffer | ArrayBuffer | Buffer[]): KoattyContext {
+function createWsContext(ctx: KoattyContext, data: Buffer | ArrayBuffer | Buffer[], socket: WebSocket): KoattyContext {
     Helper.define(ctx, "websocket", socket);
     ctx.setMetaData("_body", data.toString());
 
