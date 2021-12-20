@@ -10,18 +10,16 @@ Create KoattyContext
 <b>Signature:</b>
 
 ```typescript
-export declare function CreateContext(app: Koatty, ctx: DefaultContext, req: any, res: any, protocol?: string): KoattyContext;
+export declare function CreateContext(ctx: DefaultContext, req: any, res: any): KoattyContext;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  app | [Koatty](./koatty_core.koatty.md) |  |
 |  ctx | DefaultContext |  |
 |  req | any |  |
 |  res | any |  |
-|  protocol | string |  |
 
 <b>Returns:</b>
 
