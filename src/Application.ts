@@ -29,7 +29,6 @@ export class Koatty extends Koa implements Application {
     public env: string;
     public version: string;
     public options: InitOptions;
-    public container: Container;
     public server: KoattyServer;
     public router: KoattyRouter;
 
