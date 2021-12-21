@@ -3625,9 +3625,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 koatty_container@^1.x.x:
-  version "1.6.11"
-  resolved "https://registry.yarnpkg.com/koatty_container/-/koatty_container-1.6.11.tgz#1239a0ecfe301f994c341b20d6bad7e1c164cada"
-  integrity sha512-FC4HnSZ+OX7pxGXfXg1OrDTIGDUoeVLKbeWgoPm5xgOVxDWLTx09RUKEqRzhjwj8VAPdzI4VjtNZ/g1gYBBJpA==
+  version "1.6.14"
+  resolved "https://registry.yarnpkg.com/koatty_container/-/koatty_container-1.6.14.tgz#b8938fb629dc6b87e56ad5b1e8bd1ecbc99a8908"
+  integrity sha512-qbq7wyvgthypoLyFqDMsJGmtYue6F2Oavoh4c2UxIPi+AUPH4zT6I8DWU5/R8gMwuaQElKDeF1x/0n8MYqEqxQ==
   dependencies:
     koatty_lib "^1.x.x"
     reflect-metadata "^0.1.13"
@@ -3654,9 +3654,9 @@ koatty_lib@^1.x.x:
     tslib "^2.3.1"
 
 koatty_logger@^1.x.x:
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/koatty_logger/-/koatty_logger-1.3.4.tgz#c3b2922ddcdf0ba5d1c7fa381bd577cb2a178a2a"
-  integrity sha512-pDB9lu6qaZ7CwG6nkRxz0477HAbqklAZeygOllMf3jJRnYmsTV4MxnZT72tC2uUTPo3L20O7nj0gHvvmapJ/hw==
+  version "1.3.12"
+  resolved "https://registry.yarnpkg.com/koatty_logger/-/koatty_logger-1.3.12.tgz#ed736bcb5576d0bdf2e34bfd10330421dc725876"
+  integrity sha512-hrg7BxDtW7CQwbDHAgHdvzOj4nfU58/h/dTOk7BOif+3/dCg/ixPoy9rkJQ8smpq+rPDY/HTFpVq64sr2JDOJw==
   dependencies:
     koatty_lib "^1.x.x"
 
