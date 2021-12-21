@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.4.6",
+  "version": "1.4.8",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
@@ -21,6 +21,10 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "main": "./dist/index.js",
+  "exports": {
+    "require": "./dist/index.js",
+    "import": "./dist/index.mjs"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koatty/koatty_core.git"
