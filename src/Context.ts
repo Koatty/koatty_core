@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2021-12-21 17:13:36
+ * @LastEditTime: 2021-12-23 10:38:41
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -25,7 +25,6 @@ type DefaultContext = Koa.BaseContext & Koa.DefaultContext;
  */
 function initBaseContext(ctx: DefaultContext): KoattyContext {
     const context = Object.create(ctx);
-    context.status = 200;
     // throw
     context.throw = function (statusOrMessage: HttpStatusCode | string,
         codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
@@ -90,6 +89,7 @@ export function CreateContext(ctx: DefaultContext, req: any, res: any): KoattyCo
  */
 export function CreateGrpcContext(ctx: DefaultContext, call: IRpcServerUnaryCall<any, any>, callback: IRpcServerCallback<any>): KoattyContext {
     const context = initBaseContext(ctx);
+    context.status = 200;
     // 
     Helper.define(context, "rpc", {
         call,
@@ -131,6 +131,7 @@ export function CreateGrpcContext(ctx: DefaultContext, call: IRpcServerUnaryCall
  */
 export function CreateWsContext(ctx: DefaultContext, data: Buffer | ArrayBuffer | Buffer[], socket: WebSocket): KoattyContext {
     const context = initBaseContext(ctx);
+    context.status = 200;
     Helper.define(context, "websocket", socket);
     context.setMetaData("_body", data.toString());
 
