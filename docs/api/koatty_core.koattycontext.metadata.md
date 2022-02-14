@@ -4,6 +4,10 @@
 
 ## KoattyContext.metadata property
 
+metadata
+
+ {<!-- -->KoattyMetadata<!-- -->}  KoattyContext
+
 <b>Signature:</b>
 
 ```typescript

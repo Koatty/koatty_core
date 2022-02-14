@@ -9,7 +9,7 @@ Create Context
 <b>Signature:</b>
 
 ```typescript
-createContext(req: any, res: any, protocol?: string): KoattyContext;
+createContext(req: any, res: any, protocol?: KoattyProtocol): KoattyContext;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createContext(req: any, res: any, protocol?: string): KoattyContext;
 |  --- | --- | --- |
 |  req | any |  |
 |  res | any |  |
-|  protocol | string |  |
+|  protocol | [KoattyProtocol](./koatty_core.koattyprotocol.md) |  |
 
 <b>Returns:</b>
 

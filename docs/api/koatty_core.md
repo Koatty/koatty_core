@@ -16,8 +16,6 @@
 |  Function | Description |
 |  --- | --- |
 |  [CreateContext(ctx, req, res)](./koatty_core.createcontext.md) | Create KoattyContext |
-|  [CreateGrpcContext(ctx, call, callback)](./koatty_core.creategrpccontext.md) | Create Koatty gRPC Context |
-|  [CreateWsContext(ctx, data, socket)](./koatty_core.createwscontext.md) | Create Koatty Websocket Context |
 
 ## Interfaces
 
@@ -42,4 +40,5 @@
 |  [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md) |  |
 |  [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md) |  |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
+|  [KoattyProtocol](./koatty_core.koattyprotocol.md) |  |
 

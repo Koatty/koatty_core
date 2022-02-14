@@ -4,8 +4,12 @@
 
 ## KoattyContext.status property
 
+status
+
+ {<!-- -->number<!-- -->}  KoattyContext
+
 <b>Signature:</b>
 
 ```typescript
-status: HttpStatusCode;
+status: number;
 ```
