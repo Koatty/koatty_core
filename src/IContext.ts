@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2021-12-18 22:06:45
+ * @LastEditTime: 2022-02-11 14:24:13
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -51,8 +51,29 @@ export interface KoattyContext extends AppContext {
      */
     state: any;
 
-    status: HttpStatusCode;
+    /**
+     * status
+     *
+     * @type {number}
+     * @memberof KoattyContext
+     */
+    status: number;
+
+    /**
+     * metadata
+     *
+     * @type {KoattyMetadata}
+     * @memberof KoattyContext
+     */
     metadata: KoattyMetadata;
+
+    /**
+     * protocol
+     *
+     * @type {string}
+     * @memberof KoattyContext
+     */
+    protocol: string;
 
     /**
      * gRPC ServerImpl

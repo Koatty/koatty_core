@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2021-12-18 20:02:30
+ * @LastEditTime: 2022-02-11 14:58:26
  */
 
 import { Koatty } from "./Application";
@@ -105,3 +105,5 @@ export interface KoattyRouter {
     LoadRouter: (list: any[]) => void;
     ListRouter?: () => any;
 }
+
+export type KoattyProtocol = 'http' | 'https' | 'http2' | 'grpc' | 'ws' | 'wss';
