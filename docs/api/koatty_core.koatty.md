@@ -39,6 +39,7 @@ export declare class Koatty extends Koa implements Application
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [callback(protocol, reqHandler)](./koatty_core.koatty.callback.md) |  | return a request handler callback for http/gRPC/ws server. |
 |  [config(name, type)](./koatty_core.koatty.config.md) |  | Read app configuration |
 |  [createContext(req, res, protocol)](./koatty_core.koatty.createcontext.md) |  | Create Context |
 |  [getMetaData(key)](./koatty_core.koatty.getmetadata.md) |  | Get application metadata by key |
