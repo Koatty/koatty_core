@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.5.2",
+  "version": "1.6.0-0",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
