@@ -6,12 +6,14 @@
  */
 import Koa from "koa";
 import { Helper } from "koatty_lib";
+import koaCompose from "koa-compose";
+import onFinished from "on-finished";
 import { DefaultLogger as Logger } from "koatty_logger";
 import { isPrevent } from "koatty_exception";
 import { CreateContext } from "./Context";
 import { KoattyMetadata } from "./Metadata";
 import { KoattyContext } from "./IContext";
-import { Application, Container } from "koatty_container";
+import { Application } from "koatty_container";
 import {
     InitOptions,
     KoattyProtocol,
@@ -200,6 +202,46 @@ export class Koatty extends Koa implements Application {
      */
     public listen(server: any, listeningListener?: any): any {
         return server.Start(listeningListener);
+    }
+
+    /**
+     * return a request handler callback
+     * for http/gRPC/ws server.
+     *
+     * @param {KoattyProtocol} [protocol]
+     * @param {(ctx: KoattyContext) => Promise<any>} [reqHandler]
+     * @returns {*}  
+     * @memberof Koatty
+     */
+    callback(protocol: KoattyProtocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+        if (reqHandler) {
+            this.middleware.push(reqHandler);
+        }
+        const fn = koaCompose(this.middleware);
+        return (req: unknown, res: unknown) => {
+            const context = this.createContext(req, res, protocol);
+            return this.handleRequest(context, fn);
+        }
+    }
+
+    /**
+     * Handle request in callback.
+     *
+     * @private
+     * @param {KoattyContext} ctx
+     * @param {(ctx: KoattyContext) => Promise<any>} fnMiddleware
+     * @returns {*}  
+     * @memberof Koatty
+     */
+    private async handleRequest(
+        ctx: KoattyContext,
+        fnMiddleware: (ctx: KoattyContext) => Promise<any>,
+    ) {
+        const res = ctx.res;
+        res.statusCode = 404;
+        const onerror = (err: Error) => ctx.onerror(err);
+        onFinished(res, onerror);
+        return fnMiddleware(ctx);
     }
 
     /**
