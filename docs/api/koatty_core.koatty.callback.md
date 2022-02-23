@@ -9,14 +9,14 @@ return a request handler callback for http/gRPC/ws server.
 <b>Signature:</b>
 
 ```typescript
-callback(protocol?: KoattyProtocol, reqHandler?: (ctx: KoattyContext) => Promise<any>): (req: unknown, res: unknown) => Promise<any>;
+callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): (req: unknown, res: unknown) => Promise<any>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  protocol | [KoattyProtocol](./koatty_core.koattyprotocol.md) |  |
+|  protocol | string |  |
 |  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; |  |
 
 <b>Returns:</b>

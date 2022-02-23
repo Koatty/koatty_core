@@ -24,9 +24,7 @@
 |  [InitOptions](./koatty_core.initoptions.md) | InitOptions InitOptions |
 |  [KoattyContext](./koatty_core.koattycontext.md) | Koatty Context.  KoattyContext  {<!-- -->Koa.Context<!-- -->} |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | Router interface  KoattyRouter |
-|  [KoattyRouterOptions](./koatty_core.koattyrouteroptions.md) | KoattyRouterOptions  KoattyRouterOptions |
 |  [KoattyServer](./koatty_core.koattyserver.md) | interface Server  KoattyServer |
-|  [ListeningOptions](./koatty_core.listeningoptions.md) | listening options ListeningOptions |
 
 ## Type Aliases
 
@@ -40,5 +38,4 @@
 |  [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md) |  |
 |  [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md) |  |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
-|  [KoattyProtocol](./koatty_core.koattyprotocol.md) |  |
 
