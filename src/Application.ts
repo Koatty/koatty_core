@@ -16,7 +16,6 @@ import { KoattyContext } from "./IContext";
 import { Application } from "koatty_container";
 import {
     InitOptions,
-    KoattyProtocol,
     KoattyRouter, KoattyServer
 } from "./IApplication";
 import { ServerResponse } from "http";
@@ -175,7 +174,7 @@ export class Koatty extends Koa implements Application {
      * @returns {KoattyContext}  {*}
      * @memberof Koatty
      */
-    public createContext(req: any, res: any, protocol?: KoattyProtocol): KoattyContext {
+    public createContext(req: any, res: any, protocol?: string): KoattyContext {
         let resp;
         // protocol
         protocol = protocol ?? 'http';
@@ -208,12 +207,12 @@ export class Koatty extends Koa implements Application {
      * return a request handler callback
      * for http/gRPC/ws server.
      *
-     * @param {KoattyProtocol} [protocol]
+     * @param {KoattyProtocol} [protocol] 
      * @param {(ctx: KoattyContext) => Promise<any>} [reqHandler]
      * @returns {*}  
      * @memberof Koatty
      */
-    callback(protocol: KoattyProtocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+    callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
         if (reqHandler) {
             this.middleware.push(reqHandler);
         }
