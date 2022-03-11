@@ -3,10 +3,11 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2022-02-23 11:22:02
+ * @LastEditTime: 2022-03-11 11:01:00
  */
 
 import { Koatty } from "./Application";
+import { Server } from 'net';
 
 /**
  * InitOptions
@@ -29,11 +30,11 @@ export interface InitOptions {
 export interface KoattyServer {
     app: Koatty;
     options: any;
-    server: any;
+    server: Server;
     status: number;
 
-    Start: (listenCallback: () => void) => void;
-    Stop: () => void;
+    Start: (listenCallback: () => void) => Server;
+    Stop: (callback?: () => void) => void;
     /**
      * gRPC service register
      * @param {ServiceImplementation} impl

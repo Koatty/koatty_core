@@ -33,6 +33,7 @@ export class Koatty extends Koa implements Application {
     public options: InitOptions;
     public server: KoattyServer;
     public router: KoattyRouter;
+    readonly listenCallback: () => void;
 
     public appPath: string;
     public rootPath: string;
@@ -195,12 +196,16 @@ export class Koatty extends Koa implements Application {
      * listening and start server
      *
      * @param {Function} server KoattyServer
-     * @param {Function} [listeningListener] () => void
-     * @returns {void}  void
+     * @param {Function} [listenCallback] () => void
+     * @returns {*}  any
      * @memberof Koatty
      */
-    public listen(server: any, listeningListener?: any): any {
-        return server.Start(listeningListener);
+    public listen(server?: any, listenCallback?: any): any {
+        this.server = server ?? this.server;
+        listenCallback = listenCallback ? () => {
+            listenCallback(); this.listenCallback();
+        } : this.listenCallback;
+        return this.server.Start(listenCallback);
     }
 
     /**
