@@ -3,17 +3,12 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2022-02-14 10:44:47
+ * @LastEditTime: 2022-03-11 18:18:22
  */
-import Koa from "koa";
-import { WebSocket } from "ws";
 import { Helper } from "koatty_lib";
 import { KoattyMetadata } from "./Metadata";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
-import { IRpcServerCallback, IRpcServerUnaryCall, KoattyContext } from "./IContext";
-
-// KoaContext
-type KoaContext = Koa.BaseContext & Koa.DefaultContext;
+import { IRpcServerCallback, IRpcServerUnaryCall, IWebSocket, KoaContext, KoattyContext, WsRequest } from "./IContext";
 
 
 /**
@@ -85,14 +80,14 @@ function createGrpcContext(context: KoattyContext, call: IRpcServerUnaryCall<any
  * Create Koatty Websocket Context
  *
  * @param {KoattyContext} ctx
- * @param {(Buffer | ArrayBuffer | Buffer[])} data
+ * @param {IncomingMessage} req
  * @param {WebSocket} socket
  * @returns {*}  {KoattyContext}
  */
-function createWsContext(context: KoattyContext, data: Buffer | ArrayBuffer | Buffer[], socket: WebSocket): KoattyContext {
+function createWsContext(context: KoattyContext, req: WsRequest, socket: IWebSocket): KoattyContext {
     context.status = 200;
     Helper.define(context, "websocket", socket);
-    context.setMetaData("_body", data.toString());
+    context.setMetaData("_body", (req.data ?? "").toString());
 
     return context;
 }

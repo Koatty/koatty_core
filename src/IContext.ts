@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2022-02-21 15:28:43
+ * @LastEditTime: 2022-03-11 18:19:24
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -11,6 +11,23 @@ import { Context } from "koatty_container";
 import { ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream } from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { KoattyMetadata } from "./Metadata";
+import { IncomingMessage } from "http";
+
+// KoaContext
+export type KoaContext = Koa.BaseContext & Koa.DefaultContext;
+/**
+ * KoattyNext
+ */
+export type KoattyNext = Koa.Next;
+/**
+ * WsRequest
+ *
+ * @class WsRequest
+ * @extends {IncomingMessage}
+ */
+export class WsRequest extends IncomingMessage {
+    data: Buffer | ArrayBuffer | Buffer[];
+}
 
 // export
 export type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;
@@ -28,6 +45,9 @@ export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<
 
 // redefine ServerCallback
 export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>
+
+// redefine WebSocket
+export type IWebSocket = WebSocket;
 
 /**
  * AppContext
@@ -94,7 +114,7 @@ export interface KoattyContext extends AppContext {
      * @type {*}
      * @memberof KoattyContext
      */
-    websocket?: WebSocket; // ws.WebSocket
+    websocket?: IWebSocket; // ws.WebSocket
 
     /**
      * send metadata to http request header. 
@@ -121,7 +141,3 @@ export interface KoattyContext extends AppContext {
     getMetaData: (key: string) => unknown;
     setMetaData: (key: string, value: any) => any;
 }
-/**
- * KoattyNext
- */
-export type KoattyNext = Koa.Next;
