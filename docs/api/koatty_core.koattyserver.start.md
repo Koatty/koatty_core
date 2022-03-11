@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-Start: (listenCallback: () => void) => void;
+Start: (listenCallback: () => void) => Server;
 ```

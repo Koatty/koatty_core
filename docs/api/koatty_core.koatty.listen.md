@@ -9,19 +9,19 @@ listening and start server
 <b>Signature:</b>
 
 ```typescript
-listen(server: any, listeningListener?: any): any;
+listen(listenCallback?: any, server?: any): any;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
+|  listenCallback | any | () =<!-- -->&gt; void |
 |  server | any | KoattyServer |
-|  listeningListener | any | () =<!-- -->&gt; void |
 
 <b>Returns:</b>
 
 any
 
-{<!-- -->void<!-- -->} void  Koatty
+{<!-- -->\*<!-- -->} any  Koatty
 

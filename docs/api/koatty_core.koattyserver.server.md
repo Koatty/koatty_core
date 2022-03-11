@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-server: any;
+server: Server;
 ```
