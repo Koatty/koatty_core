@@ -11,5 +11,5 @@ websocket instance
 <b>Signature:</b>
 
 ```typescript
-websocket?: WebSocket;
+websocket?: IWebSocket;
 ```

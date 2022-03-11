@@ -17,7 +17,7 @@ export declare function CreateContext(ctx: KoaContext, req: any, res: any): Koat
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  ctx | KoaContext |  |
+|  ctx | [KoaContext](./koatty_core.koacontext.md) |  |
 |  req | any |  |
 |  res | any |  |
 

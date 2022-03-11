@@ -10,6 +10,7 @@
 |  --- | --- |
 |  [Koatty](./koatty_core.koatty.md) | Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
 |  [KoattyMetadata](./koatty_core.koattymetadata.md) | KoattyMetadata  KoattyMetadata |
+|  [WsRequest](./koatty_core.wsrequest.md) | WsRequest WsRequest  {<!-- -->IncomingMessage<!-- -->} |
 
 ## Functions
 
@@ -37,5 +38,7 @@
 |  [IRpcServerReadableStream](./koatty_core.irpcserverreadablestream.md) |  |
 |  [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md) |  |
 |  [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md) |  |
+|  [IWebSocket](./koatty_core.iwebsocket.md) |  |
+|  [KoaContext](./koatty_core.koacontext.md) |  |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
 

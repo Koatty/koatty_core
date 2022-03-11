@@ -27,7 +27,7 @@ export interface KoattyContext extends AppContext
 |  [setMetaData](./koatty_core.koattycontext.setmetadata.md) | (key: string, value: any) =&gt; any |  |
 |  [state](./koatty_core.koattycontext.state.md) | any | state {<!-- -->Koa.DefaultState<!-- -->}  KoattyContext |
 |  [status](./koatty_core.koattycontext.status.md) | number | status {<!-- -->number<!-- -->}  KoattyContext |
-|  [websocket?](./koatty_core.koattycontext.websocket.md) | WebSocket | <i>(Optional)</i> websocket instance {<!-- -->\*<!-- -->}  KoattyContext |
+|  [websocket?](./koatty_core.koattycontext.websocket.md) | [IWebSocket](./koatty_core.iwebsocket.md) | <i>(Optional)</i> websocket instance {<!-- -->\*<!-- -->}  KoattyContext |
 
 ## Methods
 
