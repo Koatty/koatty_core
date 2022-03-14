@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2022-03-11 18:18:22
+ * @LastEditTime: 2022-03-14 11:00:45
  */
 import { Helper } from "koatty_lib";
 import { KoattyMetadata } from "./Metadata";
@@ -26,7 +26,7 @@ export function CreateContext(ctx: KoaContext, req: any, res: any): KoattyContex
     switch (ctx.protocol) {
         case "ws":
         case "wss":
-            return createWsContext(context, req.data, res);
+            return createWsContext(context, req, res);
         case "grpc":
             return createGrpcContext(context, req, res);
         default:
