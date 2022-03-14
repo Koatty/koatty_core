@@ -3,11 +3,10 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2022-03-11 11:01:00
+ * @LastEditTime: 2022-03-14 17:57:21
  */
 
 import { Koatty } from "./Application";
-import { Server } from 'net';
 
 /**
  * InitOptions
@@ -21,6 +20,8 @@ export interface InitOptions {
     thinkPath?: string;
 }
 
+type unknownServer = unknown;
+
 /**
  * interface Server
  *
@@ -30,10 +31,10 @@ export interface InitOptions {
 export interface KoattyServer {
     app: Koatty;
     options: any;
-    server: Server;
+    server: unknownServer;
     status: number;
 
-    Start: (listenCallback: () => void) => Server;
+    Start: (listenCallback: () => void) => unknownServer;
     Stop: (callback?: () => void) => void;
     /**
      * gRPC service register
