@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2022-03-11 18:19:24
+ * @LastEditTime: 2022-03-15 15:46:14
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -26,7 +26,7 @@ export type KoattyNext = Koa.Next;
  * @extends {IncomingMessage}
  */
 export class WsRequest extends IncomingMessage {
-    data: Buffer | ArrayBuffer | Buffer[];
+  data: Buffer | ArrayBuffer | Buffer[];
 }
 
 // export
@@ -37,9 +37,9 @@ export type IRpcServerDuplexStream<RequestType, ResponseType> = ServerDuplexStre
 
 // redefine ServerCall
 export type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<RequestType, ResponseType>
-    | IRpcServerReadableStream<RequestType, ResponseType>
-    | IRpcServerWriteableStream<RequestType, ResponseType>
-    | IRpcServerDuplexStream<RequestType, ResponseType>;
+  | IRpcServerReadableStream<RequestType, ResponseType>
+  | IRpcServerWriteableStream<RequestType, ResponseType>
+  | IRpcServerDuplexStream<RequestType, ResponseType>;
 // redefine ServerCallImpl
 export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
 
@@ -62,82 +62,82 @@ type AppContext = Koa.Context & Context;
  * @extends {Koa.Context}
  */
 export interface KoattyContext extends AppContext {
-    /**
-     * state
-     *
-     * @type {Koa.DefaultState}
-     * @memberof KoattyContext
-     */
-    state: any;
+  /**
+   * state
+   *
+   * @type {Koa.DefaultState}
+   * @memberof KoattyContext
+   */
+  state: any;
 
-    /**
-     * status
-     *
-     * @type {number}
-     * @memberof KoattyContext
-     */
-    status: number;
+  /**
+   * status
+   *
+   * @type {number}
+   * @memberof KoattyContext
+   */
+  status: number;
 
-    /**
-     * metadata
-     *
-     * @type {KoattyMetadata}
-     * @memberof KoattyContext
-     */
-    metadata: KoattyMetadata;
+  /**
+   * metadata
+   *
+   * @type {KoattyMetadata}
+   * @memberof KoattyContext
+   */
+  metadata: KoattyMetadata;
 
-    /**
-     * protocol
-     *
-     * @type {string}
-     * @memberof KoattyContext
-     */
-    protocol: string;
+  /**
+   * protocol
+   *
+   * @type {string}
+   * @memberof KoattyContext
+   */
+  protocol: string;
 
-    /**
-     * gRPC ServerImpl
-     *
-     * @type {{
-     *         call: IRpcServerCall<any, any>;
-     *         callback?: IRpcServerCallback<any>;
-     *     }}
-     * @memberof KoattyContext
-     */
-    rpc?: {
-        call: IRpcServerCall<any, any>;
-        callback?: IRpcServerCallback<any>;
-    }
+  /**
+   * gRPC ServerImpl
+   *
+   * @type {{
+   *         call: IRpcServerCall<any, any>;
+   *         callback?: IRpcServerCallback<any>;
+   *     }}
+   * @memberof KoattyContext
+   */
+  rpc?: {
+    call: IRpcServerCall<any, any>;
+    callback?: IRpcServerCallback<any>;
+  }
 
-    /**
-     * websocket instance
-     *
-     * @type {*}
-     * @memberof KoattyContext
-     */
-    websocket?: IWebSocket; // ws.WebSocket
+  /**
+   * websocket instance
+   *
+   * @type {*}
+   * @memberof KoattyContext
+   */
+  websocket?: IWebSocket; // ws.WebSocket
 
-    /**
-     * send metadata to http request header. 
-     * then gRPC request to send metadata
-     *
-     * @memberof KoattyContext
-     */
-    sendMetadata?: (data: KoattyMetadata) => void;
+  /**
+   * send metadata to http request header. 
+   * then gRPC request to send metadata
+   *
+   * @memberof KoattyContext
+   */
+  sendMetadata?: (data: KoattyMetadata) => void;
 
-    /**
-     * Replace ctx.throw
-     *
-     * @type {(status: number, message?: string)}
-     * @type {(message: string, code?: number, status?: HttpStatusCode)}
-     * @memberof Context
-     */
-    throw(status: number, message?: string): never;
-    throw(message: string, code?: number, status?: any): never;
-    /**
-    * context metadata
-    * 
-    * @memberof Context
-    */
-    getMetaData: (key: string) => unknown;
-    setMetaData: (key: string, value: any) => any;
+  /**
+   * Replace ctx.throw
+   *
+   * @type {(status: number, message?: string)}
+   * @type {(message: string, code?: number, status?: HttpStatusCode)}
+   * @memberof Context
+   */
+  throw(status: number, message?: string): never;
+  throw(message: string, code?: number, status?: any): never;
+  /**
+  * context metadata
+  * 
+  * @memberof Context
+  */
+  getMetaData: (key: string) => unknown;
+  setMetaData: (key: string, value: any) => any;
 }
