@@ -34,6 +34,8 @@
   "author": "richenlin@gmail.com",
   "license": "BSD-3-Clause",
   "devDependencies": {
+    "@commitlint/cli": "^16.x.x",
+    "@commitlint/config-conventional": "^16.x.x",
     "@grpc/grpc-js": "^1.4.5",
     "@microsoft/api-documenter": "^7.x.x",
     "@microsoft/api-extractor": "^7.x.x",
@@ -45,8 +47,6 @@
     "@types/ws": "^8.x.x",
     "@typescript-eslint/eslint-plugin": "^5.x.x",
     "@typescript-eslint/parser": "^5.x.x",
-    "commitlint": "^16.x.x",
-    "commitlint-config-gitmoji": "^2.x.x",
     "conventional-changelog-cli": "^2.x.x",
     "copyfiles": "^2.x.x",
     "del-cli": "^4.x.x",
@@ -69,8 +69,8 @@
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
     "koatty_logger": "^1.x.x",
-    "on-finished": "^2.3.0",
-    "tslib": "^2.3.1"
+    "on-finished": "^2.4.1",
+    "tslib": "^2.4.0"
   },
   "peerDependencies": {
     "koatty_container": "^1.x.x",

@@ -11,9 +11,8 @@ KoattyMetadata
 <b>Signature:</b>
 
 ```typescript
-export declare class KoattyMetadata extends Metadata 
+export declare class KoattyMetadata 
 ```
-<b>Extends:</b> Metadata
 
 ## Properties
 
