@@ -16,8 +16,8 @@ listen(server?: any, listenCallback?: any): any;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | any | KoattyServer |
-|  listenCallback | any | () =<!-- -->&gt; void |
+|  server | any | <i>(Optional)</i> KoattyServer |
+|  listenCallback | any | <i>(Optional)</i> () =<!-- -->&gt; void |
 
 <b>Returns:</b>
 

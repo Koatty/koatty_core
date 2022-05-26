@@ -16,8 +16,8 @@ callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  protocol | string |  |
-|  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; |  |
+|  protocol | string | <i>(Optional)</i> |
+|  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

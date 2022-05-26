@@ -18,7 +18,7 @@ createContext(req: any, res: any, protocol?: string): KoattyContext;
 |  --- | --- | --- |
 |  req | any |  |
 |  res | any |  |
-|  protocol | string |  |
+|  protocol | string | <i>(Optional)</i> |
 
 <b>Returns:</b>
 

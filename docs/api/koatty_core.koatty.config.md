@@ -17,7 +17,7 @@ config(name: string, type?: string): any;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  type | string |  Koatty |
+|  type | string | <i>(Optional)</i>  Koatty |
 
 <b>Returns:</b>
 

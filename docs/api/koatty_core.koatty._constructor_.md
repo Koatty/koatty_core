@@ -16,5 +16,5 @@ protected constructor(options?: InitOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [InitOptions](./koatty_core.initoptions.md) |  Koatty |
+|  options | [InitOptions](./koatty_core.initoptions.md) | <i>(Optional)</i>  Koatty |
 
