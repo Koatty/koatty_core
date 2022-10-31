@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.9](https://github.com/koatty/koatty_core/compare/v1.6.8...v1.6.9) (2022-10-31)
+
+
+### Bug Fixes
+
+* remove property ([ad38fca](https://github.com/koatty/koatty_core/commit/ad38fca72a4a3626613a2687acbec8a58d9cccba))
+* upgrade deps ([ae3240c](https://github.com/koatty/koatty_core/commit/ae3240cdcc18cb684c1b58a781b53b46d78ba3f0))
+
 ### [1.6.8](https://github.com/koatty/koatty_core/compare/v1.6.6...v1.6.8) (2022-05-26)
 
 ### [1.6.6](https://github.com/koatty/koatty_core/compare/v1.6.5...v1.6.6) (2022-03-15)
