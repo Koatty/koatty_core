@@ -9,5 +9,5 @@ gRPC service register
 <b>Signature:</b>
 
 ```typescript
-RegisterService?: (impl: any) => void;
+readonly RegisterService?: (impl: any) => void;
 ```

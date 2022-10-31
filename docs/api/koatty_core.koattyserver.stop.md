@@ -7,5 +7,5 @@
 <b>Signature:</b>
 
 ```typescript
-Stop: (callback?: () => void) => void;
+readonly Stop: (callback?: () => void) => void;
 ```

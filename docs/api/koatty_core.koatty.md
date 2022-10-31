@@ -28,7 +28,6 @@ export declare class Koatty extends Koa implements Application
 |  [appDebug](./koatty_core.koatty.appdebug.md) |  | boolean |  |
 |  [appPath](./koatty_core.koatty.apppath.md) |  | string |  |
 |  [env](./koatty_core.koatty.env.md) |  | string |  |
-|  [listenCallback](./koatty_core.koatty.listencallback.md) |  | () =&gt; void |  |
 |  [options](./koatty_core.koatty.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
 |  [rootPath](./koatty_core.koatty.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koatty.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
