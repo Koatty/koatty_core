@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2022-03-15 15:46:08
+ * @LastEditTime: 2022-10-29 11:47:09
  */
 
 import { Koatty } from "./Application";
@@ -34,13 +34,13 @@ export interface KoattyServer {
   server: unknownServer;
   status: number;
 
-  Start: (listenCallback: () => void) => unknownServer;
-  Stop: (callback?: () => void) => void;
+  readonly Start: (listenCallback: () => void) => unknownServer;
+  readonly Stop: (callback?: () => void) => void;
   /**
    * gRPC service register
    * @param {ServiceImplementation} impl
    */
-  RegisterService?: (impl: any) => void;
+  readonly RegisterService?: (impl: any) => void;
 }
 
 /**
