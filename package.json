@@ -69,7 +69,7 @@
     "koatty_container": "^1.x.x",
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
-    "koatty_logger": "^1.x.x",
+    "koatty_logger": "^2.x.x",
     "on-finished": "^2.4.1",
     "tslib": "^2.4.1"
   },
@@ -77,6 +77,6 @@
     "koatty_container": "^1.x.x",
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
-    "koatty_logger": "^1.x.x"
+    "koatty_logger": "^2.x.x"
   }
 }
