@@ -87,7 +87,7 @@ export class Koatty extends Koa implements Application {
    * @param {*} value
    * @memberof Koatty
    */
-  setMetaData(key: string, value: any): any {
+  setMetaData(key: string, value: any) {
     // private
     if (key.startsWith("_")) {
       Helper.define(this, key, value);
@@ -102,10 +102,14 @@ export class Koatty extends Koa implements Application {
    * @param {string} key
    * @memberof Koatty
    */
-  getMetaData(key: string): any {
+  getMetaData(key: string): any[] {
     // private
     if (key.startsWith("_")) {
-      return Reflect.get(this, key);
+      const data = Reflect.get(this, key);
+      if (Helper.isTrueEmpty(data)) {
+        return [];
+      }
+      return [data];
     }
     return this.metadata.get(key);
   }
@@ -150,7 +154,8 @@ export class Koatty extends Koa implements Application {
    */
   public config(name: string, type = 'config') {
     try {
-      const caches = this.getMetaData('_configs') ?? {};
+      const data = this.getMetaData('_configs') || [];
+      const caches = data[0] || {};
       // tslint:disable-next-line: no-unused-expression
       caches[type] ?? (caches[type] = {});
       if (name === undefined) {

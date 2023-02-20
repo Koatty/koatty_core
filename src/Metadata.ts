@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-18 17:50:20
- * @LastEditTime: 2022-03-15 15:43:10
+ * @LastEditTime: 2023-02-20 18:06:11
  */
 
 /**
@@ -51,9 +51,6 @@ export class KoattyMetadata {
       key
     );
     existingValue = existingValue || [];
-    if (existingValue.length === 1) {
-      return existingValue[0];
-    }
     return existingValue;
   }
   /**
