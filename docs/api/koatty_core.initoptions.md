@@ -20,6 +20,8 @@ export interface InitOptions
 |  --- | --- | --- |
 |  [appDebug?](./koatty_core.initoptions.appdebug.md) | boolean | <i>(Optional)</i> |
 |  [appPath?](./koatty_core.initoptions.apppath.md) | string | <i>(Optional)</i> |
+|  [name?](./koatty_core.initoptions.name.md) | string | <i>(Optional)</i> |
 |  [rootPath?](./koatty_core.initoptions.rootpath.md) | string | <i>(Optional)</i> |
 |  [thinkPath?](./koatty_core.initoptions.thinkpath.md) | string | <i>(Optional)</i> |
+|  [version?](./koatty_core.initoptions.version.md) | string | <i>(Optional)</i> |
 
