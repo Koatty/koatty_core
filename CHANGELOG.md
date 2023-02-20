@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.1](https://github.com/koatty/koatty_core/compare/v1.7.0...v1.7.1) (2023-02-20)
+
+
+### Bug Fixes
+
+* getMetaData return type ([24c72a1](https://github.com/koatty/koatty_core/commit/24c72a197ffe34d7f5328b6def3d30a06fa170a9))
+
 ## [1.7.0](https://github.com/koatty/koatty_core/compare/v1.6.12...v1.7.0) (2023-02-20)
 
 
