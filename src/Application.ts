@@ -28,8 +28,13 @@ import { ServerResponse } from "http";
  * @implements {BaseApp}
  */
 export class Koatty extends Koa implements Application {
+  // runtime env mode
   public env: string;
+  // app name
+  public name: string;
+  // app version
   public version: string;
+  // app options
   public options: InitOptions;
   public server: KoattyServer;
   public router: KoattyRouter;
@@ -54,6 +59,8 @@ export class Koatty extends Koa implements Application {
   }) {
     super();
     this.options = options ?? {};
+    this.name = options.name;
+    this.version = options.version;
     this.env = process.env.KOATTY_ENV || process.env.NODE_ENV;
     const { appDebug, appPath,
       rootPath, thinkPath } = this.options;

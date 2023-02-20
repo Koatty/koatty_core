@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2022-10-29 11:47:09
+ * @LastEditTime: 2023-02-20 14:31:01
  */
 
 import { Koatty } from "./Application";
@@ -14,6 +14,8 @@ import { Koatty } from "./Application";
  * @interface InitOptions
  */
 export interface InitOptions {
+  name?: string;
+  version?: string;
   appPath?: string;
   appDebug?: boolean;
   rootPath?: string;
