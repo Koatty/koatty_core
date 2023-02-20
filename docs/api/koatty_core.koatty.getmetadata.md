@@ -9,7 +9,7 @@ Get application metadata by key
 <b>Signature:</b>
 
 ```typescript
-getMetaData(key: string): any;
+getMetaData(key: string): any[];
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ getMetaData(key: string): any;
 
 <b>Returns:</b>
 
-any
+any\[\]
 

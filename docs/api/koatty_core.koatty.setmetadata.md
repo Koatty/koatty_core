@@ -9,7 +9,7 @@ Set application metadata
 <b>Signature:</b>
 
 ```typescript
-setMetaData(key: string, value: any): any;
+setMetaData(key: string, value: any): void;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ setMetaData(key: string, value: any): any;
 
 <b>Returns:</b>
 
-any
+void
 
