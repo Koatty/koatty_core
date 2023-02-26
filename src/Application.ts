@@ -33,7 +33,7 @@ export class Koatty extends Koa implements Application {
   // app name
   public name: string;
   // app version
-  public version: string;
+  public appVersion: string;
   // app options
   public options: InitOptions;
   public server: KoattyServer;
@@ -60,7 +60,7 @@ export class Koatty extends Koa implements Application {
     super();
     this.options = options ?? {};
     this.name = options.name;
-    this.version = options.version;
+    this.appVersion = options.version;
     this.env = process.env.KOATTY_ENV || process.env.NODE_ENV;
     const { appDebug, appPath,
       rootPath, thinkPath } = this.options;
