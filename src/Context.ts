@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2022-03-15 15:45:34
+ * @LastEditTime: 2023-02-26 11:58:30
  */
 import { Helper } from "koatty_lib";
 import { KoattyMetadata } from "./Metadata";
@@ -126,12 +126,8 @@ function initBaseContext(ctx: KoaContext): KoattyContext {
   // metadata
   context.metadata = new KoattyMetadata();
   // getMetaData
-  context.getMetaData = function (key: string) {
-    const value = context.metadata.get(key);
-    if (value.length === 1) {
-      return value[0];
-    }
-    return value;
+  context.getMetaData = function (key: string): any[] {
+    return context.metadata.get(key);
   };
 
   // setMetaData

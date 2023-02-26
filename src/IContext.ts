@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2023-02-20 16:57:43
+ * @LastEditTime: 2023-02-26 11:45:19
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -138,6 +138,6 @@ export interface KoattyContext extends AppContext {
   * 
   * @memberof Context
   */
-  getMetaData: (key: string) => any[] | null;
+  getMetaData: (key: string) => any[];
   setMetaData: (key: string, value: unknown) => void;
 }
