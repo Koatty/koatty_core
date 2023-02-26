@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2023-02-26 11:45:19
+ * @LastEditTime: 2023-02-26 22:04:43
  */
 import Koa from "koa";
 import { WebSocket } from "ws";
@@ -62,13 +62,6 @@ type AppContext = Koa.Context & Context;
  * @extends {Koa.Context}
  */
 export interface KoattyContext extends AppContext {
-  /**
-   * state
-   *
-   * @type {Koa.DefaultState}
-   * @memberof KoattyContext
-   */
-  state: any;
 
   /**
    * status
@@ -77,14 +70,6 @@ export interface KoattyContext extends AppContext {
    * @memberof KoattyContext
    */
   status: number;
-
-  /**
-   * metadata
-   *
-   * @type {KoattyMetadata}
-   * @memberof KoattyContext
-   */
-  metadata: KoattyMetadata;
 
   /**
    * protocol

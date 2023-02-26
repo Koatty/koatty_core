@@ -3,7 +3,7 @@
  * @Usage:
  * @Author: richen
  * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2023-02-26 11:58:30
+ * @LastEditTime: 2023-02-26 22:13:54
  */
 import { Helper } from "koatty_lib";
 import { KoattyMetadata } from "./Metadata";
@@ -106,7 +106,7 @@ function createWsContext(context: KoattyContext, req: WsRequest, socket: IWebSoc
  * @returns {*}  {KoattyContext}
  */
 function initBaseContext(ctx: KoaContext): KoattyContext {
-  const context = Object.create(ctx);
+  const context: KoattyContext = Object.create(ctx);
   // throw
   context.throw = function (statusOrMessage: HttpStatusCode | string,
     codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
@@ -126,7 +126,7 @@ function initBaseContext(ctx: KoaContext): KoattyContext {
   // metadata
   context.metadata = new KoattyMetadata();
   // getMetaData
-  context.getMetaData = function (key: string): any[] {
+  context.getMetaData = function (key: string) {
     return context.metadata.get(key);
   };
 
