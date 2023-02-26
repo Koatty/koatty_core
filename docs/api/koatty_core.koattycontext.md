@@ -19,7 +19,7 @@ export interface KoattyContext extends AppContext
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [getMetaData](./koatty_core.koattycontext.getmetadata.md) | (key: string) =&gt; any\[\] \| null | context metadata Context |
+|  [getMetaData](./koatty_core.koattycontext.getmetadata.md) | (key: string) =&gt; any\[\] | context metadata Context |
 |  [metadata](./koatty_core.koattycontext.metadata.md) | [KoattyMetadata](./koatty_core.koattymetadata.md) | metadata {<!-- -->KoattyMetadata<!-- -->}  KoattyContext |
 |  [protocol](./koatty_core.koattycontext.protocol.md) | string | protocol {<!-- -->string<!-- -->}  KoattyContext |
 |  [rpc?](./koatty_core.koattycontext.rpc.md) | { call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; } | <i>(Optional)</i> gRPC ServerImpl {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext |
