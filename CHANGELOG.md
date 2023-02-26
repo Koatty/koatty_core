@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.4](https://github.com/koatty/koatty_core/compare/v1.7.2...v1.7.4) (2023-02-26)
+
+
+### Bug Fixes
+
+* remove context ingerface metadata ([cb59579](https://github.com/koatty/koatty_core/commit/cb595791d55da7ceec0f5cfb9303baf4d291332c))
+* rename ([e3ca5c3](https://github.com/koatty/koatty_core/commit/e3ca5c33d170b06f8e5a01f99f76ffd91a3f85f6))
+
 ### [1.7.2](https://github.com/koatty/koatty_core/compare/v1.7.1...v1.7.2) (2023-02-26)
 
 
