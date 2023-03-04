@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.8](https://github.com/koatty/koatty_core/compare/v1.7.7...v1.7.8) (2023-03-04)
+
+
+### Bug Fixes
+
+* app.listen param ([4a2b2ab](https://github.com/koatty/koatty_core/commit/4a2b2ab85eaf6574790ca7e7cc2dffb4969cd717))
+
 ### [1.7.7](https://github.com/koatty/koatty_core/compare/v1.7.6...v1.7.7) (2023-03-04)
 
 
