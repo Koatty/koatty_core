@@ -207,13 +207,11 @@ export class Koatty extends Koa implements Application {
   /**
    * listening and start server
    *
-   * @param {Function} server KoattyServer
-   * @param {Function} [listenCallback] () => void
+   * @param {Function} [listenCallback] (app: Koatty) => void
    * @returns {*}  any
    * @memberof Koatty
    */
-  public listen(server?: any, listenCallback?: any): any {
-    this.server = server ?? this.server;
+  public listen(listenCallback?: any): any {
     const callback = () => {
       // Emit app started event
       Logger.Log('Koatty', '', 'Emit App Start ...');
