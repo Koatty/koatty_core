@@ -5,6 +5,7 @@
  * @ version: 2020-07-06 11:21:37
  */
 import Koa from "koa";
+import EventEmitter from "events";
 import { Helper } from "koatty_lib";
 import koaCompose from "koa-compose";
 import onFinished from "on-finished";
@@ -213,10 +214,14 @@ export class Koatty extends Koa implements Application {
    */
   public listen(server?: any, listenCallback?: any): any {
     this.server = server ?? this.server;
-    listenCallback = listenCallback ? listenCallback : () => {
-      Logger.Log("think", "", `Server running ...`);
+    const callback = () => {
+      // Emit app started event
+      Logger.Log('Koatty', '', 'Emit App Start ...');
+      asyncEvent(this, 'appStart');
+      // 
+      listenCallback(this);
     };
-    return this.server.Start(listenCallback);
+    return this.server.Start(callback);
   }
 
   /**
@@ -352,4 +357,21 @@ function parseExp(fn: Function) {
       });
     });
   };
+}
+/**
+ * Execute event as async
+ * 
+ * @param {EventEmitter} event
+ * @param {string} eventName
+ * @return {*}
+ */
+async function asyncEvent(event: EventEmitter, eventName: string) {
+  const ls: any[] = event.listeners(eventName);
+  // eslint-disable-next-line no-restricted-syntax
+  for await (const func of ls) {
+    if (Helper.isFunction(func)) {
+      func();
+    }
+  }
+  return event.removeAllListeners(eventName);
 }
