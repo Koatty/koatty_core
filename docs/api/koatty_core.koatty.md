@@ -45,7 +45,7 @@ export declare class Koatty extends Koa implements Application
 |  [createContext(req, res, protocol)](./koatty_core.koatty.createcontext.md) |  | Create Context |
 |  [getMetaData(key)](./koatty_core.koatty.getmetadata.md) |  | Get application metadata by key |
 |  [init()](./koatty_core.koatty.init.md) |  | app custom init, must be defined options |
-|  [listen(server, listenCallback)](./koatty_core.koatty.listen.md) |  | listening and start server |
+|  [listen(listenCallback)](./koatty_core.koatty.listen.md) |  | listening and start server |
 |  [setMetaData(key, value)](./koatty_core.koatty.setmetadata.md) |  | Set application metadata |
 |  [use(fn)](./koatty_core.koatty.use.md) |  | Use the given koa middleware <code>fn</code>. support generator func |
 |  [useExp(fn)](./koatty_core.koatty.useexp.md) |  | Use the given Express middleware <code>fn</code>. |

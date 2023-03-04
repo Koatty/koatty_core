@@ -9,15 +9,14 @@ listening and start server
 <b>Signature:</b>
 
 ```typescript
-listen(server?: any, listenCallback?: any): any;
+listen(listenCallback?: any): any;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  server | any | <i>(Optional)</i> KoattyServer |
-|  listenCallback | any | <i>(Optional)</i> () =<!-- -->&gt; void |
+|  listenCallback | any | <i>(Optional)</i> (app: Koatty) =<!-- -->&gt; void |
 
 <b>Returns:</b>
 
