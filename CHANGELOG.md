@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.7](https://github.com/koatty/koatty_core/compare/v1.7.6...v1.7.7) (2023-03-04)
+
+
+### Bug Fixes
+
+* emit appStart event ([76f3ea8](https://github.com/koatty/koatty_core/commit/76f3ea886b1d18dc1f66a4e4a59443eae84632fa))
+
 ### [1.7.6](https://github.com/koatty/koatty_core/compare/v1.7.4...v1.7.6) (2023-02-26)
 
 
