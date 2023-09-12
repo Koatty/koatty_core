@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.10](https://github.com/koatty/koatty_core/compare/v1.7.9...v1.7.10) (2023-09-12)
+
+
+### Bug Fixes
+
+* restore thinkPath ([76885fe](https://github.com/koatty/koatty_core/commit/76885fe2539ed7386da84bc22bca5e5736198917))
+
 ### [1.7.9](https://github.com/koatty/koatty_core/compare/v1.7.8...v1.7.9) (2023-09-12)
 
 
