@@ -34,6 +34,7 @@ export declare class Koatty extends Koa implements Application
 |  [rootPath](./koatty_core.koatty.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koatty.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
 |  [server](./koatty_core.koatty.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
+|  [thinkPath](./koatty_core.koatty.thinkpath.md) |  | string |  |
 |  [version](./koatty_core.koatty.version.md) |  | string |  |
 
 ## Methods
