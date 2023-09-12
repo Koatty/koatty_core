@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.7.9](https://github.com/koatty/koatty_core/compare/v1.7.8...v1.7.9) (2023-09-12)
+
+
+### Bug Fixes
+
+* comment ([096f93d](https://github.com/koatty/koatty_core/commit/096f93d621fb5a86d0b48a1e645d50fa65c90eed))
+* logsPath ([332af7f](https://github.com/koatty/koatty_core/commit/332af7f869d516847262a749c4fcbb5a62c39c5b))
+
 ### [1.7.8](https://github.com/koatty/koatty_core/compare/v1.7.7...v1.7.8) (2023-03-04)
 
 
