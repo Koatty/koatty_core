@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2023-02-20 14:31:01
+ * @LastEditTime: 2023-09-12 10:37:58
  */
 
 import { Koatty } from "./Application";
@@ -19,7 +19,6 @@ export interface InitOptions {
   appPath?: string;
   appDebug?: boolean;
   rootPath?: string;
-  thinkPath?: string;
 }
 
 type unknownServer = unknown;
