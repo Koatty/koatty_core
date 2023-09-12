@@ -42,6 +42,7 @@ export class Koatty extends Koa implements Application {
   // env var
   public appPath: string;
   public rootPath: string;
+  public thinkPath: string;
   public logsPath: string;
   public appDebug: boolean;
 
@@ -56,16 +57,18 @@ export class Koatty extends Koa implements Application {
     appDebug: true,
     appPath: '',
     rootPath: '',
+    thinkPath: '',
   }) {
     super();
     this.options = options ?? {};
     this.name = options.name;
     this.version = options.version;
     this.env = process.env.KOATTY_ENV || process.env.NODE_ENV;
-    const { appDebug, appPath, rootPath } = this.options;
+    const { appDebug, appPath, rootPath, thinkPath } = this.options;
     this.appDebug = appDebug;
     this.appPath = appPath;
     this.rootPath = rootPath;
+    this.thinkPath = thinkPath;
     this.metadata = new KoattyMetadata();
     // constructor
     this.init();
