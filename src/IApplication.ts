@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2023-09-12 11:10:49
+ * @LastEditTime: 2023-10-28 11:37:15
  */
 
 import { Koatty } from "./Application";
@@ -19,7 +19,7 @@ export interface InitOptions {
   appPath?: string;
   appDebug?: boolean;
   rootPath?: string;
-  thinkPath?: string;
+  koattyPath?: string;
 }
 
 type unknownServer = unknown;
@@ -60,3 +60,16 @@ export interface KoattyRouter {
   LoadRouter: (list: any[]) => void;
   ListRouter?: () => any;
 }
+
+/**
+ * AppEvent
+ *
+ * @export
+ * @enum AppEvent
+ */
+export const enum AppEvent {
+  appBoot = "appBoot",
+  appReady = "appReady",
+  appStart = "appStart",
+  appStop = "appStop",
+} 
