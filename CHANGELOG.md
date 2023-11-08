@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://github.com/koatty/koatty_core/compare/v1.8.0...v1.8.1) (2023-11-08)
+
+
+### Bug Fixes
+
+* export AppEventArr ([a93e1a9](https://github.com/koatty/koatty_core/commit/a93e1a9e32c96e3ade1262ea5186eecead0d7b98))
+
 ## [1.8.0](https://github.com/koatty/koatty_core/compare/v1.7.10...v1.8.0) (2023-11-08)
 
 
