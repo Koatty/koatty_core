@@ -16,6 +16,7 @@ import { KoattyMetadata } from "./Metadata";
 import { KoattyContext } from "./IContext";
 import { Application } from "koatty_container";
 import {
+  AppEvent,
   InitOptions,
   KoattyRouter, KoattyServer
 } from "./IApplication";
@@ -215,7 +216,7 @@ export class Koatty extends Koa implements Application {
     const callback = () => {
       // Emit app started event
       Logger.Log('Koatty', '', 'Emit App Start ...');
-      asyncEvent(this, 'appStart');
+      asyncEvent(this, AppEvent.appStart);
       // 
       listenCallback(this);
     };
