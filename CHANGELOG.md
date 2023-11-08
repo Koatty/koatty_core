@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/koatty/koatty_core/compare/v1.7.10...v1.8.0) (2023-11-08)
+
+
+### Features
+
+* add app event ([fd26da9](https://github.com/koatty/koatty_core/commit/fd26da9ea1e8fa355b9f515f8b9622ae9f5f306b))
+* add AppEvent defined ([79c26c3](https://github.com/koatty/koatty_core/commit/79c26c3b2bad05a90fe48ef547b195a001745c1d))
+
 ### [1.7.10](https://github.com/koatty/koatty_core/compare/v1.7.9...v1.7.10) (2023-09-12)
 
 
