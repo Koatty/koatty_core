@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2023-11-06 07:58:01
+ * @LastEditTime: 2023-11-08 13:39:08
  */
 
 import { Koatty } from "./Application";
@@ -73,7 +73,7 @@ export const enum AppEvent {
   appStart = "appStart",
   appStop = "appStop",
 }
-const AppEventArr = ["appBoot", "appReady", "appStart", "appStop"];
+export const AppEventArr = ["appBoot", "appReady", "appStart", "appStop"];
 
 // type EventHookFunc
 export type EventHookFunc = (app: Koatty) => Promise<any>;
