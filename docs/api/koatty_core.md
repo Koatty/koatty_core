@@ -33,6 +33,12 @@
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
 |  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
 
+## Variables
+
+|  Variable | Description |
+|  --- | --- |
+|  [AppEventArr](./koatty_core.appeventarr.md) |  |
+
 ## Type Aliases
 
 |  Type Alias | Description |
