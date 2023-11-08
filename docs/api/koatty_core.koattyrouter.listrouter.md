@@ -4,7 +4,7 @@
 
 ## KoattyRouter.ListRouter property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 ListRouter?: () => any;

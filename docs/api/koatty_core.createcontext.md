@@ -7,7 +7,7 @@
 Create KoattyContext
 
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare function CreateContext(ctx: KoaContext, req: any, res: any): KoattyContext;
@@ -21,7 +21,7 @@ export declare function CreateContext(ctx: KoaContext, req: any, res: any): Koat
 |  req | any |  |
 |  res | any |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [KoattyContext](./koatty_core.koattycontext.md)
 

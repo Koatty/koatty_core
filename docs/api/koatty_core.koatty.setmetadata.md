@@ -6,7 +6,7 @@
 
 Set application metadata
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 setMetaData(key: string, value: any): void;
@@ -19,7 +19,7 @@ setMetaData(key: string, value: any): void;
 |  key | string |  |
 |  value | any |  Koatty |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

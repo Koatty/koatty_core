@@ -6,7 +6,7 @@
 
 Use the given Express middleware `fn`<!-- -->.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 useExp(fn: Function): any;
@@ -18,7 +18,7 @@ useExp(fn: Function): any;
 |  --- | --- | --- |
 |  fn | Function |  |
 
-<b>Returns:</b>
+**Returns:**
 
 any
 

@@ -4,7 +4,7 @@
 
 ## Koatty.env property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 env: string;

@@ -4,7 +4,7 @@
 
 ## KoattyRouter.LoadRouter property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 LoadRouter: (list: any[]) => void;

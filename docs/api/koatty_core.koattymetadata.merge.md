@@ -6,7 +6,7 @@
 
 Merges all key-value pairs from a given Metadata object into this one. If both this object and the given object have values in the same key, values from the other Metadata object will be appended to this object's values.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 merge(other: KoattyMetadata): void;
@@ -18,7 +18,7 @@ merge(other: KoattyMetadata): void;
 |  --- | --- | --- |
 |  other | [KoattyMetadata](./koatty_core.koattymetadata.md) | A Metadata object. |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

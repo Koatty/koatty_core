@@ -6,7 +6,7 @@
 
 Set the given value for the given key
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 set(key: string, value: any): void;
@@ -19,7 +19,7 @@ set(key: string, value: any): void;
 |  key | string |  |
 |  value | any |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

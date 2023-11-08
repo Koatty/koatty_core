@@ -4,7 +4,7 @@
 
 ## KoattyServer.server property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 server: unknownServer;

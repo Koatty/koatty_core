@@ -8,7 +8,7 @@ websocket instance
 
  {<!-- -->\*<!-- -->}  KoattyContext
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 websocket?: IWebSocket;

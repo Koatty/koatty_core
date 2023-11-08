@@ -6,7 +6,7 @@
 
 listening and start server
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 listen(listenCallback?: any): any;
@@ -16,9 +16,9 @@ listen(listenCallback?: any): any;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  listenCallback | any | <i>(Optional)</i> (app: Koatty) =<!-- -->&gt; void |
+|  listenCallback | any | _(Optional)_ (app: Koatty) =<!-- -->&gt; void |
 
-<b>Returns:</b>
+**Returns:**
 
 any
 

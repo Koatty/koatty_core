@@ -6,7 +6,7 @@
 
 Adds the given value for the given key by appending to a list of previous values associated with that key.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 add(key: string, value: any): void;
@@ -19,7 +19,7 @@ add(key: string, value: any): void;
 |  key | string |  |
 |  value | any |  |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

@@ -4,7 +4,7 @@
 
 ## InitOptions.appPath property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 appPath?: string;

@@ -6,7 +6,7 @@
 
 KoattyNext
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type KoattyNext = Koa.Next;

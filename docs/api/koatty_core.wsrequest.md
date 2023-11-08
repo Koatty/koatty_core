@@ -8,12 +8,12 @@ WsRequest
 
  WsRequest  {<!-- -->IncomingMessage<!-- -->}
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class WsRequest extends IncomingMessage 
 ```
-<b>Extends:</b> IncomingMessage
+**Extends:** IncomingMessage
 
 ## Properties
 

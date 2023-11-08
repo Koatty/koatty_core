@@ -4,10 +4,10 @@
 
 ## IRpcServerCall type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<RequestType, ResponseType> | IRpcServerReadableStream<RequestType, ResponseType> | IRpcServerWriteableStream<RequestType, ResponseType> | IRpcServerDuplexStream<RequestType, ResponseType>;
 ```
-<b>References:</b> [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md)<!-- -->, [IRpcServerReadableStream](./koatty_core.irpcserverreadablestream.md)<!-- -->, [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md)<!-- -->, [IRpcServerDuplexStream](./koatty_core.irpcserverduplexstream.md)
+**References:** [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md)<!-- -->, [IRpcServerReadableStream](./koatty_core.irpcserverreadablestream.md)<!-- -->, [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md)<!-- -->, [IRpcServerDuplexStream](./koatty_core.irpcserverduplexstream.md)
 

@@ -8,7 +8,7 @@ protocol
 
  {<!-- -->string<!-- -->}  KoattyContext
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protocol: string;

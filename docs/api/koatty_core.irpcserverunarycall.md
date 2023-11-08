@@ -4,7 +4,7 @@
 
 ## IRpcServerUnaryCall type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;

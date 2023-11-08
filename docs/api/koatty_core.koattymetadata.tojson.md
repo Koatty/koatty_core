@@ -6,14 +6,14 @@
 
 This modifies the behavior of JSON.stringify to show an object representation of the metadata map.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 toJSON(): {
         [key: string]: any;
     };
 ```
-<b>Returns:</b>
+**Returns:**
 
 { \[key: string\]: any; }
 

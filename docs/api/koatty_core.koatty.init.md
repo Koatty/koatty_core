@@ -6,12 +6,12 @@
 
 app custom init, must be defined options
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 init(): void;
 ```
-<b>Returns:</b>
+**Returns:**
 
 void
 

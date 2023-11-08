@@ -4,7 +4,7 @@
 
 ## Koatty.logsPath property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 logsPath: string;

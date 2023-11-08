@@ -8,7 +8,7 @@ InitOptions
 
  InitOptions
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface InitOptions 
@@ -16,12 +16,12 @@ export interface InitOptions
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [appDebug?](./koatty_core.initoptions.appdebug.md) | boolean | <i>(Optional)</i> |
-|  [appPath?](./koatty_core.initoptions.apppath.md) | string | <i>(Optional)</i> |
-|  [name?](./koatty_core.initoptions.name.md) | string | <i>(Optional)</i> |
-|  [rootPath?](./koatty_core.initoptions.rootpath.md) | string | <i>(Optional)</i> |
-|  [thinkPath?](./koatty_core.initoptions.thinkpath.md) | string | <i>(Optional)</i> |
-|  [version?](./koatty_core.initoptions.version.md) | string | <i>(Optional)</i> |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [appDebug?](./koatty_core.initoptions.appdebug.md) |  | boolean | _(Optional)_ |
+|  [appPath?](./koatty_core.initoptions.apppath.md) |  | string | _(Optional)_ |
+|  [koattyPath?](./koatty_core.initoptions.koattypath.md) |  | string | _(Optional)_ |
+|  [name?](./koatty_core.initoptions.name.md) |  | string | _(Optional)_ |
+|  [rootPath?](./koatty_core.initoptions.rootpath.md) |  | string | _(Optional)_ |
+|  [version?](./koatty_core.initoptions.version.md) |  | string | _(Optional)_ |
 

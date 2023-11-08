@@ -8,7 +8,7 @@ KoattyMetadata
 
   KoattyMetadata
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class KoattyMetadata 
@@ -18,7 +18,7 @@ export declare class KoattyMetadata
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [internalRepr](./koatty_core.koattymetadata.internalrepr.md) |  | Map&lt;string, any\[\]&gt; |  |
+|  [internalRepr](./koatty_core.koattymetadata.internalrepr.md) | <code>protected</code> | Map&lt;string, any\[\]&gt; |  |
 
 ## Methods
 

@@ -8,7 +8,7 @@ interface Server
 
   KoattyServer
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface KoattyServer 
@@ -16,13 +16,13 @@ export interface KoattyServer
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [app](./koatty_core.koattyserver.app.md) | [Koatty](./koatty_core.koatty.md) |  |
-|  [options](./koatty_core.koattyserver.options.md) | any |  |
-|  [RegisterService?](./koatty_core.koattyserver.registerservice.md) | (impl: any) =&gt; void | <i>(Optional)</i> gRPC service register |
-|  [server](./koatty_core.koattyserver.server.md) | unknownServer |  |
-|  [Start](./koatty_core.koattyserver.start.md) | (listenCallback: () =&gt; void) =&gt; unknownServer |  |
-|  [status](./koatty_core.koattyserver.status.md) | number |  |
-|  [Stop](./koatty_core.koattyserver.stop.md) | (callback?: () =&gt; void) =&gt; void |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [app](./koatty_core.koattyserver.app.md) |  | [Koatty](./koatty_core.koatty.md) |  |
+|  [options](./koatty_core.koattyserver.options.md) |  | any |  |
+|  [RegisterService?](./koatty_core.koattyserver.registerservice.md) | <code>readonly</code> | (impl: any) =&gt; void | _(Optional)_ gRPC service register |
+|  [server](./koatty_core.koattyserver.server.md) |  | unknownServer |  |
+|  [Start](./koatty_core.koattyserver.start.md) | <code>readonly</code> | (listenCallback: () =&gt; void) =&gt; unknownServer |  |
+|  [status](./koatty_core.koattyserver.status.md) |  | number |  |
+|  [Stop](./koatty_core.koattyserver.stop.md) | <code>readonly</code> | (callback?: () =&gt; void) =&gt; void |  |
 

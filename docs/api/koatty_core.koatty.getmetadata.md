@@ -6,7 +6,7 @@
 
 Get application metadata by key
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getMetaData(key: string): any[];
@@ -18,7 +18,7 @@ getMetaData(key: string): any[];
 |  --- | --- | --- |
 |  key | string |  Koatty |
 
-<b>Returns:</b>
+**Returns:**
 
 any\[\]
 

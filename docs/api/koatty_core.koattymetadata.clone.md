@@ -6,12 +6,12 @@
 
 Clones the metadata object.  The newly cloned object.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 clone(): KoattyMetadata;
 ```
-<b>Returns:</b>
+**Returns:**
 
 [KoattyMetadata](./koatty_core.koattymetadata.md)
 

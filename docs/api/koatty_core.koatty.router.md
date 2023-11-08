@@ -4,7 +4,7 @@
 
 ## Koatty.router property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 router: KoattyRouter;

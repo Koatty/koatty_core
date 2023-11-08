@@ -4,7 +4,7 @@
 
 ## Koatty.rootPath property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rootPath: string;

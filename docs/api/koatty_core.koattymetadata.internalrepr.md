@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.internalRepr property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected internalRepr: Map<string, any[]>;

@@ -6,7 +6,7 @@
 
 return a request handler callback for http/gRPC/ws server.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): (req: unknown, res: unknown) => Promise<any>;
@@ -16,10 +16,10 @@ callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): 
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  protocol | string | <i>(Optional)</i> |
-|  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; | <i>(Optional)</i> |
+|  protocol | string | _(Optional)_ |
+|  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 (req: unknown, res: unknown) =&gt; Promise&lt;any&gt;
 

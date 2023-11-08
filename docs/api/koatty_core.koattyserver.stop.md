@@ -4,7 +4,7 @@
 
 ## KoattyServer.Stop property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly Stop: (callback?: () => void) => void;

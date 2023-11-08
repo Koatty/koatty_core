@@ -6,7 +6,7 @@
 
 Create Context
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 createContext(req: any, res: any, protocol?: string): KoattyContext;
@@ -18,9 +18,9 @@ createContext(req: any, res: any, protocol?: string): KoattyContext;
 |  --- | --- | --- |
 |  req | any |  |
 |  res | any |  |
-|  protocol | string | <i>(Optional)</i> |
+|  protocol | string | _(Optional)_ |
 
-<b>Returns:</b>
+**Returns:**
 
 [KoattyContext](./koatty_core.koattycontext.md)
 

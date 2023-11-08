@@ -6,7 +6,7 @@
 
 Creates an instance of Koatty.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 protected constructor(options?: InitOptions);
@@ -16,5 +16,5 @@ protected constructor(options?: InitOptions);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  options | [InitOptions](./koatty_core.initoptions.md) | <i>(Optional)</i>  Koatty |
+|  options | [InitOptions](./koatty_core.initoptions.md) | _(Optional)_  Koatty |
 

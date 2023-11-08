@@ -4,7 +4,7 @@
 
 ## KoaContext type
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare type KoaContext = Koa.BaseContext & Koa.DefaultContext;

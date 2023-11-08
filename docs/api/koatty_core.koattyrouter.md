@@ -8,7 +8,7 @@ Router interface
 
   KoattyRouter
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface KoattyRouter 
@@ -16,12 +16,12 @@ export interface KoattyRouter
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [app](./koatty_core.koattyrouter.app.md) | [Koatty](./koatty_core.koatty.md) |  |
-|  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) | () =&gt; any | <i>(Optional)</i> |
-|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) | (list: any\[\]) =&gt; void |  |
-|  [options](./koatty_core.koattyrouter.options.md) | any |  |
-|  [router](./koatty_core.koattyrouter.router.md) | any |  |
-|  [SetRouter](./koatty_core.koattyrouter.setrouter.md) | (path: string, func: Function, method?: any) =&gt; void |  |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [app](./koatty_core.koattyrouter.app.md) |  | [Koatty](./koatty_core.koatty.md) |  |
+|  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) |  | () =&gt; any | _(Optional)_ |
+|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) |  | (list: any\[\]) =&gt; void |  |
+|  [options](./koatty_core.koattyrouter.options.md) |  | any |  |
+|  [router](./koatty_core.koattyrouter.router.md) |  | any |  |
+|  [SetRouter](./koatty_core.koattyrouter.setrouter.md) |  | (path: string, func: Function, method?: any) =&gt; void |  |
 

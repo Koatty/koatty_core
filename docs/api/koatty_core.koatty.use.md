@@ -6,7 +6,7 @@
 
 Use the given koa middleware `fn`<!-- -->. support generator func
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 use(fn: Function): any;
@@ -18,7 +18,7 @@ use(fn: Function): any;
 |  --- | --- | --- |
 |  fn | Function |  |
 
-<b>Returns:</b>
+**Returns:**
 
 any
 

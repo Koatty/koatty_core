@@ -6,7 +6,7 @@
 
 copy all key-value pairs from a given object into this new Metadata.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 static from(obj: {
@@ -20,7 +20,7 @@ static from(obj: {
 |  --- | --- | --- |
 |  obj | { \[key: string\]: any; } |  |
 
-<b>Returns:</b>
+**Returns:**
 
 [KoattyMetadata](./koatty_core.koattymetadata.md)
 

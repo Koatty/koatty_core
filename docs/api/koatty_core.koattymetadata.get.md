@@ -6,7 +6,7 @@
 
 Gets a list of all values associated with the key. Normalizes the key.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 get(key: string): any[];
@@ -18,7 +18,7 @@ get(key: string): any[];
 |  --- | --- | --- |
 |  key | string | The key whose value should be retrieved.  A list of values associated with the given key. |
 
-<b>Returns:</b>
+**Returns:**
 
 any\[\]
 

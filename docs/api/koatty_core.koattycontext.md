@@ -8,29 +8,29 @@ Koatty Context.
 
   KoattyContext  {<!-- -->Koa.Context<!-- -->}
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export interface KoattyContext extends AppContext 
 ```
-<b>Extends:</b> AppContext
+**Extends:** AppContext
 
 ## Properties
 
-|  Property | Type | Description |
-|  --- | --- | --- |
-|  [getMetaData](./koatty_core.koattycontext.getmetadata.md) | (key: string) =&gt; any\[\] | context metadata Context |
-|  [protocol](./koatty_core.koattycontext.protocol.md) | string | protocol {<!-- -->string<!-- -->}  KoattyContext |
-|  [rpc?](./koatty_core.koattycontext.rpc.md) | { call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; } | <i>(Optional)</i> gRPC ServerImpl {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext |
-|  [sendMetadata?](./koatty_core.koattycontext.sendmetadata.md) | (data: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void | <i>(Optional)</i> send metadata to http request header. then gRPC request to send metadata KoattyContext |
-|  [setMetaData](./koatty_core.koattycontext.setmetadata.md) | (key: string, value: unknown) =&gt; void |  |
-|  [status](./koatty_core.koattycontext.status.md) | number | status {<!-- -->number<!-- -->}  KoattyContext |
-|  [websocket?](./koatty_core.koattycontext.websocket.md) | [IWebSocket](./koatty_core.iwebsocket.md) | <i>(Optional)</i> websocket instance {<!-- -->\*<!-- -->}  KoattyContext |
+|  Property | Modifiers | Type | Description |
+|  --- | --- | --- | --- |
+|  [getMetaData](./koatty_core.koattycontext.getmetadata.md) |  | (key: string) =&gt; any\[\] | <p>context metadata</p><p> Context</p> |
+|  [protocol](./koatty_core.koattycontext.protocol.md) |  | string | <p>protocol</p><p> {<!-- -->string<!-- -->}  KoattyContext</p> |
+|  [rpc?](./koatty_core.koattycontext.rpc.md) |  | { call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; } | <p>_(Optional)_ gRPC ServerImpl</p><p> {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext</p> |
+|  [sendMetadata?](./koatty_core.koattycontext.sendmetadata.md) |  | (data: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void | <p>_(Optional)_ send metadata to http request header. then gRPC request to send metadata</p><p> KoattyContext</p> |
+|  [setMetaData](./koatty_core.koattycontext.setmetadata.md) |  | (key: string, value: unknown) =&gt; void |  |
+|  [status](./koatty_core.koattycontext.status.md) |  | number | <p>status</p><p> {<!-- -->number<!-- -->}  KoattyContext</p> |
+|  [websocket?](./koatty_core.koattycontext.websocket.md) |  | [IWebSocket](./koatty_core.iwebsocket.md) | <p>_(Optional)_ websocket instance</p><p> {<!-- -->\*<!-- -->}  KoattyContext</p> |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [throw(status, message)](./koatty_core.koattycontext.throw.md) | Replace ctx.throw {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context |
+|  [throw(status, message)](./koatty_core.koattycontext.throw.md) | <p>Replace ctx.throw</p><p> {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context</p> |
 |  [throw(message, code, status)](./koatty_core.koattycontext.throw_1.md) |  |
 

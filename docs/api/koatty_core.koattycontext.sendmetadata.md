@@ -8,7 +8,7 @@ send metadata to http request header. then gRPC request to send metadata
 
  KoattyContext
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 sendMetadata?: (data: KoattyMetadata) => void;

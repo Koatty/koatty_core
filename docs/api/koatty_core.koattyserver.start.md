@@ -4,7 +4,7 @@
 
 ## KoattyServer.Start property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly Start: (listenCallback: () => void) => unknownServer;

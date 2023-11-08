@@ -6,7 +6,7 @@
 
 Removes the given key and any associated values. Normalizes the key.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 remove(key: string): void;
@@ -18,7 +18,7 @@ remove(key: string): void;
 |  --- | --- | --- |
 |  key | string | The key whose values should be removed. |
 
-<b>Returns:</b>
+**Returns:**
 
 void
 

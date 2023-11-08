@@ -4,7 +4,7 @@
 
 ## KoattyRouter.SetRouter property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 SetRouter: (path: string, func: Function, method?: any) => void;

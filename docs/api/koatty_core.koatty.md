@@ -6,20 +6,20 @@
 
 Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 export declare class Koatty extends Koa implements Application 
 ```
-<b>Extends:</b> Koa
+**Extends:** Koa
 
-<b>Implements:</b> Application
+**Implements:** Application
 
 ## Constructors
 
 |  Constructor | Modifiers | Description |
 |  --- | --- | --- |
-|  [(constructor)(options)](./koatty_core.koatty._constructor_.md) |  | Creates an instance of Koatty. |
+|  [(constructor)(options)](./koatty_core.koatty._constructor_.md) | <code>protected</code> | Creates an instance of Koatty. |
 
 ## Properties
 
@@ -28,13 +28,13 @@ export declare class Koatty extends Koa implements Application
 |  [appDebug](./koatty_core.koatty.appdebug.md) |  | boolean |  |
 |  [appPath](./koatty_core.koatty.apppath.md) |  | string |  |
 |  [env](./koatty_core.koatty.env.md) |  | string |  |
+|  [koattyPath](./koatty_core.koatty.koattypath.md) |  | string |  |
 |  [logsPath](./koatty_core.koatty.logspath.md) |  | string |  |
 |  [name](./koatty_core.koatty.name.md) |  | string |  |
 |  [options](./koatty_core.koatty.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
 |  [rootPath](./koatty_core.koatty.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koatty.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
 |  [server](./koatty_core.koatty.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
-|  [thinkPath](./koatty_core.koatty.thinkpath.md) |  | string |  |
 |  [version](./koatty_core.koatty.version.md) |  | string |  |
 
 ## Methods

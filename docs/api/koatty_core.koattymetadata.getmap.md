@@ -6,14 +6,14 @@
 
 Gets a plain object mapping each key to the first value associated with it. This reflects the most common way that people will want to see metadata.  A key/value mapping of the metadata.
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 getMap(): {
         [key: string]: any;
     };
 ```
-<b>Returns:</b>
+**Returns:**
 
 { \[key: string\]: any; }
 

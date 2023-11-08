@@ -6,7 +6,7 @@
 
 Read app configuration
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 config(name: string, type?: string): any;
@@ -17,9 +17,9 @@ config(name: string, type?: string): any;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  name | string |  |
-|  type | string | <i>(Optional)</i>  Koatty |
+|  type | string | _(Optional)_  Koatty |
 
-<b>Returns:</b>
+**Returns:**
 
 any
 

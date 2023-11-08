@@ -9,28 +9,35 @@
 |  Class | Description |
 |  --- | --- |
 |  [Koatty](./koatty_core.koatty.md) | Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
-|  [KoattyMetadata](./koatty_core.koattymetadata.md) | KoattyMetadata  KoattyMetadata |
-|  [WsRequest](./koatty_core.wsrequest.md) | WsRequest WsRequest  {<!-- -->IncomingMessage<!-- -->} |
+|  [KoattyMetadata](./koatty_core.koattymetadata.md) | <p>KoattyMetadata</p><p>  KoattyMetadata</p> |
+|  [WsRequest](./koatty_core.wsrequest.md) | <p>WsRequest</p><p> WsRequest  {<!-- -->IncomingMessage<!-- -->}</p> |
+
+## Enumerations
+
+|  Enumeration | Description |
+|  --- | --- |
+|  [AppEvent](./koatty_core.appevent.md) | <p>app event</p><p>  AppEvent</p> |
 
 ## Functions
 
 |  Function | Description |
 |  --- | --- |
-|  [CreateContext(ctx, req, res)](./koatty_core.createcontext.md) | Create KoattyContext |
+|  [CreateContext(ctx, req, res)](./koatty_core.createcontext.md) | <p>Create KoattyContext</p> |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
-|  [InitOptions](./koatty_core.initoptions.md) | InitOptions InitOptions |
-|  [KoattyContext](./koatty_core.koattycontext.md) | Koatty Context.  KoattyContext  {<!-- -->Koa.Context<!-- -->} |
-|  [KoattyRouter](./koatty_core.koattyrouter.md) | Router interface  KoattyRouter |
-|  [KoattyServer](./koatty_core.koattyserver.md) | interface Server  KoattyServer |
+|  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
+|  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
+|  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
+|  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [EventHookFunc](./koatty_core.eventhookfunc.md) |  |
 |  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
 |  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |
 |  [IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md) |  |

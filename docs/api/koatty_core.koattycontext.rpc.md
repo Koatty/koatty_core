@@ -8,7 +8,7 @@ gRPC ServerImpl
 
  {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 rpc?: {

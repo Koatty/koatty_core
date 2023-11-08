@@ -6,7 +6,7 @@
 
 gRPC service register
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 readonly RegisterService?: (impl: any) => void;

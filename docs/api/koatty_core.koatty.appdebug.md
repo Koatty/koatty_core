@@ -4,7 +4,7 @@
 
 ## Koatty.appDebug property
 
-<b>Signature:</b>
+**Signature:**
 
 ```typescript
 appDebug: boolean;
