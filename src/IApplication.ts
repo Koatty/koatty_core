@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2023-10-28 11:37:15
+ * @LastEditTime: 2023-11-06 07:58:01
  */
 
 import { Koatty } from "./Application";
@@ -62,7 +62,7 @@ export interface KoattyRouter {
 }
 
 /**
- * AppEvent
+ * app event
  *
  * @export
  * @enum AppEvent
@@ -72,4 +72,8 @@ export const enum AppEvent {
   appReady = "appReady",
   appStart = "appStart",
   appStop = "appStop",
-} 
+}
+const AppEventArr = ["appBoot", "appReady", "appStart", "appStop"];
+
+// type EventHookFunc
+export type EventHookFunc = (app: Koatty) => Promise<any>;
