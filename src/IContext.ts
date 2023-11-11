@@ -1,9 +1,8 @@
-/*
- * @Description: 
- * @Usage: 
- * @Author: richen
- * @Date: 2021-11-23 11:40:15
- * @LastEditTime: 2023-02-26 22:04:43
+/**
+ * @ author: richen
+ * @ copyright: Copyright (c) - <richenlin(at)gmail.com>
+ * @ license: BSD (3-Clause)
+ * @ version: 2020-07-06 11:21:37
  */
 import Koa from "koa";
 import { WebSocket } from "ws";

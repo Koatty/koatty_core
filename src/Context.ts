@@ -1,9 +1,8 @@
-/*
- * @Description:
- * @Usage:
- * @Author: richen
- * @Date: 2021-07-09 11:34:49
- * @LastEditTime: 2023-02-26 22:13:54
+/**
+ * @ author: richen
+ * @ copyright: Copyright (c) - <richenlin(at)gmail.com>
+ * @ license: BSD (3-Clause)
+ * @ version: 2020-07-06 11:21:37
  */
 import { Helper } from "koatty_lib";
 import { KoattyMetadata } from "./Metadata";

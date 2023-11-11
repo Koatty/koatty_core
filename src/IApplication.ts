@@ -1,9 +1,8 @@
-/*
- * @Description: 
- * @Usage: 
- * @Author: richen
- * @Date: 2021-11-23 11:09:54
- * @LastEditTime: 2023-11-08 13:39:08
+/**
+ * @ author: richen
+ * @ copyright: Copyright (c) - <richenlin(at)gmail.com>
+ * @ license: BSD (3-Clause)
+ * @ version: 2020-07-06 11:21:37
  */
 
 import { Koatty } from "./Application";
