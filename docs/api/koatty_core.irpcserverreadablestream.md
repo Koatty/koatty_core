@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export declare type IRpcServerReadableStream<RequestType, ResponseType> = ServerReadableStream<RequestType, ResponseType>;
+export type IRpcServerReadableStream<RequestType, ResponseType> = ServerReadableStream<RequestType, ResponseType>;
 ```

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export declare type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;
+export type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;
 ```

@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export declare type IWebSocket = WebSocket;
+export type IWebSocket = WebSocket;
 ```

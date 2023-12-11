@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export declare type KoaContext = Koa.BaseContext & Koa.DefaultContext;
+export type KoaContext = Koa.BaseContext & Koa.DefaultContext;
 ```

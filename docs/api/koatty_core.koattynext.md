@@ -9,5 +9,5 @@ KoattyNext
 **Signature:**
 
 ```typescript
-export declare type KoattyNext = Koa.Next;
+export type KoattyNext = Koa.Next;
 ```

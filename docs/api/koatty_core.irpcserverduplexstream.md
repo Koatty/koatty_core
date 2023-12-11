@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export declare type IRpcServerDuplexStream<RequestType, ResponseType> = ServerDuplexStream<RequestType, ResponseType>;
+export type IRpcServerDuplexStream<RequestType, ResponseType> = ServerDuplexStream<RequestType, ResponseType>;
 ```
