@@ -4,8 +4,10 @@
 
 ## KoattyRouter.LoadRouter property
 
+load router list and register handler
+
 **Signature:**
 
 ```typescript
-LoadRouter: (list: any[]) => void;
+readonly LoadRouter: (app: Koatty, list: any[]) => Promise<void>;
 ```

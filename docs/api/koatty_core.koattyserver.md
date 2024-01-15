@@ -18,7 +18,6 @@ export interface KoattyServer
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [app](./koatty_core.koattyserver.app.md) |  | [Koatty](./koatty_core.koatty.md) |  |
 |  [options](./koatty_core.koattyserver.options.md) |  | any |  |
 |  [RegisterService?](./koatty_core.koattyserver.registerservice.md) | <code>readonly</code> | (impl: any) =&gt; void | _(Optional)_ gRPC service register |
 |  [server](./koatty_core.koattyserver.server.md) |  | unknownServer |  |

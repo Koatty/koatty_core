@@ -28,10 +28,12 @@
 
 |  Interface | Description |
 |  --- | --- |
+|  [Implementation](./koatty_core.implementation.md) | <p>Implementation</p><p>  Implementation</p> |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
 |  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
+|  [RouterImplementation](./koatty_core.routerimplementation.md) | <p>RouterImplementation</p><p>  RouterImplementation</p> |
 
 ## Variables
 

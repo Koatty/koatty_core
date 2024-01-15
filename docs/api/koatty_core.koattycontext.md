@@ -21,6 +21,8 @@ export interface KoattyContext extends AppContext
 |  --- | --- | --- | --- |
 |  [getMetaData](./koatty_core.koattycontext.getmetadata.md) |  | (key: string) =&gt; any\[\] | <p>context metadata</p><p> Context</p> |
 |  [protocol](./koatty_core.koattycontext.protocol.md) |  | string | <p>protocol</p><p> {<!-- -->string<!-- -->}  KoattyContext</p> |
+|  [requestBody?](./koatty_core.koattycontext.requestbody.md) |  | () =&gt; Promise&lt;unknown&gt; | _(Optional)_ Get parsed body(form variable and file object). |
+|  [requestParam?](./koatty_core.koattycontext.requestparam.md) |  | () =&gt; unknown | _(Optional)_ Get parsed query-string and path variable(koa ctx.query and ctx.params), and set as an object. |
 |  [rpc?](./koatty_core.koattycontext.rpc.md) |  | { call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; } | <p>_(Optional)_ gRPC ServerImpl</p><p> {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext</p> |
 |  [sendMetadata?](./koatty_core.koattycontext.sendmetadata.md) |  | (data: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void | <p>_(Optional)_ send metadata to http request header. then gRPC request to send metadata</p><p> KoattyContext</p> |
 |  [setMetaData](./koatty_core.koattycontext.setmetadata.md) |  | (key: string, value: unknown) =&gt; void |  |

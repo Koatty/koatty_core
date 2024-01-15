@@ -18,10 +18,9 @@ export interface KoattyRouter
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [app](./koatty_core.koattyrouter.app.md) |  | [Koatty](./koatty_core.koatty.md) |  |
-|  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) |  | () =&gt; any | _(Optional)_ |
-|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) |  | (list: any\[\]) =&gt; void |  |
-|  [options](./koatty_core.koattyrouter.options.md) |  | any |  |
-|  [router](./koatty_core.koattyrouter.router.md) |  | any |  |
-|  [SetRouter](./koatty_core.koattyrouter.setrouter.md) |  | (path: string, func: Function, method?: any) =&gt; void |  |
+|  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) | <code>readonly</code> | () =&gt; Map&lt;string, [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->&gt; | _(Optional)_ return router list |
+|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) | <code>readonly</code> | (app: [Koatty](./koatty_core.koatty.md)<!-- -->, list: any\[\]) =&gt; Promise&lt;void&gt; | load router list and register handler |
+|  [options](./koatty_core.koattyrouter.options.md) |  | any | router options |
+|  [router](./koatty_core.koattyrouter.router.md) |  | any | KoaRouter or custom router |
+|  [SetRouter](./koatty_core.koattyrouter.setrouter.md) | <code>readonly</code> | (name: string, impl?: [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->) =&gt; void | set router map |
 

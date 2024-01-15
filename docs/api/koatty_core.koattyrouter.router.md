@@ -4,6 +4,8 @@
 
 ## KoattyRouter.router property
 
+KoaRouter or custom router
+
 **Signature:**
 
 ```typescript

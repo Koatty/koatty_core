@@ -4,8 +4,10 @@
 
 ## KoattyRouter.SetRouter property
 
+set router map
+
 **Signature:**
 
 ```typescript
-SetRouter: (path: string, func: Function, method?: any) => void;
+readonly SetRouter: (name: string, impl?: RouterImplementation) => void;
 ```

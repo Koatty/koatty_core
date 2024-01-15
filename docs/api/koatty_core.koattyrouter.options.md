@@ -4,6 +4,8 @@
 
 ## KoattyRouter.options property
 
+router options
+
 **Signature:**
 
 ```typescript

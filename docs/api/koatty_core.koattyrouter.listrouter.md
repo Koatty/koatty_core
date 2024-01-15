@@ -4,8 +4,10 @@
 
 ## KoattyRouter.ListRouter property
 
+return router list
+
 **Signature:**
 
 ```typescript
-ListRouter?: () => any;
+readonly ListRouter?: () => Map<string, RouterImplementation>;
 ```
