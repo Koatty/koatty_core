@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-0](https://github.com/koatty/koatty_core/compare/v1.8.6...v1.9.0-0) (2024-01-15)
+
+
+### Features
+
+* ctx增加requestParam、requestBody ([165e2de](https://github.com/koatty/koatty_core/commit/165e2de87a72e7d7bdb9b918883f107ed26ba03d))
+
+
+### Bug Fixes
+
+* 修改路由定义 ([7a3b0a7](https://github.com/koatty/koatty_core/commit/7a3b0a76d43b9d9a18db286f4ae3c9a47df4561f))
+
 ### [1.8.6](https://github.com/koatty/koatty_core/compare/v1.8.5...v1.8.6) (2024-01-04)
 
 ### [1.8.5](https://github.com/koatty/koatty_core/compare/v1.8.4...v1.8.5) (2024-01-04)
