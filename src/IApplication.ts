@@ -5,7 +5,9 @@
  * @ version: 2020-07-06 11:21:37
  */
 
+import { ServiceDefinition } from "@grpc/grpc-js";
 import { Koatty } from "./Application";
+import { Implementation } from "./IContext";
 
 /**
  * InitOptions
@@ -30,7 +32,6 @@ type unknownServer = unknown;
  * @interface KoattyServer
  */
 export interface KoattyServer {
-  app: Koatty;
   options: any;
   server: unknownServer;
   status: number;
@@ -45,19 +46,54 @@ export interface KoattyServer {
 }
 
 /**
+ * RouterImplementation
+ *
+ * @export
+ * @interface RouterImplementation
+ */
+export interface RouterImplementation {
+  path?: string;
+  service?: ServiceDefinition;
+  implementation?: Function | Implementation;
+}
+
+/**
  * Router interface
  *
  * @export
  * @interface KoattyRouter
  */
 export interface KoattyRouter {
-  app: Koatty;
+  /**
+   * router options
+   */
   options: any;
+  /**
+   * KoaRouter or custom router
+   */
   router: any;
 
-  SetRouter: (path: string, func: Function, method?: any) => void;
-  LoadRouter: (list: any[]) => void;
-  ListRouter?: () => any;
+  /**
+   * set router map
+   * @param name 
+   * @param impl 
+   * @returns 
+   */
+  readonly SetRouter: (name: string, impl?: RouterImplementation) => void;
+
+  /**
+   * load router list and register handler
+   * @param app 
+   * @param list 
+   * @returns 
+   */
+  readonly LoadRouter: (app: Koatty, list: any[]) => Promise<void>;
+
+  /**
+   * return router list
+   * @returns 
+   */
+  readonly ListRouter?: () => Map<string, RouterImplementation>;
 }
 
 /**
