@@ -7,7 +7,10 @@
 import Koa from "koa";
 import { WebSocket } from "ws";
 import { Context } from "koatty_container";
-import { ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream } from "@grpc/grpc-js";
+import {
+  ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
+  UntypedHandleCall
+} from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { KoattyMetadata } from "./Metadata";
 import { IncomingMessage } from "http";
@@ -44,6 +47,16 @@ export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<
 
 // redefine ServerCallback
 export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>
+
+/**
+ * Implementation
+ *
+ * @export
+ * @interface Implementation
+ */
+export interface Implementation {
+  [methodName: string]: UntypedHandleCall;
+}
 
 // redefine WebSocket
 export type IWebSocket = WebSocket;
@@ -124,4 +137,17 @@ export interface KoattyContext extends AppContext {
   */
   getMetaData: (key: string) => any[];
   setMetaData: (key: string, value: unknown) => void;
+
+  /**
+   * Get parsed query-string and path variable(koa ctx.query and ctx.params),
+   * and set as an object.
+   * @returns unknown
+   */
+  requestParam?: () => unknown;
+
+  /**
+   * Get parsed body(form variable and file object).
+   * @returns Promise<unknown> ex: {post: {...}, file: {...}}
+   */
+  requestBody?: () => Promise<unknown>;
 }
