@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type IHttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
+export type IHttpImplementation = (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
 ```
 **References:** [KoattyContext](./koatty_core.koattycontext.md)<!-- -->, [KoattyNext](./koatty_core.koattynext.md)
 

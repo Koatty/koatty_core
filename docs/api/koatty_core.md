@@ -55,6 +55,7 @@
 |  [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md) |  |
 |  [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md) |  |
 |  [IWebSocket](./koatty_core.iwebsocket.md) |  |
+|  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
 |  [KoaContext](./koatty_core.koacontext.md) |  |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
 
