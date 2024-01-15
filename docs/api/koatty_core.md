@@ -46,7 +46,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [EventHookFunc](./koatty_core.eventhookfunc.md) |  |
-|  [HttpImplementation](./koatty_core.httpimplementation.md) |  |
+|  [IHttpImplementation](./koatty_core.ihttpimplementation.md) |  |
 |  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
 |  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |
 |  [IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md) |  |

@@ -56,7 +56,10 @@ export interface IRpcImplementation {
 }
 
 // HttpImplementation
-export type IHttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
+export type IHttpImplementation = (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
+
+// IWsImplementation
+export type IWsImplementation = (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
 
 /**
  * RouterImplementation
@@ -66,8 +69,9 @@ export type IHttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Prom
  */
 export interface RouterImplementation {
   path?: string;
+  method?: string;
   service?: ServiceDefinition;
-  implementation?: Function | IRpcImplementation | IHttpImplementation;
+  implementation?: IHttpImplementation | IRpcImplementation | IWsImplementation;
 }
 
 /**
