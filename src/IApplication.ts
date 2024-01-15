@@ -5,9 +5,9 @@
  * @ version: 2020-07-06 11:21:37
  */
 
-import { ServiceDefinition } from "@grpc/grpc-js";
+import { ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
 import { Koatty } from "./Application";
-import { IRpcImplementation, KoattyContext, KoattyNext } from "./IContext";
+import { KoattyContext, KoattyNext } from "./IContext";
 
 /**
  * InitOptions
@@ -46,6 +46,19 @@ export interface KoattyServer {
 }
 
 /**
+ * gRPC Implementation
+ *
+ * @export
+ * @interface IRpcImplementation
+ */
+export interface IRpcImplementation {
+  [methodName: string]: UntypedHandleCall;
+}
+
+// HttpImplementation
+export type IHttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
+
+/**
  * RouterImplementation
  *
  * @export
@@ -54,11 +67,8 @@ export interface KoattyServer {
 export interface RouterImplementation {
   path?: string;
   service?: ServiceDefinition;
-  implementation?: Function | IRpcImplementation | HttpImplementation;
+  implementation?: Function | IRpcImplementation | IHttpImplementation;
 }
-
-// HttpImplementation
-export type HttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
 
 /**
  * Router interface

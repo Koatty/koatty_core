@@ -28,8 +28,8 @@
 
 |  Interface | Description |
 |  --- | --- |
-|  [Implementation](./koatty_core.implementation.md) | <p>Implementation</p><p>  Implementation</p> |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
+|  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
 |  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
@@ -46,6 +46,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [EventHookFunc](./koatty_core.eventhookfunc.md) |  |
+|  [HttpImplementation](./koatty_core.httpimplementation.md) |  |
 |  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
 |  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |
 |  [IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md) |  |

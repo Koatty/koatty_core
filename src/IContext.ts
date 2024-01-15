@@ -9,7 +9,6 @@ import { WebSocket } from "ws";
 import { Context } from "koatty_container";
 import {
   ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
-  UntypedHandleCall
 } from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { KoattyMetadata } from "./Metadata";
@@ -46,17 +45,7 @@ export type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<Requ
 export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
 
 // redefine ServerCallback
-export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>
-
-/**
- * gRPC Implementation
- *
- * @export
- * @interface IRpcImplementation
- */
-export interface IRpcImplementation {
-  [methodName: string]: UntypedHandleCall;
-}
+export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>;
 
 // redefine WebSocket
 export type IWebSocket = WebSocket;

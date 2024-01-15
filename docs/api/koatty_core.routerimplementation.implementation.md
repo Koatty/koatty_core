@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-implementation?: Function | Implementation;
+implementation?: Function | IRpcImplementation | HttpImplementation;
 ```

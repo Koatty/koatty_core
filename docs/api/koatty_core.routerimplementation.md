@@ -18,7 +18,7 @@ export interface RouterImplementation
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [implementation?](./koatty_core.routerimplementation.implementation.md) |  | Function \| [Implementation](./koatty_core.implementation.md) | _(Optional)_ |
+|  [implementation?](./koatty_core.routerimplementation.implementation.md) |  | Function \| [IRpcImplementation](./koatty_core.irpcimplementation.md) \| [HttpImplementation](./koatty_core.httpimplementation.md) | _(Optional)_ |
 |  [path?](./koatty_core.routerimplementation.path.md) |  | string | _(Optional)_ |
 |  [service?](./koatty_core.routerimplementation.service.md) |  | ServiceDefinition | _(Optional)_ |
 
