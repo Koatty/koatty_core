@@ -7,7 +7,7 @@
 
 import { ServiceDefinition } from "@grpc/grpc-js";
 import { Koatty } from "./Application";
-import { Implementation } from "./IContext";
+import { IRpcImplementation, KoattyContext, KoattyNext } from "./IContext";
 
 /**
  * InitOptions
@@ -54,8 +54,11 @@ export interface KoattyServer {
 export interface RouterImplementation {
   path?: string;
   service?: ServiceDefinition;
-  implementation?: Function | Implementation;
+  implementation?: Function | IRpcImplementation | HttpImplementation;
 }
+
+// HttpImplementation
+export type HttpImplementation = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
 
 /**
  * Router interface

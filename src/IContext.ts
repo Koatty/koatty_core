@@ -49,12 +49,12 @@ export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<
 export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>
 
 /**
- * Implementation
+ * gRPC Implementation
  *
  * @export
- * @interface Implementation
+ * @interface IRpcImplementation
  */
-export interface Implementation {
+export interface IRpcImplementation {
   [methodName: string]: UntypedHandleCall;
 }
 
