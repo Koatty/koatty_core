@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-3](https://github.com/koatty/koatty_core/compare/v1.9.0-2...v1.9.0-3) (2024-01-15)
+
+
+### Bug Fixes
+
+* IWsImplementation ([bb3a875](https://github.com/koatty/koatty_core/commit/bb3a8756ef12ea37919dbad949fc5154a03b27d3))
+
 ## [1.9.0-2](https://github.com/koatty/koatty_core/compare/v1.9.0-1...v1.9.0-2) (2024-01-15)
 
 
