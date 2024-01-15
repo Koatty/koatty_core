@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0-1](https://github.com/koatty/koatty_core/compare/v1.9.0-0...v1.9.0-1) (2024-01-15)
+
+
+### Bug Fixes
+
+* HttpImplementation ([39af80c](https://github.com/koatty/koatty_core/commit/39af80c2fcd8f122e05c20210b37818ec32a043e))
+
 ## [1.9.0-0](https://github.com/koatty/koatty_core/compare/v1.8.6...v1.9.0-0) (2024-01-15)
 
 
