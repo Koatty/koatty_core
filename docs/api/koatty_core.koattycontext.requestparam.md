@@ -9,5 +9,5 @@ Get parsed query-string and path variable(koa ctx.query and ctx.params), and set
 **Signature:**
 
 ```typescript
-requestParam?: () => unknown;
+readonly requestParam?: () => unknown;
 ```

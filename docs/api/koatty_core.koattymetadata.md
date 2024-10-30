@@ -18,7 +18,7 @@ export declare class KoattyMetadata
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [internalRepr](./koatty_core.koattymetadata.internalrepr.md) | <code>protected</code> | Map&lt;string, any\[\]&gt; |  |
+|  [internalRepo](./koatty_core.koattymetadata.internalrepo.md) | <code>protected</code> | Map&lt;string, any\[\]&gt; |  |
 
 ## Methods
 

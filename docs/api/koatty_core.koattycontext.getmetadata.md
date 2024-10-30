@@ -4,12 +4,12 @@
 
 ## KoattyContext.getMetaData property
 
-context metadata
+context metadata operation
 
  Context
 
 **Signature:**
 
 ```typescript
-getMetaData: (key: string) => any[];
+readonly getMetaData: (key: string) => any[];
 ```

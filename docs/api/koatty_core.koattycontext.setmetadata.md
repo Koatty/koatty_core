@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-setMetaData: (key: string, value: unknown) => void;
+readonly setMetaData: (key: string, value: unknown) => void;
 ```

@@ -9,5 +9,5 @@ Get parsed body(form variable and file object).
 **Signature:**
 
 ```typescript
-requestBody?: () => Promise<unknown>;
+readonly requestBody?: () => Promise<unknown>;
 ```
