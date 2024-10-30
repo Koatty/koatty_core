@@ -4,15 +4,15 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import Koa from "koa";
-import { WebSocket } from "ws";
-import { Context } from "koatty_container";
 import {
   ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
 } from "@grpc/grpc-js";
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
-import { KoattyMetadata } from "./Metadata";
 import { IncomingMessage } from "http";
+import Koa from "koa";
+import { Context } from "koatty_container";
+import { WebSocket } from "ws";
+import { KoattyMetadata } from "./Metadata";
 
 // KoaContext
 export type KoaContext = Koa.BaseContext & Koa.DefaultContext;
@@ -103,12 +103,20 @@ export interface KoattyContext extends AppContext {
   websocket?: IWebSocket; // ws.WebSocket
 
   /**
+  * context metadata operation
+  * 
+  * @memberof Context
+  */
+  readonly getMetaData: (key: string) => any[];
+  readonly setMetaData: (key: string, value: unknown) => void;
+
+  /**
    * send metadata to http request header. 
    * then gRPC request to send metadata
    *
    * @memberof KoattyContext
    */
-  sendMetadata?: (data: KoattyMetadata) => void;
+  readonly sendMetadata?: (data: KoattyMetadata) => void;
 
   /**
    * Replace ctx.throw
@@ -119,24 +127,17 @@ export interface KoattyContext extends AppContext {
    */
   throw(status: number, message?: string): never;
   throw(message: string, code?: number, status?: any): never;
-  /**
-  * context metadata
-  * 
-  * @memberof Context
-  */
-  getMetaData: (key: string) => any[];
-  setMetaData: (key: string, value: unknown) => void;
 
   /**
    * Get parsed query-string and path variable(koa ctx.query and ctx.params),
    * and set as an object.
    * @returns unknown
    */
-  requestParam?: () => unknown;
+  readonly requestParam?: () => unknown;
 
   /**
    * Get parsed body(form variable and file object).
    * @returns Promise<unknown> ex: {post: {...}, file: {...}}
    */
-  requestBody?: () => Promise<unknown>;
+  readonly requestBody?: () => Promise<unknown>;
 }

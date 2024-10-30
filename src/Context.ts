@@ -4,10 +4,10 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import { Helper } from "koatty_lib";
-import { KoattyMetadata } from "./Metadata";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
+import { Helper } from "koatty_lib";
 import { IRpcServerCallback, IRpcServerUnaryCall, IWebSocket, KoaContext, KoattyContext, WsRequest } from "./IContext";
+import { KoattyMetadata } from "./Metadata";
 
 
 /**
@@ -21,15 +21,13 @@ import { IRpcServerCallback, IRpcServerUnaryCall, IWebSocket, KoaContext, Koatty
  */
 export function CreateContext(ctx: KoaContext, req: any, res: any): KoattyContext {
   const context = initBaseContext(ctx);
-  switch (ctx.protocol) {
-    case "ws":
-    case "wss":
-      return createWsContext(context, req, res);
-    case "grpc":
-      return createGrpcContext(context, req, res);
-    default:
-      return context;
+  if (ctx.protocol === "ws" || ctx.protocol === "wss") {
+    return createWsContext(context, req, res);
   }
+  if (ctx.protocol === "grpc") {
+    return createGrpcContext(context, req, res);
+  }
+  return context;
 }
 
 /**
@@ -43,38 +41,24 @@ export function CreateContext(ctx: KoaContext, req: any, res: any): KoattyContex
  */
 function createGrpcContext(context: KoattyContext, call: IRpcServerUnaryCall<any, any>, callback: IRpcServerCallback<any>): KoattyContext {
   context.status = 200;
-  // 
-  Helper.define(context, "rpc", {
-    call,
-    callback
-  });
+  Helper.define(context, "rpc", { call, callback });
   // metadata
-  context.metadata = KoattyMetadata.from(call.metadata.toJSON());
+  Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
 
   if (call) {
-    let handler: any = {};
-    if (Object.hasOwnProperty.call(call, "handler")) {
-      handler = Reflect.get(call, "handler") || {};
-    } else if (Object.hasOwnProperty.call(call, "call")) {
-      const called = Reflect.get(call, "call") || {};
-      handler = called.handler || {};
-    }
+    const handler = Reflect.get(call, "handler") || Reflect.get(Reflect.get(call, "call"), "handler") || {};
     const cmd = handler.path || '';
     // originalPath
     context.setMetaData("originalPath", cmd);
     // payload
     context.setMetaData("_body", call.request || {});
     // sendMetadata
-    context.sendMetadata = function (data: KoattyMetadata) {
+    Helper.define(context, "sendMetadata", (data: KoattyMetadata) => {
       const m = data.getMap();
       const metadata = call.metadata.clone();
-      for (const k in m) {
-        if (Object.prototype.hasOwnProperty.call(m, k)) {
-          metadata.add(k, m[k]);
-        }
-      }
+      Object.keys(m).forEach(k => metadata.add(k, m[k]));
       call.sendMetadata(metadata);
-    };
+    });
   }
 
   return context;
@@ -93,7 +77,6 @@ function createWsContext(context: KoattyContext, req: WsRequest, socket: IWebSoc
   context.status = 200;
   Helper.define(context, "websocket", socket);
   context.setMetaData("_body", (req.data ?? "").toString());
-
   return context;
 }
 
@@ -107,37 +90,27 @@ function createWsContext(context: KoattyContext, req: WsRequest, socket: IWebSoc
 function initBaseContext(ctx: KoaContext): KoattyContext {
   const context: KoattyContext = Object.create(ctx);
   // throw
-  context.throw = function (statusOrMessage: HttpStatusCode | string,
+  Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
     codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
-    if (typeof statusOrMessage !== "string") {
-      if (HttpStatusCodeMap.has(statusOrMessage)) {
-        status = statusOrMessage;
-        statusOrMessage = HttpStatusCodeMap.get(statusOrMessage);
-      }
+    if (typeof statusOrMessage !== "string" && HttpStatusCodeMap.has(statusOrMessage)) {
+      status = statusOrMessage;
+      statusOrMessage = HttpStatusCodeMap.get(statusOrMessage);
     }
     if (typeof codeOrMessage === "string") {
       statusOrMessage = codeOrMessage;
       codeOrMessage = 1;
     }
     throw new Exception(<string>statusOrMessage, codeOrMessage, status);
-  };
+  });
 
   // metadata
-  context.metadata = new KoattyMetadata();
+  Helper.define(context, "metadata", new KoattyMetadata(), true);
   // getMetaData
-  context.getMetaData = function (key: string) {
-    return context.metadata.get(key);
-  };
-
+  Helper.define(context, "getMetaData", (key: string) => context.metadata.get(key));
   // setMetaData
-  context.setMetaData = function (key: string, value: any) {
-    context.metadata.set(key, value);
-  };
-
+  Helper.define(context, "setMetaData", (key: string, value: any) => context.metadata.set(key, value));
   // sendMetadata
-  context.sendMetadata = function (data: KoattyMetadata) {
-    context.set(data.toJSON());
-  };
+  Helper.define(context, "sendMetadata", (data: KoattyMetadata) => context.set(data.toJSON()), true);
 
   return context;
 }

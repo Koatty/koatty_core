@@ -4,23 +4,23 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import Koa from "koa";
 import EventEmitter from "events";
-import { Helper } from "koatty_lib";
+import { ServerResponse } from "http";
+import Koa from "koa";
 import koaCompose from "koa-compose";
-import onFinished from "on-finished";
-import { DefaultLogger as Logger } from "koatty_logger";
-import { isPrevent } from "koatty_exception";
-import { CreateContext } from "./Context";
-import { KoattyMetadata } from "./Metadata";
-import { KoattyContext } from "./IContext";
 import { Application } from "koatty_container";
+import { isPrevent } from "koatty_exception";
+import { Helper } from "koatty_lib";
+import { DefaultLogger as Logger } from "koatty_logger";
+import onFinished from "on-finished";
+import { CreateContext } from "./Context";
 import {
   AppEvent,
   InitOptions,
   KoattyRouter, KoattyServer
 } from "./IApplication";
-import { ServerResponse } from "http";
+import { KoattyContext } from "./IContext";
+import { KoattyMetadata } from "./Metadata";
 
 /**
  * Application 
@@ -38,7 +38,7 @@ export class Koatty extends Koa implements Application {
   public version: string;
   // app options
   public options: InitOptions;
-  public server: KoattyServer;
+  public server: KoattyServer | KoattyServer[];
   public router: KoattyRouter;
   // env var
   public appPath: string;
@@ -156,21 +156,11 @@ export class Koatty extends Koa implements Application {
    */
   public config(name: string, type = 'config') {
     try {
-      const data = this.getMetaData('_configs') || [];
-      const caches = data[0] || {};
-      // tslint:disable-next-line: no-unused-expression
-      caches[type] ?? (caches[type] = {});
-      if (name === undefined) {
-        return caches[type];
-      }
+      const caches = this.getMetaData('_configs')[0] || {};
+      if (!caches[type]) caches[type] = {};
+      if (name === undefined) return caches[type];
       if (Helper.isString(name)) {
-        // name不含. 一级
-        if (name.indexOf('.') === -1) {
-          return caches[type][name];
-        }  // name包含. 二级
-        const keys = name.split('.');
-        const value = caches[type][keys[0]] ?? {};
-        return value[keys[1]];
+        return name.indexOf('.') === -1 ? caches[type][name] : caches[type][name.split('.')[0]]?.[name.split('.')[1]];
       }
       return caches[type][name];
     } catch (err) {
@@ -189,18 +179,9 @@ export class Koatty extends Koa implements Application {
    * @memberof Koatty
    */
   public createContext(req: any, res: any, protocol?: string): KoattyContext {
-    let resp;
-    // protocol
-    protocol = protocol ?? 'http';
-
-    if (['ws', 'wss', 'grpc'].includes(protocol)) {
-      resp = new ServerResponse(req);
-    } else {
-      resp = res;
-    }
+    const resp = ['ws', 'wss', 'grpc'].includes(protocol ?? 'http') ? new ServerResponse(req) : res;
     // create context
     const context = super.createContext(req, resp);
-
     Helper.define(context, "protocol", protocol);
     return CreateContext(context, req, res);
   }
@@ -217,10 +198,9 @@ export class Koatty extends Koa implements Application {
       // Emit app started event
       Logger.Log('Koatty', '', 'Emit App Start ...');
       asyncEvent(this, AppEvent.appStart);
-      // 
       listenCallback(this);
     };
-    return this.server.Start(callback);
+    return (<KoattyServer>this.server).Start(callback);
   }
 
   /**
@@ -258,8 +238,7 @@ export class Koatty extends Koa implements Application {
   ) {
     const res = ctx.res;
     res.statusCode = 404;
-    const onerror = (err: Error) => ctx.onerror(err);
-    onFinished(res, onerror);
+    onFinished(ctx.res, (err: Error) => ctx.onerror(err));
     return fnMiddleware(ctx);
   }
 
@@ -272,37 +251,24 @@ export class Koatty extends Koa implements Application {
     // koa error
     this.removeAllListeners('error');
     this.on('error', (err: Error) => {
-      if (!isPrevent(err)) {
-        Logger.Error(err);
-      }
-      return;
+      if (!isPrevent(err)) Logger.Error(err);
     });
     // warning
     process.removeAllListeners('warning');
-    process.on('warning', (warning) => {
-      Logger.Warn(warning);
-      return;
-    });
-
+    process.on('warning', Logger.Warn);
     // promise reject error
     process.removeAllListeners('unhandledRejection');
     process.on('unhandledRejection', (reason: Error) => {
-      if (!isPrevent(reason)) {
-        Logger.Error(reason);
-      }
-      return;
+      if (!isPrevent(reason)) Logger.Error(reason);
     });
     // uncaught exception
     process.removeAllListeners('uncaughtException');
     process.on('uncaughtException', (err) => {
-      if (err.message.indexOf('EADDRINUSE') > -1) {
+      if (err.message.includes('EADDRINUSE')) {
         Logger.Error(Helper.toString(err));
         process.exit(-1);
       }
-      if (!isPrevent(err)) {
-        Logger.Error(err);
-      }
-      return;
+      if (!isPrevent(err)) Logger.Error(err);
     });
   }
 }
@@ -332,7 +298,6 @@ export class Koatty extends Koa implements Application {
 // });
 
 
-
 /**
  * Convert express middleware for koa
  *
@@ -348,11 +313,8 @@ function parseExp(fn: Function) {
     }
     return new Promise((resolve, reject) => {
       fn(ctx.req, ctx.res, (err: Error) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(next());
-        }
+        if (err) return reject(err);
+        resolve(next());
       });
     });
   };
@@ -365,12 +327,9 @@ function parseExp(fn: Function) {
  * @return {*}
  */
 async function asyncEvent(event: EventEmitter, eventName: string) {
-  const ls: any[] = event.listeners(eventName);
-  // eslint-disable-next-line no-restricted-syntax
-  for await (const func of ls) {
-    if (Helper.isFunction(func)) {
-      func();
-    }
+  const listeners = event.listeners(eventName);
+  for (const func of listeners) {
+    if (Helper.isFunction(func)) await func();
   }
   return event.removeAllListeners(eventName);
 }
