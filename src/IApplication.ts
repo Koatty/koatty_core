@@ -6,7 +6,7 @@
  */
 
 import { ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
-import { Koatty } from "./Application";
+import Koa from "koa";
 import { KoattyContext, KoattyNext } from "./IContext";
 
 /**
@@ -20,8 +20,88 @@ export interface InitOptions {
   appPath?: string;
   appDebug?: boolean;
   rootPath?: string;
+  // koatty framework path
   koattyPath?: string;
 }
+
+/**
+ * Koatty Application Object
+ */
+export interface KoattyApplication extends Koa {
+  env: string;
+  name: string;
+  version: string;
+
+  options: InitOptions;
+
+  server: KoattyServer | KoattyServer[];
+  router: KoattyRouter;
+
+  appPath: string;
+  rootPath: string;
+  koattyPath: string;
+  logsPath: string;
+
+  appDebug: boolean;
+
+  context: KoattyContext;
+
+  /**
+  * Application metadata operation
+  * 
+  * @memberof Context
+  */
+  readonly getMetaData: (key: string) => any[];
+  readonly setMetaData: (key: string, value: unknown) => void;
+
+  /**
+   * Use middleware
+   * @param fn 
+   * @returns 
+   */
+  readonly use: (fn: Function) => any;
+
+  /**
+   * Use the given Express middleware
+   * @param fn 
+   * @returns 
+   */
+  readonly useExp: (fn: Function) => any;
+
+  /**
+   * Read app configuration
+   * @param name 
+   * @param type 
+   * @returns 
+   */
+  readonly config: (name: string, type?: string) => any;
+
+  /**
+   * Create context
+   * @param req 
+   * @param res 
+   * @param protocol 
+   * @returns 
+   */
+  readonly createContext: (req: any, res: any, protocol?: string) => KoattyContext;
+
+  /**
+   * Listening and start server
+   * @param listenCallback 
+   * @returns 
+   */
+  readonly listen: (listenCallback?: any) => any;
+
+  /**
+   * 
+   * @param protocol 
+   * @param reqHandler 
+   * @returns 
+   */
+  readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => { (req: unknown, res: unknown): Promise<any> };
+
+}
+
 
 type unknownServer = unknown;
 
@@ -104,7 +184,7 @@ export interface KoattyRouter {
    * @param list 
    * @returns 
    */
-  readonly LoadRouter: (app: Koatty, list: any[]) => Promise<void>;
+  readonly LoadRouter: (app: KoattyApplication, list: any[]) => Promise<void>;
 
   /**
    * return router list
@@ -128,4 +208,4 @@ export const enum AppEvent {
 export const AppEventArr = ["appBoot", "appReady", "appStart", "appStop"];
 
 // type EventHookFunc
-export type EventHookFunc = (app: Koatty) => Promise<any>;
+export type EventHookFunc = (app: KoattyApplication) => Promise<any>;

@@ -10,12 +10,11 @@ import {
 import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
 import { IncomingMessage } from "http";
 import Koa from "koa";
-import { Context } from "koatty_container";
 import { WebSocket } from "ws";
 import { KoattyMetadata } from "./Metadata";
 
 // KoaContext
-export type KoaContext = Koa.BaseContext & Koa.DefaultContext;
+export type KoaContext = Koa.ParameterizedContext;
 /**
  * KoattyNext
  */
@@ -51,18 +50,13 @@ export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>;
 export type IWebSocket = WebSocket;
 
 /**
- * AppContext
- */
-type AppContext = Koa.Context & Context;
-
-/**
  * Koatty Context.
  *
  * @export
  * @interface KoattyContext
  * @extends {Koa.Context}
  */
-export interface KoattyContext extends AppContext {
+export interface KoattyContext extends KoaContext {
 
   /**
    * status

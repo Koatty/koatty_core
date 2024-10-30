@@ -11,16 +11,16 @@ import { KoattyMetadata } from "./Metadata";
 
 
 /**
- *  Create KoattyContext
- *
- * @export
- * @param {KoaContext} ctx
- * @param {*} req
- * @param {*} res
- * @returns {*}  {KoattyContext}
+ * Create KoattyContext
+ * @param ctx  koa context
+ * @param protocol server protocol
+ * @param req  request 
+ * @param res  response
+ * @returns 
  */
-export function CreateContext(ctx: KoaContext, req: any, res: any): KoattyContext {
+export function createKoattyContext(ctx: KoaContext, protocol: string, req: any, res: any): KoattyContext {
   const context = initBaseContext(ctx);
+  Helper.define(context, "protocol", protocol);
   if (ctx.protocol === "ws" || ctx.protocol === "wss") {
     return createWsContext(context, req, res);
   }

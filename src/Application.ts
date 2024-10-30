@@ -8,15 +8,15 @@ import EventEmitter from "events";
 import { ServerResponse } from "http";
 import Koa from "koa";
 import koaCompose from "koa-compose";
-import { Application } from "koatty_container";
 import { isPrevent } from "koatty_exception";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
 import onFinished from "on-finished";
-import { CreateContext } from "./Context";
+import { createKoattyContext } from "./Context";
 import {
   AppEvent,
   InitOptions,
+  KoattyApplication,
   KoattyRouter, KoattyServer
 } from "./IApplication";
 import { KoattyContext } from "./IContext";
@@ -29,7 +29,7 @@ import { KoattyMetadata } from "./Metadata";
  * @extends {Koa}
  * @implements {BaseApp}
  */
-export class Koatty extends Koa implements Application {
+export class Koatty extends Koa implements KoattyApplication {
   // runtime env mode
   public env: string;
   // app name
@@ -43,10 +43,12 @@ export class Koatty extends Koa implements Application {
   // env var
   public appPath: string;
   public rootPath: string;
+  // koatty framework path
   public koattyPath: string;
   public logsPath: string;
   public appDebug: boolean;
 
+  public context: KoattyContext;
   private metadata: KoattyMetadata;
 
   /**
@@ -170,7 +172,7 @@ export class Koatty extends Koa implements Application {
   }
 
   /**
-   * Create Context
+   * Create Context for every request 
    *
    * @param {*} req
    * @param {*} res
@@ -182,8 +184,8 @@ export class Koatty extends Koa implements Application {
     const resp = ['ws', 'wss', 'grpc'].includes(protocol ?? 'http') ? new ServerResponse(req) : res;
     // create context
     const context = super.createContext(req, resp);
-    Helper.define(context, "protocol", protocol);
-    return CreateContext(context, req, res);
+    Helper.define(context, "app", this);
+    return createKoattyContext(context, protocol, req, res);
   }
 
   /**
