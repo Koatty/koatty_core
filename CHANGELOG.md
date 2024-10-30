@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-1](https://github.com/koatty/koatty_core/compare/v1.10.0-0...v1.10.0-1) (2024-10-30)
+
+
+### Refactor
+
+* 优化ctx创建，更加贴合koa的执行逻辑 ([6acfecf](https://github.com/koatty/koatty_core/commit/6acfecf2728428dbe39bc00c1a38fdccda0d52f7))
+
 ## [1.10.0-0](https://github.com/koatty/koatty_core/compare/v1.9.0...v1.10.0-0) (2024-10-30)
 
 
