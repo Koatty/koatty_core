@@ -4,7 +4,7 @@
 
 ## Koatty.createContext() method
 
-Create Context
+Create Context for every request
 
 **Signature:**
 

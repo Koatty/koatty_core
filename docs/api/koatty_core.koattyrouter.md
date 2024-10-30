@@ -19,7 +19,7 @@ export interface KoattyRouter
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
 |  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) | <code>readonly</code> | () =&gt; Map&lt;string, [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->&gt; | _(Optional)_ return router list |
-|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) | <code>readonly</code> | (app: [Koatty](./koatty_core.koatty.md)<!-- -->, list: any\[\]) =&gt; Promise&lt;void&gt; | load router list and register handler |
+|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) | <code>readonly</code> | (app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->, list: any\[\]) =&gt; Promise&lt;void&gt; | load router list and register handler |
 |  [options](./koatty_core.koattyrouter.options.md) |  | any | router options |
 |  [router](./koatty_core.koattyrouter.router.md) |  | any | KoaRouter or custom router |
 |  [SetRouter](./koatty_core.koattyrouter.setrouter.md) | <code>readonly</code> | (name: string, impl?: [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->) =&gt; void | set router map |

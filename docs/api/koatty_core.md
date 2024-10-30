@@ -22,7 +22,7 @@
 
 |  Function | Description |
 |  --- | --- |
-|  [CreateContext(ctx, req, res)](./koatty_core.createcontext.md) | <p>Create KoattyContext</p> |
+|  [createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md) | Create KoattyContext |
 
 ## Interfaces
 
@@ -30,6 +30,7 @@
 |  --- | --- |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
 |  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
+|  [KoattyApplication](./koatty_core.koattyapplication.md) | Koatty Application Object |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
 |  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |

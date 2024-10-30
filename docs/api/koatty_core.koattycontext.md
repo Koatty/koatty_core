@@ -11,9 +11,9 @@ Koatty Context.
 **Signature:**
 
 ```typescript
-export interface KoattyContext extends AppContext 
+export interface KoattyContext extends KoaContext 
 ```
-**Extends:** AppContext
+**Extends:** [KoaContext](./koatty_core.koacontext.md)
 
 ## Properties
 

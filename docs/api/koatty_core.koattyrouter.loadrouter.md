@@ -9,5 +9,5 @@ load router list and register handler
 **Signature:**
 
 ```typescript
-readonly LoadRouter: (app: Koatty, list: any[]) => Promise<void>;
+readonly LoadRouter: (app: KoattyApplication, list: any[]) => Promise<void>;
 ```

@@ -9,11 +9,11 @@ Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
 **Signature:**
 
 ```typescript
-export declare class Koatty extends Koa implements Application 
+export declare class Koatty extends Koa implements KoattyApplication 
 ```
 **Extends:** Koa
 
-**Implements:** Application
+**Implements:** [KoattyApplication](./koatty_core.koattyapplication.md)
 
 ## Constructors
 
@@ -27,6 +27,7 @@ export declare class Koatty extends Koa implements Application
 |  --- | --- | --- | --- |
 |  [appDebug](./koatty_core.koatty.appdebug.md) |  | boolean |  |
 |  [appPath](./koatty_core.koatty.apppath.md) |  | string |  |
+|  [context](./koatty_core.koatty.context.md) |  | [KoattyContext](./koatty_core.koattycontext.md) |  |
 |  [env](./koatty_core.koatty.env.md) |  | string |  |
 |  [koattyPath](./koatty_core.koatty.koattypath.md) |  | string |  |
 |  [logsPath](./koatty_core.koatty.logspath.md) |  | string |  |
@@ -43,7 +44,7 @@ export declare class Koatty extends Koa implements Application
 |  --- | --- | --- |
 |  [callback(protocol, reqHandler)](./koatty_core.koatty.callback.md) |  | return a request handler callback for http/gRPC/ws server. |
 |  [config(name, type)](./koatty_core.koatty.config.md) |  | Read app configuration |
-|  [createContext(req, res, protocol)](./koatty_core.koatty.createcontext.md) |  | Create Context |
+|  [createContext(req, res, protocol)](./koatty_core.koatty.createcontext.md) |  | Create Context for every request |
 |  [getMetaData(key)](./koatty_core.koatty.getmetadata.md) |  | Get application metadata by key |
 |  [init()](./koatty_core.koatty.init.md) |  | app custom init, must be defined options |
 |  [listen(listenCallback)](./koatty_core.koatty.listen.md) |  | listening and start server |

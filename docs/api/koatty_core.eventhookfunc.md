@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type EventHookFunc = (app: Koatty) => Promise<any>;
+export type EventHookFunc = (app: KoattyApplication) => Promise<any>;
 ```
-**References:** [Koatty](./koatty_core.koatty.md)
+**References:** [KoattyApplication](./koatty_core.koattyapplication.md)
 
