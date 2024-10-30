@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.10.0-1",
+  "version": "1.10.0-0",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
@@ -70,7 +70,6 @@
     "http-assert": "^1.5.0",
     "koa": "^2.x.x",
     "koa-compose": "^4.1.0",
-    "koatty_container": "^1.x.x",
     "koatty_core": "file:",
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
@@ -79,7 +78,6 @@
   },
   "peerDependencies": {
     "koa": "^2.x.x",
-    "koatty_container": "^1.x.x",
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
     "koatty_logger": "^2.x.x"
