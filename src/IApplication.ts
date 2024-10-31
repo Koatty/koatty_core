@@ -47,6 +47,11 @@ export interface KoattyApplication extends Koa {
   context: KoattyContext;
 
   /**
+   * app custom init, must be defined options
+   */
+  init: () => void;
+
+  /**
   * Application metadata operation
   * 
   * @memberof Context
