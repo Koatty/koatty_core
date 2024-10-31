@@ -25,6 +25,7 @@ export interface KoattyApplication extends Koa
 |  [createContext](./koatty_core.koattyapplication.createcontext.md) | <code>readonly</code> | (req: any, res: any, protocol?: string) =&gt; [KoattyContext](./koatty_core.koattycontext.md) | Create context |
 |  [env](./koatty_core.koattyapplication.env.md) |  | string |  |
 |  [getMetaData](./koatty_core.koattyapplication.getmetadata.md) | <code>readonly</code> | (key: string) =&gt; any\[\] | <p>Application metadata operation</p><p> Context</p> |
+|  [init](./koatty_core.koattyapplication.init.md) |  | () =&gt; void | app custom init, must be defined options |
 |  [koattyPath](./koatty_core.koattyapplication.koattypath.md) |  | string |  |
 |  [listen](./koatty_core.koattyapplication.listen.md) | <code>readonly</code> | (listenCallback?: any) =&gt; any | Listening and start server |
 |  [logsPath](./koatty_core.koattyapplication.logspath.md) |  | string |  |
