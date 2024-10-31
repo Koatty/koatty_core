@@ -1,4 +1,4 @@
-import { Koatty } from '../src/Application';
+import { Koatty } from '../dist/index';
 
 
 class App extends Koatty {
@@ -9,9 +9,10 @@ class App extends Koatty {
   public init(): void {
     this.context.get("aa");
     this.context.setMetaData("aa", "bb");
-
     return;
   }
 }
 
 const app = new App();
+
+app.context.throw("", 1, 304)

@@ -5,10 +5,10 @@
  * @ version: 2020-07-06 11:21:37
  */
 import {
-  ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
+  ServerReadableStream, ServerUnaryCall, ServerWritableStream
 } from "@grpc/grpc-js";
-import { sendUnaryData, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
-import { IncomingMessage } from "http";
+import { sendUnaryData, ServerReadableStreamImpl, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
+import { IncomingMessage, OutgoingMessage } from "http";
 import Koa from "koa";
 import { WebSocket } from "ws";
 import { KoattyMetadata } from "./Metadata";
@@ -19,32 +19,24 @@ export type KoaContext = Koa.ParameterizedContext;
  * KoattyNext
  */
 export type KoattyNext = Koa.Next;
-/**
- * WsRequest
- *
- * @class WsRequest
- * @extends {IncomingMessage}
- */
-export class WsRequest extends IncomingMessage {
-  data: Buffer | ArrayBuffer | Buffer[];
-}
 
-// export
-export type IRpcServerUnaryCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>;
-export type IRpcServerReadableStream<RequestType, ResponseType> = ServerReadableStream<RequestType, ResponseType>;
-export type IRpcServerWriteableStream<RequestType, ResponseType> = ServerWritableStream<RequestType, ResponseType>;
-export type IRpcServerDuplexStream<RequestType, ResponseType> = ServerDuplexStream<RequestType, ResponseType>
+export type RequestType = IncomingMessage & IRpcServerCall<any, any> & {
+  data: Buffer | ArrayBuffer | Buffer[];
+};
+
+export type ResponseType = OutgoingMessage & IRpcServerCallback<any> & IWebSocket;
 
 // redefine ServerCall
-export type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<RequestType, ResponseType>
-  | IRpcServerReadableStream<RequestType, ResponseType>
-  | IRpcServerWriteableStream<RequestType, ResponseType>
-  | IRpcServerDuplexStream<RequestType, ResponseType>;
+export type IRpcServerCall<ReqType, ResType> = ServerUnaryCall<ReqType, ResType>
+  & ServerReadableStream<ReqType, ResType>
+  & ServerWritableStream<ReqType, ResType>
+  ;
 // redefine ServerCallImpl
-export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
+export type IRpcServerCallImpl<ReqType, ResType> = ServerUnaryCallImpl<ReqType, ResType>
+  & ServerReadableStreamImpl<ReqType, ResType>;
 
 // redefine ServerCallback
-export type IRpcServerCallback<ResponseType> = sendUnaryData<ResponseType>;
+export type IRpcServerCallback<ResType> = sendUnaryData<ResType>;
 
 // redefine WebSocket
 export type IWebSocket = WebSocket;
@@ -89,7 +81,7 @@ export interface KoattyContext extends KoaContext {
   }
 
   /**
-   * websocket instance
+   * WebSocket ServerImpl
    *
    * @type {*}
    * @memberof KoattyContext
@@ -119,8 +111,9 @@ export interface KoattyContext extends KoaContext {
    * @type {(message: string, code?: number, status?: HttpStatusCode)}
    * @memberof Context
    */
+  throw(status: number): never;
   throw(status: number, message?: string): never;
-  throw(message: string, code?: number, status?: any): never;
+  throw(message: string, code?: number | undefined, status?: number | undefined): never;
 
   /**
    * Get parsed query-string and path variable(koa ctx.query and ctx.params),

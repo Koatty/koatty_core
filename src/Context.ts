@@ -4,9 +4,13 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
+import { IncomingMessage } from "http";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
 import { Helper } from "koatty_lib";
-import { IRpcServerCallback, IRpcServerUnaryCall, IWebSocket, KoaContext, KoattyContext, WsRequest } from "./IContext";
+import {
+  IRpcServerCall, IRpcServerCallback, IWebSocket, KoaContext, KoattyContext, RequestType,
+  ResponseType
+} from './IContext';
 import { KoattyMetadata } from "./Metadata";
 
 
@@ -39,7 +43,8 @@ export function createKoattyContext(ctx: KoaContext, protocol: string, req: any,
  * @param {IRpcServerCallback<any>} rpcCallback
  * @returns {*}  {KoattyContext}
  */
-function createGrpcContext(context: KoattyContext, call: IRpcServerUnaryCall<any, any>, callback: IRpcServerCallback<any>): KoattyContext {
+function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestType, ResponseType>,
+  callback: IRpcServerCallback<any>): KoattyContext {
   context.status = 200;
   Helper.define(context, "rpc", { call, callback });
   // metadata
@@ -73,7 +78,9 @@ function createGrpcContext(context: KoattyContext, call: IRpcServerUnaryCall<any
  * @param {WebSocket} socket
  * @returns {*}  {KoattyContext}
  */
-function createWsContext(context: KoattyContext, req: WsRequest, socket: IWebSocket): KoattyContext {
+function createWsContext(context: KoattyContext, req: IncomingMessage & {
+  data: Buffer | ArrayBuffer | Buffer[];
+}, socket: IWebSocket): KoattyContext {
   context.status = 200;
   Helper.define(context, "websocket", socket);
   context.setMetaData("_body", (req.data ?? "").toString());
@@ -92,9 +99,12 @@ function initBaseContext(ctx: KoaContext): KoattyContext {
   // throw
   Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
     codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
-    if (typeof statusOrMessage !== "string" && HttpStatusCodeMap.has(statusOrMessage)) {
-      status = statusOrMessage;
-      statusOrMessage = HttpStatusCodeMap.get(statusOrMessage);
+    if (typeof statusOrMessage !== "string") {
+      const httpStatus = HttpStatusCodeMap.get(statusOrMessage);
+      if (httpStatus) {
+        status = statusOrMessage;
+        statusOrMessage = httpStatus;
+      }
     }
     if (typeof codeOrMessage === "string") {
       statusOrMessage = codeOrMessage;
