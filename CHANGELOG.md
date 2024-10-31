@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-3](https://github.com/koatty/koatty_core/compare/v1.10.0-2...v1.10.0-3) (2024-10-31)
+
+
+### Bug Fixes
+
+* interface ([b9e5447](https://github.com/koatty/koatty_core/commit/b9e5447fd4d79ec62a4addbfd3f943b59b2e2152))
+
+
+### Performance
+
+* request and response type ([6f98734](https://github.com/koatty/koatty_core/commit/6f98734783e012bcbba201856217d9cebad64b9b))
+
 ## [1.10.0-2](https://github.com/koatty/koatty_core/compare/v1.10.0-1...v1.10.0-2) (2024-10-31)
 
 ## [1.10.0-1](https://github.com/koatty/koatty_core/compare/v1.10.0-0...v1.10.0-1) (2024-10-30)
