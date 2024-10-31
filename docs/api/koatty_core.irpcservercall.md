@@ -7,7 +7,5 @@
 **Signature:**
 
 ```typescript
-export type IRpcServerCall<RequestType, ResponseType> = IRpcServerUnaryCall<RequestType, ResponseType> | IRpcServerReadableStream<RequestType, ResponseType> | IRpcServerWriteableStream<RequestType, ResponseType> | IRpcServerDuplexStream<RequestType, ResponseType>;
+export type IRpcServerCall<ReqType, ResType> = ServerUnaryCall<ReqType, ResType> & ServerReadableStream<ReqType, ResType> & ServerWritableStream<ReqType, ResType>;
 ```
-**References:** [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md)<!-- -->, [IRpcServerReadableStream](./koatty_core.irpcserverreadablestream.md)<!-- -->, [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md)<!-- -->, [IRpcServerDuplexStream](./koatty_core.irpcserverduplexstream.md)
-

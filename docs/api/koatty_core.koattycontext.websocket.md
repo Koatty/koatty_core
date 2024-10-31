@@ -4,7 +4,7 @@
 
 ## KoattyContext.websocket property
 
-websocket instance
+WebSocket ServerImpl
 
  {<!-- -->\*<!-- -->}  KoattyContext
 

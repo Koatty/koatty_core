@@ -7,16 +7,15 @@
 **Signature:**
 
 ```typescript
-throw(message: string, code?: number, status?: any): never;
+throw(status: number, message?: string): never;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  message | string |  |
-|  code | number | _(Optional)_ |
-|  status | any | _(Optional)_ |
+|  status | number |  |
+|  message | string | _(Optional)_ |
 
 **Returns:**
 

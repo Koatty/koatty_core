@@ -10,7 +10,6 @@
 |  --- | --- |
 |  [Koatty](./koatty_core.koatty.md) | Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
 |  [KoattyMetadata](./koatty_core.koattymetadata.md) | <p>KoattyMetadata</p><p>  KoattyMetadata</p> |
-|  [WsRequest](./koatty_core.wsrequest.md) | <p>WsRequest</p><p> WsRequest  {<!-- -->IncomingMessage<!-- -->}</p> |
 
 ## Enumerations
 
@@ -51,12 +50,10 @@
 |  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
 |  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |
 |  [IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md) |  |
-|  [IRpcServerDuplexStream](./koatty_core.irpcserverduplexstream.md) |  |
-|  [IRpcServerReadableStream](./koatty_core.irpcserverreadablestream.md) |  |
-|  [IRpcServerUnaryCall](./koatty_core.irpcserverunarycall.md) |  |
-|  [IRpcServerWriteableStream](./koatty_core.irpcserverwriteablestream.md) |  |
 |  [IWebSocket](./koatty_core.iwebsocket.md) |  |
 |  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
 |  [KoaContext](./koatty_core.koacontext.md) |  |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
+|  [RequestType](./koatty_core.requesttype.md) |  |
+|  [ResponseType](./koatty_core.responsetype.md) |  |
 

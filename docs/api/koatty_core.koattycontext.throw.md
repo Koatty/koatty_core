@@ -11,7 +11,7 @@ Replace ctx.throw
 **Signature:**
 
 ```typescript
-throw(status: number, message?: string): never;
+throw(status: number): never;
 ```
 
 ## Parameters
@@ -19,7 +19,6 @@ throw(status: number, message?: string): never;
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  status | number |  |
-|  message | string | _(Optional)_ |
 
 **Returns:**
 

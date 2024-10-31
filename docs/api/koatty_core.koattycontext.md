@@ -27,12 +27,13 @@ export interface KoattyContext extends KoaContext
 |  [sendMetadata?](./koatty_core.koattycontext.sendmetadata.md) | <code>readonly</code> | (data: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void | <p>_(Optional)_ send metadata to http request header. then gRPC request to send metadata</p><p> KoattyContext</p> |
 |  [setMetaData](./koatty_core.koattycontext.setmetadata.md) | <code>readonly</code> | (key: string, value: unknown) =&gt; void |  |
 |  [status](./koatty_core.koattycontext.status.md) |  | number | <p>status</p><p> {<!-- -->number<!-- -->}  KoattyContext</p> |
-|  [websocket?](./koatty_core.koattycontext.websocket.md) |  | [IWebSocket](./koatty_core.iwebsocket.md) | <p>_(Optional)_ websocket instance</p><p> {<!-- -->\*<!-- -->}  KoattyContext</p> |
+|  [websocket?](./koatty_core.koattycontext.websocket.md) |  | [IWebSocket](./koatty_core.iwebsocket.md) | <p>_(Optional)_ WebSocket ServerImpl</p><p> {<!-- -->\*<!-- -->}  KoattyContext</p> |
 
 ## Methods
 
 |  Method | Description |
 |  --- | --- |
-|  [throw(status, message)](./koatty_core.koattycontext.throw.md) | <p>Replace ctx.throw</p><p> {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context</p> |
-|  [throw(message, code, status)](./koatty_core.koattycontext.throw_1.md) |  |
+|  [throw(status)](./koatty_core.koattycontext.throw.md) | <p>Replace ctx.throw</p><p> {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context</p> |
+|  [throw(status, message)](./koatty_core.koattycontext.throw_1.md) |  |
+|  [throw(message, code, status)](./koatty_core.koattycontext.throw_2.md) |  |
 
