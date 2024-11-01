@@ -1,13 +1,13 @@
 {
   "name": "koatty_core",
-  "version": "1.10.0-6",
+  "version": "1.10.0-7",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
     "build:cp": "node scripts/postBuild && copyfiles package.json LICENSE README.md dist/",
-    "build:js": "del-cli --force dist && npx rollup --bundleConfigAsCjs -c .rollup.config.js",
-    "build:doc": "del-cli --force docs/api && npx api-documenter markdown --input temp --output docs/api",
-    "build:dts": "del-cli --force temp && npx tsc && npx api-extractor run --local --verbose",
+    "build:js": "npx rollup --bundleConfigAsCjs -c .rollup.config.js",
+    "build:doc": "npx api-documenter markdown --input temp --output docs/api",
+    "build:dts": "npx tsc && npx api-extractor run --local --verbose",
     "eslint": "eslint --ext .ts,.js ./",
     "lock": "npm i --package-lock-only",
     "prepublishOnly": "npm test && npm run build && git push --follow-tags origin",
@@ -21,10 +21,6 @@
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "main": "./dist/index.js",
-  "exports": {
-    "require": "./dist/index.js",
-    "import": "./dist/index.mjs"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koatty/koatty_core.git"
@@ -53,19 +49,20 @@
     "conventional-changelog-cli": "^5.x.x",
     "copyfiles": "^2.x.x",
     "del-cli": "^6.x.x",
-    "eslint": "^8.57.x",
+    "eslint": "^8.x.x",
     "eslint-plugin-jest": "^28.x.x",
     "husky": "^4.x.x",
     "jest": "^29.x.x",
     "jest-html-reporters": "^3.x.x",
     "reflect-metadata": "^0.x.x",
-    "rollup": "^4.24.3",
+    "rollup": "^4.x.x",
+    "rollup-plugin-delete": "^2.x.x",
     "rollup-plugin-typescript2": "^0.x.x",
     "standard-version": "^9.x.x",
     "ts-jest": "^29.x.x",
     "ts-node": "^10.x.x",
     "tslib": "^2.x.x",
-    "typescript": "^5.x.x"
+    "typescript": "^4.x.x"
   },
   "dependencies": {
     "http-assert": "^1.5.0",
