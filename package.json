@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.10.0-7",
+  "version": "1.10.0-8",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
@@ -36,7 +36,6 @@
     "@grpc/grpc-js": "^1.x.x",
     "@microsoft/api-documenter": "^7.x.x",
     "@microsoft/api-extractor": "^7.x.x",
-    "@rollup/plugin-commonjs": "^28.x.x",
     "@rollup/plugin-json": "^6.x.x",
     "@types/jest": "^29.x.x",
     "@types/koa": "^2.x.x",
@@ -56,7 +55,6 @@
     "jest-html-reporters": "^3.x.x",
     "reflect-metadata": "^0.x.x",
     "rollup": "^4.x.x",
-    "rollup-plugin-delete": "^2.x.x",
     "rollup-plugin-typescript2": "^0.x.x",
     "standard-version": "^9.x.x",
     "ts-jest": "^29.x.x",
