@@ -23,7 +23,8 @@
   "main": "./dist/index.js",
   "exports": {
     "require": "./dist/index.js",
-    "import": "./dist/index.mjs"
+    "import": "./dist/index.mjs",
+    "types": "./dist/index.d.ts"
   },
   "repository": {
     "type": "git",
@@ -66,7 +67,7 @@
     "ts-jest": "^29.x.x",
     "ts-node": "^10.x.x",
     "tslib": "^2.x.x",
-    "typescript": "^4.x.x"
+    "typescript": "^5.x.x"
   },
   "dependencies": {
     "http-assert": "^1.5.0",

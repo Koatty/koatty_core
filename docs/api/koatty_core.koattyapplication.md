@@ -4,7 +4,9 @@
 
 ## KoattyApplication interface
 
-Koatty Application Object
+Koatty Application interface
+
+  KoattyApplication  {<!-- -->Koa<!-- -->}
 
 **Signature:**
 

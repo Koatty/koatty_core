@@ -12,23 +12,23 @@
  * @class KoattyMetadata
  */
 export class KoattyMetadata {
-  protected internalRepo = new Map<string, any[]>();
+  protected _internalRepo = new Map<string, any[]>();
   /**
    * Set the given value for the given key
    */
   set(key: string, value: any): void {
-    this.internalRepo.set(key, [value]);
+    this._internalRepo.set(key, [value]);
   }
   /**
    * Adds the given value for the given key by appending to a list of previous
    * values associated with that key. 
    */
   add(key: string, value: any): void {
-    const existingValue: any[] | undefined = this.internalRepo.get(
+    const existingValue: any[] | undefined = this._internalRepo.get(
       key
     );
     if (existingValue === undefined) {
-      this.internalRepo.set(key, [value]);
+      this._internalRepo.set(key, [value]);
     } else {
       existingValue.push(value);
     }
@@ -38,7 +38,7 @@ export class KoattyMetadata {
    * @param key The key whose values should be removed.
    */
   remove(key: string): void {
-    this.internalRepo.delete(key);
+    this._internalRepo.delete(key);
   }
   /**
    * Gets a list of all values associated with the key. Normalizes the key.
@@ -46,7 +46,7 @@ export class KoattyMetadata {
    * @return A list of values associated with the given key.
    */
   get(key: string): any[] {
-    let existingValue: any[] | undefined = this.internalRepo.get(
+    let existingValue: any[] | undefined = this._internalRepo.get(
       key
     );
     existingValue = existingValue || [];
@@ -62,7 +62,7 @@ export class KoattyMetadata {
   } {
     const result: { [key: string]: any } = {};
 
-    this.internalRepo.forEach((values, key) => {
+    this._internalRepo.forEach((values, key) => {
       if (values.length > 0) {
         const v = values[0];
         result[key] = v instanceof Buffer ? v.slice() : v;
@@ -76,9 +76,9 @@ export class KoattyMetadata {
    */
   clone(): KoattyMetadata {
     const newMetadata = new KoattyMetadata();
-    const newInternalRepr = newMetadata.internalRepo;
+    const newInternalRepr = newMetadata._internalRepo;
 
-    this.internalRepo.forEach((value, key) => {
+    this._internalRepo.forEach((value, key) => {
       const clonedValue: any[] = value.map((v) => {
         if (v instanceof Buffer) {
           return Buffer.from(v);
@@ -100,12 +100,12 @@ export class KoattyMetadata {
    * @param other A Metadata object.
    */
   merge(other: KoattyMetadata): void {
-    other.internalRepo.forEach((values: any, key: string) => {
+    other._internalRepo.forEach((values: any, key: string) => {
       const mergedValue: any[] = (
-        this.internalRepo.get(key) || []
+        this._internalRepo.get(key) || []
       ).concat(values);
 
-      this.internalRepo.set(key, mergedValue);
+      this._internalRepo.set(key, mergedValue);
     });
   }
   /**
@@ -119,7 +119,7 @@ export class KoattyMetadata {
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const values = obj[key];
-        metadata.internalRepo.set(key, values);
+        metadata._internalRepo.set(key, values);
       }
     }
     return metadata;
@@ -132,7 +132,7 @@ export class KoattyMetadata {
     [key: string]: any;
   } {
     const result: { [key: string]: any[] } = {};
-    for (const [key, values] of this.internalRepo.entries()) {
+    for (const [key, values] of this._internalRepo.entries()) {
       result[key] = values;
     }
     return result;

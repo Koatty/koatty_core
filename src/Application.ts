@@ -23,7 +23,7 @@ import { KoattyContext } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
 
 /**
- * Application 
+ * Koatty Application 
  * @export
  * @class Koatty
  * @extends {Koa}
@@ -31,7 +31,7 @@ import { KoattyMetadata } from "./Metadata";
  */
 export class Koatty extends Koa implements KoattyApplication {
   // runtime env mode
-  public env: string;
+  public env: string = "development";
   // app name
   public name: string;
   // app version
@@ -48,7 +48,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public logsPath: string;
   public appDebug: boolean;
 
-  public context: KoattyContext;
+  public context: KoattyContext = {} as any;
   private metadata: KoattyMetadata;
 
   /**

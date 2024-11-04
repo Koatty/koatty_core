@@ -25,7 +25,11 @@ export interface InitOptions {
 }
 
 /**
- * Koatty Application Object
+ * Koatty Application interface
+ *
+ * @export
+ * @interface KoattyApplication
+ * @extends {Koa}
  */
 export interface KoattyApplication extends Koa {
   env: string;

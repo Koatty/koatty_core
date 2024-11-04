@@ -4,7 +4,7 @@
 
 ## Koatty class
 
-Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
+Koatty Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
 
 **Signature:**
 
