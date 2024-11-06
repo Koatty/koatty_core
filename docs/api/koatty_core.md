@@ -22,12 +22,19 @@
 |  Function | Description |
 |  --- | --- |
 |  [createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md) | Create KoattyContext |
+|  [implementsAspectInterface(cls)](./koatty_core.implementsaspectinterface.md) | check is implements Aspect Interface |
+|  [implementsControllerInterface(cls)](./koatty_core.implementscontrollerinterface.md) | check is implements Controller Interface |
+|  [implementsMiddlewareInterface(cls)](./koatty_core.implementsmiddlewareinterface.md) | check is implements Middleware Interface |
+|  [implementsPluginInterface(cls)](./koatty_core.implementsplugininterface.md) | check is implements Plugin Interface |
+|  [implementsServiceInterface(cls)](./koatty_core.implementsserviceinterface.md) | check is implements Service Interface |
+|  [Plugin(identifier)](./koatty_core.plugin.md) | <p>Indicates that an decorated class is a "plugin".</p> |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
+|  [IPlugin](./koatty_core.iplugin.md) | Interface for Plugin |
 |  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
 |  [KoattyApplication](./koatty_core.koattyapplication.md) | <p>Koatty Application interface</p><p>  KoattyApplication  {<!-- -->Koa<!-- -->}</p> |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
