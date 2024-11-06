@@ -1,6 +1,6 @@
 {
   "name": "koatty_core",
-  "version": "1.10.0-12",
+  "version": "1.10.0-13",
   "description": "Koatty framework core",
   "scripts": {
     "build": "npm run build:js && npm run build:dts && npm run build:doc && npm run build:cp",
@@ -11,7 +11,6 @@
     "eslint": "eslint --ext .ts,.js ./",
     "lock": "npx del-cli --force node_modules && npm i --package-lock-only && npx pnpm i",
     "prepublishOnly": "npm test && npm run build && git push --follow-tags origin",
-    "prerelease": "npm run lock && npm test && npm run build",
     "release": "standard-version",
     "release:pre": "npm run release -- --prerelease",
     "release:major": "npm run release -- --release-as major",
@@ -73,7 +72,7 @@
     "http-assert": "^1.5.0",
     "koa": "^2.15.3",
     "koa-compose": "^4.1.0",
-    "koatty_container": "^1.x.x",
+    "koatty_container": "^1.9.4",
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
     "koatty_logger": "^2.x.x",
