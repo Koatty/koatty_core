@@ -7,7 +7,10 @@
 import {
   ServerReadableStream, ServerUnaryCall, ServerWritableStream
 } from "@grpc/grpc-js";
-import { sendUnaryData, ServerReadableStreamImpl, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
+import {
+  sendUnaryData, ServerReadableStreamImpl,
+  ServerUnaryCallImpl
+} from "@grpc/grpc-js/build/src/server-call";
 import { IncomingMessage, OutgoingMessage } from "http";
 import Koa from "koa";
 import { WebSocket } from "ws";

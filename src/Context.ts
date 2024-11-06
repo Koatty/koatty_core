@@ -8,7 +8,8 @@ import { IncomingMessage } from "http";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
 import { Helper } from "koatty_lib";
 import {
-  IRpcServerCall, IRpcServerCallback, IWebSocket, KoaContext, KoattyContext, RequestType,
+  IRpcServerCall, IRpcServerCallback, IWebSocket,
+  KoaContext, KoattyContext, RequestType,
   ResponseType
 } from './IContext';
 import { KoattyMetadata } from "./Metadata";
@@ -22,7 +23,8 @@ import { KoattyMetadata } from "./Metadata";
  * @param res  response
  * @returns 
  */
-export function createKoattyContext(ctx: KoaContext, protocol: string, req: any, res: any): KoattyContext {
+export function createKoattyContext(ctx: KoaContext, protocol: string,
+  req: any, res: any): KoattyContext {
   const context = initBaseContext(ctx);
   Helper.define(context, "protocol", protocol);
   if (ctx.protocol === "ws" || ctx.protocol === "wss") {
