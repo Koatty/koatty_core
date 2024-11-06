@@ -3,18 +3,17 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2023-12-09 21:56:32
- * @LastEditTime: 2024-11-06 22:31:20
+ * @LastEditTime: 2024-11-06 23:18:34
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
 
-import { Middleware } from "koa";
 import { IAspect, IOC } from "koatty_container";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as logger } from "koatty_logger";
 import "reflect-metadata";
 import { KoattyApplication } from "./IApplication";
-import { KoattyContext } from "./IContext";
+import { KoattyContext, KoattyNext } from "./IContext";
 
 // used to store router 
 export const CONTROLLER_ROUTER = "CONTROLLER_ROUTER";
@@ -30,7 +29,8 @@ export interface IController {
  * Interface for Middleware
  */
 export interface IMiddleware {
-  run: (options: any, app: KoattyApplication) => Middleware;
+  run: (options: any, app: KoattyApplication) =>
+    (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
 }
 
 /**

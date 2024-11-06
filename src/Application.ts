@@ -4,11 +4,9 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import EventEmitter from "events";
 import { ServerResponse } from "http";
 import Koa from "koa";
 import koaCompose from "koa-compose";
-import { isPrevent } from "koatty_exception";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
 import onFinished from "on-finished";
@@ -21,6 +19,7 @@ import {
 } from "./IApplication";
 import { KoattyContext } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
+import { asyncEvent, isPrevent, parseExp } from "./Utils";
 
 /**
  * Koatty Application 
@@ -298,40 +297,3 @@ export class Koatty extends Koa implements KoattyApplication {
 //         return Reflect.construct(target, args, newTarget);
 //     }
 // });
-
-
-/**
- * Convert express middleware for koa
- *
- * @param {function} fn
- * @returns
- * @memberof Koatty
- */
-function parseExp(fn: Function) {
-  return function (ctx: KoattyContext, next: Function) {
-    if (fn.length < 3) {
-      fn(ctx.req, ctx.res);
-      return next();
-    }
-    return new Promise((resolve, reject) => {
-      fn(ctx.req, ctx.res, (err: Error) => {
-        if (err) return reject(err);
-        resolve(next());
-      });
-    });
-  };
-}
-/**
- * Execute event as async
- * 
- * @param {EventEmitter} event
- * @param {string} eventName
- * @return {*}
- */
-async function asyncEvent(event: EventEmitter, eventName: string) {
-  const listeners = event.listeners(eventName);
-  for (const func of listeners) {
-    if (Helper.isFunction(func)) await func();
-  }
-  return event.removeAllListeners(eventName);
-}
