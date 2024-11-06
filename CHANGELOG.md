@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-12](https://github.com/koatty/koatty_core/compare/v1.10.0-11...v1.10.0-12) (2024-11-06)
+
 ## [1.10.0-11](https://github.com/koatty/koatty_core/compare/v1.10.0-10...v1.10.0-11) (2024-11-04)
 
 ## [1.10.0-10](https://github.com/koatty/koatty_core/compare/v1.10.0-9...v1.10.0-10) (2024-11-04)
