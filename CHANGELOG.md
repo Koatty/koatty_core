@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-14](https://github.com/koatty/koatty_core/compare/v1.10.0-13...v1.10.0-14) (2024-11-06)
+
+
+### Bug Fixes
+
+* build ([3124135](https://github.com/koatty/koatty_core/commit/3124135a75b690129d489e9d2219158768b2a6c5))
+
 ## [1.10.0-13](https://github.com/koatty/koatty_core/compare/v1.10.0-12...v1.10.0-13) (2024-11-06)
 
 ## [1.10.0-12](https://github.com/koatty/koatty_core/compare/v1.10.0-11...v1.10.0-12) (2024-11-06)
