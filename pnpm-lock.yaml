@@ -18,16 +18,16 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       koatty_container:
-        specifier: ^1.9.2
+        specifier: ^1.x.x
         version: 1.9.2(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_exception:
-        specifier: ^1.4.4
+        specifier: ^1.x.x
         version: 1.4.4(koatty_container@1.9.2)(koatty_core@1.10.0-11)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib:
-        specifier: ^1.4.0
+        specifier: ^1.x.x
         version: 1.4.0
       koatty_logger:
-        specifier: ^2.1.8
+        specifier: ^2.x.x
         version: 2.1.8(koa@2.15.3)(koatty_container@1.9.2)(koatty_exception@1.4.4)(koatty_lib@1.4.0)(tslib@2.6.2)
       on-finished:
         specifier: ^2.4.1
@@ -2472,10 +2472,6 @@ packages:
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
 
-  logform@2.6.0:
-    resolution: {integrity: sha512-1ulHeNPp6k/LD8H91o7VYFBng5i1BDE7HoKxVbZiGFidS1Rj65qcywLxX+pVfAPoQJEjRdvKcusKwOupHCVOVQ==}
-    engines: {node: '>= 12.0.0'}
-
   logform@2.6.1:
     resolution: {integrity: sha512-CdaO738xRapbKIMVn2m4F6KTj4j7ooJ8POVnebSgKo3KBz5axNXRAL7ZdRjIV6NOr2Uf4vjtRkxrFETOioCqSA==}
     engines: {node: '>= 12.0.0'}
@@ -2582,9 +2578,6 @@ packages:
   modify-values@1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
-
-  moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
 
   moment@2.30.1:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
@@ -3339,10 +3332,6 @@ packages:
     engines: {node: '>=8'}
     peerDependencies:
       winston: ^3
-
-  winston-transport@4.6.0:
-    resolution: {integrity: sha512-wbBA9PbPAHxKiygo7ub7BYRiKxms0tpfU2ljtWzb3SjRjv5yl6Ozuy/TkXf00HTAt+Uylo3gSkNwzc4ME0wiIg==}
-    engines: {node: '>= 12.0.0'}
 
   winston-transport@4.8.0:
     resolution: {integrity: sha512-qxSTKswC6llEMZKgCQdaWgDuMJQnhuvF5f2Nk3SNXc4byfQ+voo2mX1Px9dkNOuR8p0KAjfPG29PuYUSIb+vSA==}
@@ -5349,7 +5338,7 @@ snapshots:
 
   file-stream-rotator@0.6.1:
     dependencies:
-      moment: 2.29.4
+      moment: 2.30.1
 
   fill-range@7.0.1:
     dependencies:
@@ -6277,15 +6266,6 @@ snapshots:
 
   lodash@4.17.21: {}
 
-  logform@2.6.0:
-    dependencies:
-      '@colors/colors': 1.6.0
-      '@types/triple-beam': 1.3.5
-      fecha: 4.2.3
-      ms: 2.1.3
-      safe-stable-stringify: 2.4.3
-      triple-beam: 1.4.1
-
   logform@2.6.1:
     dependencies:
       '@colors/colors': 1.6.0
@@ -6389,8 +6369,6 @@ snapshots:
   minimist@1.2.8: {}
 
   modify-values@1.0.1: {}
-
-  moment@2.29.4: {}
 
   moment@2.30.1: {}
 
@@ -7097,13 +7075,7 @@ snapshots:
       object-hash: 2.2.0
       triple-beam: 1.4.1
       winston: 3.16.0
-      winston-transport: 4.6.0
-
-  winston-transport@4.6.0:
-    dependencies:
-      logform: 2.6.0
-      readable-stream: 3.6.2
-      triple-beam: 1.4.1
+      winston-transport: 4.8.0
 
   winston-transport@4.8.0:
     dependencies:
@@ -7117,7 +7089,7 @@ snapshots:
       '@dabh/diagnostics': 2.0.3
       async: 3.2.5
       is-stream: 2.0.1
-      logform: 2.6.0
+      logform: 2.6.1
       one-time: 1.0.0
       readable-stream: 3.6.2
       safe-stable-stringify: 2.4.3
