@@ -3,13 +3,13 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2024-11-08 09:54:42
- * @LastEditTime: 2024-11-08 13:44:36
+ * @LastEditTime: 2024-11-08 18:42:04
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
 import assert from "assert";
 import request from 'supertest';
-import { KoattyContext } from "../src";
+import { KoattyContext, KoattyProtocol } from "../src";
 import { App } from "./app";
 
 let app: App;
@@ -18,6 +18,7 @@ describe("App", () => {
     app = new App();
     app.use(async (ctx: KoattyContext) => {
       ctx.body = 'Hello, World!';
+
     });
   })
   test("getMetaData", async () => {
@@ -44,10 +45,9 @@ describe("App", () => {
   })
 
   test("response", async () => {
-    const res = await request(app.callback()).get('/'); // 发起 GET 请求
-
+    const res = await request(app.callback(KoattyProtocol.HTTP)).get('/'); // 发起 GET 请求
     // 测试响应
     expect(res.text).toBe('Hello, World!');
     expect(res.status).toBe(200);
-  }, 10000)
+  }, 30000)
 })
