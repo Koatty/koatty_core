@@ -199,7 +199,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   public listen(listenCallback?: any): any {
-    super.listen()
+    // super.listen()
     const callback = () => {
       // Emit app started event
       Logger.Log('Koatty', '', 'Emit App Start ...');
@@ -219,7 +219,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   callback(protocol = KoattyProtocol.HTTP, reqHandler?: (ctx: KoattyContext) => Promise<any>) {
-    super.callback()
+    // super.callback()
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }
