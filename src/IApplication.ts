@@ -38,7 +38,7 @@ export interface KoattyApplication extends Koa {
 
   options: InitOptions;
 
-  server: KoattyServer | KoattyServer[];
+  server: KoattyServer;
   router: KoattyRouter;
 
   appPath: string;
