@@ -7,7 +7,7 @@
 
 import { ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
 import Koa from "koa";
-import { KoattyContext, KoattyNext } from "./IContext";
+import { KoattyContext, KoattyNext, RequestType, ResponseType } from "./IContext";
 
 /**
  * InitOptions
@@ -22,6 +22,19 @@ export interface InitOptions {
   rootPath?: string;
   // koatty framework path
   koattyPath?: string;
+}
+
+/**
+ * @description: koatty server protocol
+ * @return {*}
+ */
+export enum KoattyProtocol {
+  HTTP = "http",
+  HTTPS = "https",
+  HTTP2 = "http2",
+  GRPC = "grpc",
+  WS = "ws",
+  WSS = "wss",
 }
 
 /**
@@ -92,7 +105,7 @@ export interface KoattyApplication extends Koa {
    * @param protocol 
    * @returns 
    */
-  readonly createContext: (req: any, res: any, protocol?: string) => KoattyContext;
+  readonly createContext: (req: any, res: any, protocol?: KoattyProtocol) => KoattyContext;
 
   /**
    * Listening and start server
@@ -107,7 +120,9 @@ export interface KoattyApplication extends Koa {
    * @param reqHandler 
    * @returns 
    */
-  readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => { (req: unknown, res: unknown): Promise<any> };
+  readonly callback: (protocol?: KoattyProtocol, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
+    (req: RequestType, res: ResponseType): Promise<any>
+  };
 
 }
 

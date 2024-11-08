@@ -11,7 +11,8 @@ import {
   sendUnaryData, ServerReadableStreamImpl,
   ServerUnaryCallImpl
 } from "@grpc/grpc-js/build/src/server-call";
-import { IncomingMessage, OutgoingMessage } from "http";
+import { IncomingMessage, OutgoingMessage, ServerResponse } from "http";
+import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import Koa from "koa";
 import { WebSocket } from "ws";
 import { KoattyMetadata } from "./Metadata";
@@ -23,11 +24,11 @@ export type KoaContext = Koa.ParameterizedContext;
  */
 export type KoattyNext = Koa.Next;
 
-export type RequestType = IncomingMessage & IRpcServerCall<any, any> & {
+export type RequestType = IncomingMessage | Http2ServerRequest | IRpcServerCall<any, any> | {
   data: Buffer | ArrayBuffer | Buffer[];
 };
 
-export type ResponseType = OutgoingMessage & IRpcServerCallback<any> & IWebSocket;
+export type ResponseType = ServerResponse | Http2ServerResponse | OutgoingMessage | IRpcServerCallback<any> | IWebSocket;
 
 // redefine ServerCall
 export type IRpcServerCall<ReqType, ResType> = ServerUnaryCall<ReqType, ResType>

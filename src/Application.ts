@@ -4,20 +4,21 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
+import { AsyncLocalStorage } from "async_hooks";
 import { ServerResponse } from "http";
 import Koa from "koa";
 import koaCompose from "koa-compose";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
 import onFinished from "on-finished";
-import { createKoattyContext } from "./Context";
 import {
   AppEvent,
   InitOptions,
   KoattyApplication,
+  KoattyProtocol,
   KoattyRouter, KoattyServer
 } from "./IApplication";
-import { KoattyContext } from "./IContext";
+import { KoattyContext, RequestType, ResponseType } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
 import { asyncEvent, isPrevent, parseExp } from "./Utils";
 
@@ -49,6 +50,7 @@ export class Koatty extends Koa implements KoattyApplication {
 
   public context: KoattyContext = {} as any;
   private metadata: KoattyMetadata;
+  private ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
    * Creates an instance of Koatty.
@@ -72,6 +74,7 @@ export class Koatty extends Koa implements KoattyApplication {
     this.rootPath = rootPath;
     this.koattyPath = koattyPath;
     this.metadata = new KoattyMetadata();
+    this.ctxStorage = new AsyncLocalStorage();
     // constructor
     this.init();
     // catch error
@@ -175,16 +178,17 @@ export class Koatty extends Koa implements KoattyApplication {
    *
    * @param {*} req
    * @param {*} res
-   * @param {string} [protocol]
+   * @param {KoattyProtocol} [protocol]
    * @returns {KoattyContext}  {*}
    * @memberof Koatty
    */
-  public createContext(req: any, res: any, protocol?: string): KoattyContext {
-    const resp = ['ws', 'wss', 'grpc'].includes(protocol ?? 'http') ? new ServerResponse(req) : res;
+  public createContext(req: any, res: any, protocol: KoattyProtocol = KoattyProtocol.HTTP): any {
+    const resp = ['ws', 'wss', 'grpc'].includes(protocol) ? new ServerResponse(req) : res;
     // create context
     const context = super.createContext(req, resp);
-    Helper.define(context, "app", this);
-    return createKoattyContext(context, protocol, req, res);
+    return context;
+    // Helper.define(context, "app", this);
+    // return createKoattyContext(context, protocol, req, res);
   }
 
   /**
@@ -195,6 +199,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   public listen(listenCallback?: any): any {
+    super.listen()
     const callback = () => {
       // Emit app started event
       Logger.Log('Koatty', '', 'Emit App Start ...');
@@ -213,14 +218,22 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {*}  
    * @memberof Koatty
    */
-  callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+  callback(protocol = KoattyProtocol.HTTP, reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+    super.callback()
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }
     const fn = koaCompose(this.middleware);
-    return (req: unknown, res: unknown) => {
+    if (!this.listenerCount('error')) this.on('error', this.onerror);
+
+    return (req: RequestType, res: ResponseType) => {
       const context = this.createContext(req, res, protocol);
-      return this.handleRequest(context, fn);
+      if (!this.ctxStorage) {
+        return this.handleRequest(context, fn);
+      }
+      return this.ctxStorage.run(context, async () => {
+        return await this.handleRequest(context, fn);
+      });
     }
   }
 
@@ -240,7 +253,11 @@ export class Koatty extends Koa implements KoattyApplication {
     const res = ctx.res;
     res.statusCode = 404;
     onFinished(ctx.res, (err: Error) => ctx.onerror(err));
-    return fnMiddleware(ctx);
+    const handleResponse = (ctx: any) => {
+      console.log(ctx.body);
+    };
+    return fnMiddleware(ctx).then(handleResponse).catch((err: Error) => ctx.onerror(err));
+    // return fnMiddleware(ctx);
   }
 
   /**

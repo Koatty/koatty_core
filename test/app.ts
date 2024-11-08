@@ -1,10 +1,10 @@
-import { Koatty, KoattyApplication, KoattyContext, KoattyMetadata, KoattyRouter, KoattyServer } from '../dist/index';
+import { Koatty, KoattyApplication, KoattyContext, KoattyMetadata, KoattyRouter, KoattyServer } from '../src/index';
 
 
-class App extends Koatty implements KoattyApplication {
+export class App extends Koatty implements KoattyApplication {
   ctx: KoattyContext
 
-  server: KoattyServer | KoattyServer[];
+  server: KoattyServer;
 
   router: KoattyRouter;
 
@@ -16,13 +16,9 @@ class App extends Koatty implements KoattyApplication {
   }
 
   public init(): void {
-    this.context.get("aa");
-    this.context.setMetaData("aa", "bb");
+    this.setMetaData("aa", "bb");
     return;
   }
 }
 
-const app = new App();
-
-app.context.throw("", 1, 304)
 

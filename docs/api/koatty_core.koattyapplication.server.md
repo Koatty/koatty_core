@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-server: KoattyServer | KoattyServer[];
+server: KoattyServer;
 ```

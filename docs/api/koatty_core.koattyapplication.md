@@ -35,7 +35,7 @@ export interface KoattyApplication extends Koa
 |  [options](./koatty_core.koattyapplication.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
 |  [rootPath](./koatty_core.koattyapplication.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koattyapplication.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
-|  [server](./koatty_core.koattyapplication.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) \| [KoattyServer](./koatty_core.koattyserver.md)<!-- -->\[\] |  |
+|  [server](./koatty_core.koattyapplication.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
 |  [setMetaData](./koatty_core.koattyapplication.setmetadata.md) | <code>readonly</code> | (key: string, value: unknown) =&gt; void |  |
 |  [use](./koatty_core.koattyapplication.use.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use middleware |
 |  [useExp](./koatty_core.koattyapplication.useexp.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use the given Express middleware |
