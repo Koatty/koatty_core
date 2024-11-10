@@ -79,6 +79,7 @@
     "koatty_exception": "^1.x.x",
     "koatty_lib": "^1.x.x",
     "koatty_logger": "^2.x.x",
+    "koatty_trace": "^1.x.x",
     "on-finished": "^2.4.1"
   },
   "peerDependencies": {

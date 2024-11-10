@@ -5,12 +5,14 @@
  * @ version: 2020-07-06 11:21:37
  */
 import { AsyncLocalStorage } from "async_hooks";
-import { ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from "http";
 import Koa from "koa";
 import koaCompose from "koa-compose";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
+import { Trace } from "koatty_trace";
 import onFinished from "on-finished";
+import { createKoattyContext } from "./Context";
 import {
   AppEvent,
   InitOptions,
@@ -48,7 +50,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public logsPath: string;
   public appDebug: boolean;
 
-  public context: KoattyContext = {} as any;
+  public context: KoattyContext;
   private metadata: KoattyMetadata;
   private ctxStorage: AsyncLocalStorage<unknown>;
 
@@ -182,13 +184,13 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {KoattyContext}  {*}
    * @memberof Koatty
    */
-  public createContext(req: any, res: any, protocol: KoattyProtocol = KoattyProtocol.HTTP): any {
-    const resp = ['ws', 'wss', 'grpc'].includes(protocol) ? new ServerResponse(req) : res;
+  public createContext(req: RequestType, res: ResponseType, protocol: KoattyProtocol = KoattyProtocol.HTTP): any {
+    const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
+      new ServerResponse(<IncomingMessage>req) : res;
     // create context
-    const context = super.createContext(req, resp);
-    return context;
-    // Helper.define(context, "app", this);
-    // return createKoattyContext(context, protocol, req, res);
+    const context = super.createContext(<IncomingMessage>req, <ServerResponse>resp);
+    Helper.define(context, "app", this);
+    return createKoattyContext(context, protocol, req, res);
   }
 
   /**
@@ -219,7 +221,9 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   callback(protocol = KoattyProtocol.HTTP, reqHandler?: (ctx: KoattyContext) => Promise<any>) {
-    // super.callback()
+    // inject response processed and opentrace
+    this.middleware.unshift(this.handleResponse());
+    // req handler from router 
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }
@@ -227,12 +231,12 @@ export class Koatty extends Koa implements KoattyApplication {
     if (!this.listenerCount('error')) this.on('error', this.onerror);
 
     return (req: RequestType, res: ResponseType) => {
-      const context = this.createContext(req, res, protocol);
+      const ctx: any = this.createContext(req, res);
       if (!this.ctxStorage) {
-        return this.handleRequest(context, fn);
+        return this.handleRequest(ctx, fn);
       }
-      return this.ctxStorage.run(context, async () => {
-        return await this.handleRequest(context, fn);
+      return this.ctxStorage.run(ctx, async () => {
+        return await this.handleRequest(ctx, fn);
       });
     }
   }
@@ -249,15 +253,33 @@ export class Koatty extends Koa implements KoattyApplication {
   private async handleRequest(
     ctx: KoattyContext,
     fnMiddleware: (ctx: KoattyContext) => Promise<any>,
-  ) {
+  ): Promise<any> {
     const res = ctx.res;
     res.statusCode = 404;
-    onFinished(ctx.res, (err: Error) => ctx.onerror(err));
-    const handleResponse = (ctx: any) => {
-      console.log(ctx.body);
-    };
-    return fnMiddleware(ctx).then(handleResponse).catch((err: Error) => ctx.onerror(err));
-    // return fnMiddleware(ctx);
+    const onerror = (err: Error) => ctx.onerror(err);
+    onFinished(res, onerror);
+    return fnMiddleware(ctx);
+  }
+  /**
+   * @description: handle Response & opentrace
+   * @return {*}
+   */
+  private handleResponse() {
+    const timeout = (this.config('http_timeout') || 10) * 1000;
+    const encoding = this.config('encoding') || 'utf-8';
+    const openTrace = this.config("open_trace") || false;
+    const asyncHooks = this.config("async_hooks") || false;
+
+    const options = {
+      RequestIdHeaderName: this.config('trace_header') || 'X-Request-Id',
+      RequestIdName: this.config('trace_id') || "requestId",
+      Timeout: timeout,
+      Encoding: encoding,
+      OpenTrace: openTrace,
+      AsyncHooks: asyncHooks,
+    }
+    // used trace middleware
+    return Trace(options, this);
   }
 
   /**

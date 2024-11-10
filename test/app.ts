@@ -1,7 +1,7 @@
-import { Koatty, KoattyApplication, KoattyContext, KoattyMetadata, KoattyRouter, KoattyServer } from '../src/index';
+import { Koatty, KoattyContext, KoattyMetadata, KoattyRouter, KoattyServer } from '../src/index';
 
 
-export class App extends Koatty implements KoattyApplication {
+export class App extends Koatty {
   ctx: KoattyContext
 
   server: KoattyServer;
