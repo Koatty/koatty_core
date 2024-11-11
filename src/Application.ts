@@ -12,6 +12,7 @@ import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
 import { Trace } from "koatty_trace";
 import onFinished from "on-finished";
+import { KoattyMiddleware } from "./Component";
 import { createKoattyContext } from "./Context";
 import {
   AppEvent,
@@ -50,6 +51,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public appDebug: boolean;
 
   public context: KoattyContext;
+  private tracer: KoattyMiddleware;
   private metadata: KoattyMetadata;
   private ctxStorage: AsyncLocalStorage<unknown>;
 
@@ -231,7 +233,7 @@ export class Koatty extends Koa implements KoattyApplication {
    */
   callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
     // inject response processed and opentrace
-    this.middleware.unshift(this.handleResponse());
+    if (!this.tracer) this.middleware.unshift(this.handleResponse());
     // req handler from router 
     if (reqHandler) {
       this.middleware.push(reqHandler);
@@ -266,10 +268,8 @@ export class Koatty extends Koa implements KoattyApplication {
     const res = ctx.res;
     res.statusCode = 404;
     const onerror = (err: Error) => ctx.onerror(err);
-    // const handleResponse = () => respond(ctx);
     onFinished(res, onerror);
     return fnMiddleware(ctx).catch(onerror);
-    // return fnMiddleware(ctx).then(handleResponse).catch(onerror);
   }
   /**
    * @description: handle Response & opentrace
@@ -289,8 +289,11 @@ export class Koatty extends Koa implements KoattyApplication {
       OpenTrace: openTrace,
       AsyncHooks: asyncHooks,
     }
+
     // used trace middleware
-    return Trace(options, <any>this);
+    const tracer = Trace(options, <any>this);
+    Helper.define(this, "tracer", tracer);
+    return tracer;
   }
 
   /**

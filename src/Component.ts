@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2023-12-09 21:56:32
- * @LastEditTime: 2024-11-06 23:18:34
+ * @LastEditTime: 2024-11-11 18:34:04
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
@@ -26,11 +26,18 @@ export interface IController {
 }
 
 /**
+ * @description: koatty middleware
+ * @param {KoattyContext} ctx
+ * @param {KoattyNext} next
+ * @return {*}
+ */
+export type KoattyMiddleware = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
+
+/**
  * Interface for Middleware
  */
 export interface IMiddleware {
-  run: (options: any, app: KoattyApplication) =>
-    (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
+  run: (options: any, app: KoattyApplication) => KoattyMiddleware;
 }
 
 /**

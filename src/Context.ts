@@ -25,8 +25,7 @@ import { KoattyMetadata } from "./Metadata";
  */
 export function createKoattyContext(ctx: KoaContext, protocol: string,
   req: any, res: any): KoattyContext {
-  const context = initBaseContext(ctx);
-  Helper.define(context, "protocol", protocol);
+  const context = initBaseContext(ctx, protocol);
   if (ctx.protocol === "ws" || ctx.protocol === "wss") {
     return createWsContext(context, req, res);
   }
@@ -94,10 +93,12 @@ function createWsContext(context: KoattyContext, req: IncomingMessage & {
  *
  * @param {Koatty} app
  * @param {KoaContext} ctx
+ * @param {string} protocol
  * @returns {*}  {KoattyContext}
  */
-function initBaseContext(ctx: KoaContext): KoattyContext {
+function initBaseContext(ctx: KoaContext, protocol: string): KoattyContext {
   const context: KoattyContext = Object.create(ctx);
+  Helper.define(context, "protocol", protocol);
   // throw
   Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
     codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
