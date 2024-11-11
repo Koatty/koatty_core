@@ -231,12 +231,12 @@ export class Koatty extends Koa implements KoattyApplication {
     if (!this.listenerCount('error')) this.on('error', this.onerror);
 
     return (req: RequestType, res: ResponseType) => {
-      const ctx: any = this.createContext(req, res);
+      const ctx: any = this.createContext(req, res, protocol);
       if (!this.ctxStorage) {
         return this.handleRequest(ctx, fn);
       }
       return this.ctxStorage.run(ctx, async () => {
-        return await this.handleRequest(ctx, fn);
+        return this.handleRequest(ctx, fn);
       });
     }
   }
@@ -257,8 +257,10 @@ export class Koatty extends Koa implements KoattyApplication {
     const res = ctx.res;
     res.statusCode = 404;
     const onerror = (err: Error) => ctx.onerror(err);
+    // const handleResponse = () => respond(ctx);
     onFinished(res, onerror);
-    return fnMiddleware(ctx);
+    return fnMiddleware(ctx).catch(onerror);
+    // return fnMiddleware(ctx).then(handleResponse).catch(onerror);
   }
   /**
    * @description: handle Response & opentrace
