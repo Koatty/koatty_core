@@ -9,5 +9,5 @@ Create context
 **Signature:**
 
 ```typescript
-readonly createContext: (req: any, res: any, protocol?: KoattyProtocol) => KoattyContext;
+readonly createContext: (req: any, res: any, protocol?: string) => KoattyContext;
 ```

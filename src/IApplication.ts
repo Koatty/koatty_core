@@ -25,19 +25,6 @@ export interface InitOptions {
 }
 
 /**
- * @description: koatty server protocol
- * @return {*}
- */
-export enum KoattyProtocol {
-  HTTP = "http",
-  HTTPS = "https",
-  HTTP2 = "http2",
-  GRPC = "grpc",
-  WS = "ws",
-  WSS = "wss",
-}
-
-/**
  * Koatty Application interface
  *
  * @export
@@ -105,7 +92,7 @@ export interface KoattyApplication extends Koa {
    * @param protocol 
    * @returns 
    */
-  readonly createContext: (req: any, res: any, protocol?: KoattyProtocol) => KoattyContext;
+  readonly createContext: (req: any, res: any, protocol?: string) => KoattyContext;
 
   /**
    * Listening and start server
@@ -120,7 +107,7 @@ export interface KoattyApplication extends Koa {
    * @param reqHandler 
    * @returns 
    */
-  readonly callback: (protocol?: KoattyProtocol, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
+  readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
     (req: RequestType, res: ResponseType): Promise<any>
   };
 

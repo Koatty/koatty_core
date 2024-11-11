@@ -21,10 +21,10 @@ export interface KoattyApplication extends Koa
 |  --- | --- | --- | --- |
 |  [appDebug](./koatty_core.koattyapplication.appdebug.md) |  | boolean |  |
 |  [appPath](./koatty_core.koattyapplication.apppath.md) |  | string |  |
-|  [callback](./koatty_core.koattyapplication.callback.md) | <code>readonly</code> | (protocol?: [KoattyProtocol](./koatty_core.koattyprotocol.md)<!-- -->, reqHandler?: (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt;) =&gt; { (req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->): Promise&lt;any&gt;; } |  |
+|  [callback](./koatty_core.koattyapplication.callback.md) | <code>readonly</code> | (protocol?: string, reqHandler?: (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt;) =&gt; { (req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->): Promise&lt;any&gt;; } |  |
 |  [config](./koatty_core.koattyapplication.config.md) | <code>readonly</code> | (name: string, type?: string) =&gt; any | Read app configuration |
 |  [context](./koatty_core.koattyapplication.context.md) |  | [KoattyContext](./koatty_core.koattycontext.md) |  |
-|  [createContext](./koatty_core.koattyapplication.createcontext.md) | <code>readonly</code> | (req: any, res: any, protocol?: [KoattyProtocol](./koatty_core.koattyprotocol.md)<!-- -->) =&gt; [KoattyContext](./koatty_core.koattycontext.md) | Create context |
+|  [createContext](./koatty_core.koattyapplication.createcontext.md) | <code>readonly</code> | (req: any, res: any, protocol?: string) =&gt; [KoattyContext](./koatty_core.koattycontext.md) | Create context |
 |  [env](./koatty_core.koattyapplication.env.md) |  | string |  |
 |  [getMetaData](./koatty_core.koattyapplication.getmetadata.md) | <code>readonly</code> | (key: string) =&gt; any\[\] | <p>Application metadata operation</p><p> Context</p> |
 |  [init](./koatty_core.koattyapplication.init.md) |  | () =&gt; void | app custom init, must be defined options |

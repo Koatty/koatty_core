@@ -9,7 +9,7 @@ Create Context for every request
 **Signature:**
 
 ```typescript
-createContext(req: RequestType, res: ResponseType, protocol?: KoattyProtocol): any;
+createContext(req: RequestType, res: ResponseType, protocol?: string): any;
 ```
 
 ## Parameters
@@ -18,7 +18,7 @@ createContext(req: RequestType, res: ResponseType, protocol?: KoattyProtocol): a
 |  --- | --- | --- |
 |  req | [RequestType](./koatty_core.requesttype.md) |  |
 |  res | [ResponseType](./koatty_core.responsetype.md) |  |
-|  protocol | [KoattyProtocol](./koatty_core.koattyprotocol.md) | _(Optional)_ |
+|  protocol | string | _(Optional)_ |
 
 **Returns:**
 

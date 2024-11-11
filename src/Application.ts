@@ -17,7 +17,6 @@ import {
   AppEvent,
   InitOptions,
   KoattyApplication,
-  KoattyProtocol,
   KoattyRouter, KoattyServer
 } from "./IApplication";
 import { KoattyContext, RequestType, ResponseType } from "./IContext";
@@ -185,7 +184,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {KoattyContext}  {*}
    * @memberof Koatty
    */
-  public createContext(req: RequestType, res: ResponseType, protocol: KoattyProtocol = KoattyProtocol.HTTP): any {
+  public createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
     const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
       new ServerResponse(<IncomingMessage>req) : res;
     // create context
@@ -222,7 +221,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {*}  
    * @memberof Koatty
    */
-  callback(protocol = KoattyProtocol.HTTP, reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+  callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
     // inject response processed and opentrace
     this.middleware.unshift(this.handleResponse());
     // req handler from router 
