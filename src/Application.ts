@@ -21,7 +21,7 @@ import {
 } from "./IApplication";
 import { KoattyContext, RequestType, ResponseType } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
-import { asyncEvent, isPrevent, parseExp } from "./Utils";
+import { asyncEvent, bindProcessEvent, isPrevent, parseExp } from "./Utils";
 
 /**
  * Koatty Application 
@@ -201,14 +201,22 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   public listen(listenCallback?: any): any {
-    const callbackFunc = () => {
+    const callbackFuncAndEmit = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
-      // Emit app started event
       asyncEvent(this, AppEvent.appStart);
       listenCallback?.(this);
     };
-    this.server = Array.isArray(this.server) ? this.server : [this.server];
-    this.server.forEach(s => s?.Start(callbackFunc));
+    const startServer = (s: KoattyServer, isLast: boolean) => {
+      s.Start(isLast ? callbackFuncAndEmit : () => Logger.Log('Koatty', '', `Server ${s.options.protocol} Started.`));
+    };
+    if (Array.isArray(this.server)) {
+      this.server.forEach((s, i) => { startServer(s, i === (<KoattyServer[]>this.server).length - 1) });
+    } else {
+      this.server.Start(callbackFuncAndEmit);
+    }
+    // binding event "appStop"
+    Logger.Log('Koatty', '', 'Bind App Stop event ...');
+    bindProcessEvent(this, 'appStop');
     return null;
   }
 

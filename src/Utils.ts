@@ -58,3 +58,18 @@ export async function asyncEvent(event: EventEmitter, eventName: string) {
 export function isPrevent(err: Error): boolean {
   return Helper.isError(err) && err.message === "PREVENT_NEXT_PROCESS";
 }
+/**
+ * Bind event to the process
+ *
+ * @param {EventEmitter} event
+ * @param {string} originEventName
+ * @param {string} [targetEventName]
+ */
+export function bindProcessEvent(event: EventEmitter, originEventName: string, targetEventName = "beforeExit") {
+  event.listeners(originEventName).forEach(func => {
+    if (Helper.isFunction(func)) {
+      process.addListener(<any>targetEventName, func);
+    }
+  });
+  event.removeAllListeners(originEventName);
+}
