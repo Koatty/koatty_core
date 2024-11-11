@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type RequestType = IncomingMessage & IRpcServerCall<any, any> & {
+export type RequestType = IncomingMessage | Http2ServerRequest | IRpcServerCall<any, any> | {
     data: Buffer | ArrayBuffer | Buffer[];
 };
 ```

@@ -16,6 +16,7 @@
 |  Enumeration | Description |
 |  --- | --- |
 |  [AppEvent](./koatty_core.appevent.md) | <p>app event</p><p>  AppEvent</p> |
+|  [KoattyProtocol](./koatty_core.koattyprotocol.md) | @<!-- -->description: koatty server protocol  {<!-- -->\*<!-- -->} |
 
 ## Functions
 

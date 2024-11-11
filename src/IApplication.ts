@@ -51,7 +51,7 @@ export interface KoattyApplication extends Koa {
 
   options: InitOptions;
 
-  server: KoattyServer;
+  server: KoattyServer | KoattyServer[];
   router: KoattyRouter;
 
   appPath: string;
@@ -175,7 +175,7 @@ export interface RouterImplementation {
   path?: string;
   method?: string;
   service?: ServiceDefinition;
-  implementation?: IHttpImplementation | IRpcImplementation | IWsImplementation;
+  implementation?: IHttpImplementation & IRpcImplementation & IWsImplementation;
 }
 
 /**

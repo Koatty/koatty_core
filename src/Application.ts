@@ -40,7 +40,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public version: string;
   // app options
   public options: InitOptions;
-  public server: KoattyServer;
+  public server: KoattyServer | KoattyServer[];
   public router: KoattyRouter;
   // env var
   public appPath: string;
@@ -149,8 +149,7 @@ export class Koatty extends Koa implements KoattyApplication {
       Logger.Error('The paramter is not a function.');
       return;
     }
-    fn = parseExp(fn);
-    return this.use(fn);
+    return this.use(parseExp(fn));
   }
 
   /**
@@ -163,10 +162,12 @@ export class Koatty extends Koa implements KoattyApplication {
   public config(name: string, type = 'config') {
     try {
       const caches = this.getMetaData('_configs')[0] || {};
-      if (!caches[type]) caches[type] = {};
+      caches[type] = caches[type] || {};
       if (name === undefined) return caches[type];
+
       if (Helper.isString(name)) {
-        return name.indexOf('.') === -1 ? caches[type][name] : caches[type][name.split('.')[0]]?.[name.split('.')[1]];
+        const keys = name.split('.');
+        return keys.length === 1 ? caches[type][name] : caches[type][keys[0]]?.[keys[1]];
       }
       return caches[type][name];
     } catch (err) {
@@ -188,7 +189,7 @@ export class Koatty extends Koa implements KoattyApplication {
     const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
       new ServerResponse(<IncomingMessage>req) : res;
     // create context
-    const context = super.createContext(<IncomingMessage>req, <ServerResponse>resp);
+    const context = super.createContext(req as IncomingMessage, resp as ServerResponse);
     Helper.define(context, "app", this);
     return createKoattyContext(context, protocol, req, res);
   }
@@ -201,14 +202,15 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   public listen(listenCallback?: any): any {
-    // super.listen()
-    const callback = () => {
-      // Emit app started event
+    const callbackFunc = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
+      // Emit app started event
       asyncEvent(this, AppEvent.appStart);
-      listenCallback(this);
+      listenCallback?.(this);
     };
-    return (<KoattyServer>this.server).Start(callback);
+    this.server = Array.isArray(this.server) ? this.server : [this.server];
+    this.server.forEach(s => s?.Start(callbackFunc));
+    return null;
   }
 
   /**
@@ -281,7 +283,7 @@ export class Koatty extends Koa implements KoattyApplication {
       AsyncHooks: asyncHooks,
     }
     // used trace middleware
-    return Trace(options, this);
+    return Trace(options, <any>this);
   }
 
   /**

@@ -9,20 +9,20 @@ Create Context for every request
 **Signature:**
 
 ```typescript
-createContext(req: any, res: any, protocol?: string): KoattyContext;
+createContext(req: RequestType, res: ResponseType, protocol?: KoattyProtocol): any;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  req | any |  |
-|  res | any |  |
-|  protocol | string | _(Optional)_ |
+|  req | [RequestType](./koatty_core.requesttype.md) |  |
+|  res | [ResponseType](./koatty_core.responsetype.md) |  |
+|  protocol | [KoattyProtocol](./koatty_core.koattyprotocol.md) | _(Optional)_ |
 
 **Returns:**
 
-[KoattyContext](./koatty_core.koattycontext.md)
+any
 
 {<!-- -->KoattyContext<!-- -->} {<!-- -->\*<!-- -->}  Koatty
 
