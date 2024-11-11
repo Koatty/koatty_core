@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0-20](https://github.com/koatty/koatty_core/compare/v1.10.0-19...v1.10.0-20) (2024-11-11)
+
+
+### Bug Fixes
+
+* Cannot set property server of app ([3be538a](https://github.com/koatty/koatty_core/commit/3be538a0603224793651eec7d5e18d6b1e278661))
+* redefined ([1d73d6d](https://github.com/koatty/koatty_core/commit/1d73d6da7b3aa9e9865b96c8510267d7634977ef))
+
 ## [1.10.0-19](https://github.com/koatty/koatty_core/compare/v1.10.0-18...v1.10.0-19) (2024-11-11)
 
 ## [1.10.0-18](https://github.com/koatty/koatty_core/compare/v1.10.0-17...v1.10.0-18) (2024-11-11)
