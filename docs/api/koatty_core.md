@@ -68,6 +68,7 @@
 |  [IWebSocket](./koatty_core.iwebsocket.md) |  |
 |  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
 |  [KoaContext](./koatty_core.koacontext.md) |  |
+|  [KoattyMiddleware](./koatty_core.koattymiddleware.md) | @<!-- -->description: koatty middleware |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
 |  [RequestType](./koatty_core.requesttype.md) |  |
 |  [ResponseType](./koatty_core.responsetype.md) |  |
