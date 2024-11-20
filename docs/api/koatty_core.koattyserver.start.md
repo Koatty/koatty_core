@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-readonly Start: (listenCallback: () => void) => unknownServer;
+readonly Start: (listenCallback: () => void) => NativeServer;
 ```

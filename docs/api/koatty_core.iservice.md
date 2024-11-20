@@ -4,7 +4,7 @@
 
 ## IService interface
 
-Interface for Service
+Interface for Service class
 
 **Signature:**
 

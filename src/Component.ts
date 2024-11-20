@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2023-12-09 21:56:32
- * @LastEditTime: 2024-11-11 18:34:04
+ * @LastEditTime: 2024-11-12 13:39:45
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
@@ -26,7 +26,7 @@ export interface IController {
 }
 
 /**
- * @description: koatty middleware
+ * @description: koatty middleware function
  * @param {KoattyContext} ctx
  * @param {KoattyNext} next
  * @return {*}
@@ -34,14 +34,14 @@ export interface IController {
 export type KoattyMiddleware = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
 
 /**
- * Interface for Middleware
+ * Interface for Middleware class
  */
 export interface IMiddleware {
   run: (options: any, app: KoattyApplication) => KoattyMiddleware;
 }
 
 /**
- * Interface for Service
+ * Interface for Service class
  */
 export interface IService {
   readonly app: KoattyApplication;
@@ -49,7 +49,7 @@ export interface IService {
 }
 
 /**
- * Interface for Plugin
+ * Interface for Plugin class
  */
 export interface IPlugin {
   run: (options: object, app: KoattyApplication) => Promise<any>;

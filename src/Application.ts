@@ -18,7 +18,7 @@ import {
   AppEvent,
   InitOptions,
   KoattyApplication,
-  KoattyRouter, KoattyServer
+  KoattyRouter, KoattyServer,
 } from "./IApplication";
 import { KoattyContext, RequestType, ResponseType } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
@@ -40,7 +40,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public version: string;
   // app options
   public options: InitOptions;
-  public server: KoattyServer | KoattyServer[];
+  public server: KoattyServer;
   public router: KoattyRouter;
   // env var
   public appPath: string;
@@ -76,8 +76,10 @@ export class Koatty extends Koa implements KoattyApplication {
     this.appPath = appPath;
     this.rootPath = rootPath;
     this.koattyPath = koattyPath;
+
     this.metadata = new KoattyMetadata();
     this.ctxStorage = new AsyncLocalStorage();
+
     // constructor
     this.init();
     // catch error
@@ -132,7 +134,7 @@ export class Koatty extends Koa implements KoattyApplication {
    */
   public use(fn: Function): any {
     if (!Helper.isFunction) {
-      Logger.Error('The paramter is not a function.');
+      Logger.Error('The parameter is not a function.');
       return;
     }
     return super.use(<any>fn);
@@ -147,7 +149,7 @@ export class Koatty extends Koa implements KoattyApplication {
    */
   public useExp(fn: Function): any {
     if (!Helper.isFunction) {
-      Logger.Error('The paramter is not a function.');
+      Logger.Error('The parameter is not a function.');
       return;
     }
     return this.use(parseExp(fn));
@@ -197,29 +199,26 @@ export class Koatty extends Koa implements KoattyApplication {
 
   /**
    * listening and start server
-   *
+   * 
+   * Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here.
+   * When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or
+   * Websocket
    * @param {Function} [listenCallback] (app: Koatty) => void
-   * @returns {*}  any
+   * @returns {NativeServer}  NativeServer
    * @memberof Koatty
    */
-  public listen(listenCallback?: any): any {
+  public listen(listenCallback?: any) {//:NativeServer {
     const callbackFuncAndEmit = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
       asyncEvent(this, AppEvent.appStart);
       listenCallback?.(this);
     };
-    const startServer = (s: KoattyServer, isLast: boolean) => {
-      s.Start(isLast ? callbackFuncAndEmit : () => Logger.Log('Koatty', '', `Server ${s.options.protocol} Started.`));
-    };
-    if (Array.isArray(this.server)) {
-      this.server.forEach((s, i) => { startServer(s, i === (<KoattyServer[]>this.server).length - 1) });
-    } else {
-      this.server.Start(callbackFuncAndEmit);
-    }
+
     // binding event "appStop"
     Logger.Log('Koatty', '', 'Bind App Stop event ...');
     bindProcessEvent(this, 'appStop');
-    return null;
+    const server = this.server.Start(callbackFuncAndEmit);
+    return server as any;
   }
 
   /**

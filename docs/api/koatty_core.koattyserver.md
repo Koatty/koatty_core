@@ -20,8 +20,8 @@ export interface KoattyServer
 |  --- | --- | --- | --- |
 |  [options](./koatty_core.koattyserver.options.md) |  | any |  |
 |  [RegisterService?](./koatty_core.koattyserver.registerservice.md) | <code>readonly</code> | (impl: any) =&gt; void | _(Optional)_ gRPC service register |
-|  [server](./koatty_core.koattyserver.server.md) |  | unknownServer |  |
-|  [Start](./koatty_core.koattyserver.start.md) | <code>readonly</code> | (listenCallback: () =&gt; void) =&gt; unknownServer |  |
+|  [server](./koatty_core.koattyserver.server.md) |  | [NativeServer](./koatty_core.nativeserver.md) |  |
+|  [Start](./koatty_core.koattyserver.start.md) | <code>readonly</code> | (listenCallback: () =&gt; void) =&gt; [NativeServer](./koatty_core.nativeserver.md) |  |
 |  [status](./koatty_core.koattyserver.status.md) |  | number |  |
 |  [Stop](./koatty_core.koattyserver.stop.md) | <code>readonly</code> | (callback?: () =&gt; void) =&gt; void |  |
 

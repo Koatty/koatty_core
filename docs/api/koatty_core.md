@@ -38,11 +38,11 @@
 |  Interface | Description |
 |  --- | --- |
 |  [IController](./koatty_core.icontroller.md) | Interface for Controller |
-|  [IMiddleware](./koatty_core.imiddleware.md) | Interface for Middleware |
+|  [IMiddleware](./koatty_core.imiddleware.md) | Interface for Middleware class |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
-|  [IPlugin](./koatty_core.iplugin.md) | Interface for Plugin |
+|  [IPlugin](./koatty_core.iplugin.md) | Interface for Plugin class |
 |  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
-|  [IService](./koatty_core.iservice.md) | Interface for Service |
+|  [IService](./koatty_core.iservice.md) | Interface for Service class |
 |  [KoattyApplication](./koatty_core.koattyapplication.md) | <p>Koatty Application interface</p><p>  KoattyApplication  {<!-- -->Koa<!-- -->}</p> |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
@@ -68,8 +68,9 @@
 |  [IWebSocket](./koatty_core.iwebsocket.md) |  |
 |  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
 |  [KoaContext](./koatty_core.koacontext.md) |  |
-|  [KoattyMiddleware](./koatty_core.koattymiddleware.md) | @<!-- -->description: koatty middleware |
+|  [KoattyMiddleware](./koatty_core.koattymiddleware.md) | @<!-- -->description: koatty middleware function |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
+|  [NativeServer](./koatty_core.nativeserver.md) |  |
 |  [RequestType](./koatty_core.requesttype.md) |  |
 |  [ResponseType](./koatty_core.responsetype.md) |  |
 

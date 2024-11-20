@@ -4,7 +4,7 @@
 
 ## IPlugin interface
 
-Interface for Plugin
+Interface for Plugin class
 
 **Signature:**
 

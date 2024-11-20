@@ -4,7 +4,7 @@
 
 ## IMiddleware interface
 
-Interface for Middleware
+Interface for Middleware class
 
 **Signature:**
 

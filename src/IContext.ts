@@ -24,26 +24,29 @@ export type KoaContext = Koa.ParameterizedContext;
  */
 export type KoattyNext = Koa.Next;
 
+// RequestType
 export type RequestType = IncomingMessage | Http2ServerRequest | IRpcServerCall<any, any> | {
   data: Buffer | ArrayBuffer | Buffer[];
 };
 
-export type ResponseType = ServerResponse | Http2ServerResponse | OutgoingMessage | IRpcServerCallback<any> | IWebSocket;
-
-// redefine ServerCall
-export type IRpcServerCall<ReqType, ResType> = ServerUnaryCall<ReqType, ResType>
-  & ServerReadableStream<ReqType, ResType>
-  & ServerWritableStream<ReqType, ResType>
-  ;
-// redefine ServerCallImpl
-export type IRpcServerCallImpl<ReqType, ResType> = ServerUnaryCallImpl<ReqType, ResType>
-  & ServerReadableStreamImpl<ReqType, ResType>;
-
 // redefine ServerCallback
-export type IRpcServerCallback<ResType> = sendUnaryData<ResType>;
+export type IRpcServerCallback<Response> = sendUnaryData<Response>;
 
 // redefine WebSocket
 export type IWebSocket = WebSocket;
+
+// ResponseType
+export type ResponseType = ServerResponse | Http2ServerResponse | OutgoingMessage | IRpcServerCallback<any> | IWebSocket;
+
+// redefine ServerCall
+export type IRpcServerCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>
+  | ServerReadableStream<RequestType, ResponseType>
+  | ServerWritableStream<RequestType, ResponseType>
+  ;
+
+// redefine ServerCallImpl
+export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
+  | ServerReadableStreamImpl<RequestType, ResponseType>;
 
 /**
  * Koatty Context.

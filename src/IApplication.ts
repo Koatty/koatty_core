@@ -5,7 +5,8 @@
  * @ version: 2020-07-06 11:21:37
  */
 
-import { ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
+import { Server as grpcServer, ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
+import { Server } from "http";
 import Koa from "koa";
 import { KoattyContext, KoattyNext, RequestType, ResponseType } from "./IContext";
 
@@ -24,6 +25,9 @@ export interface InitOptions {
   koattyPath?: string;
 }
 
+// 
+export type NativeServer = Server | grpcServer | WebSocket;
+
 /**
  * Koatty Application interface
  *
@@ -38,7 +42,7 @@ export interface KoattyApplication extends Koa {
 
   options: InitOptions;
 
-  server: KoattyServer | KoattyServer[];
+  server: KoattyServer;
   router: KoattyRouter;
 
   appPath: string;
@@ -96,8 +100,12 @@ export interface KoattyApplication extends Koa {
 
   /**
    * Listening and start server
+   * 
+   * Since Koa.listen returns an http.Server type, the return value must be defined
+   *  as 'any' type here. When calling, note that Koatty.listen returns a NativeServer,
+   *  such as http/https Server or grpcServer or Websocket
    * @param listenCallback 
-   * @returns 
+   * @returns NativeServer
    */
   readonly listen: (listenCallback?: any) => any;
 
@@ -113,9 +121,6 @@ export interface KoattyApplication extends Koa {
 
 }
 
-
-type unknownServer = unknown;
-
 /**
  * interface Server
  *
@@ -124,10 +129,10 @@ type unknownServer = unknown;
  */
 export interface KoattyServer {
   options: any;
-  server: unknownServer;
+  server: NativeServer;
   status: number;
 
-  readonly Start: (listenCallback: () => void) => unknownServer;
+  readonly Start: (listenCallback: () => void) => NativeServer;
   readonly Stop: (callback?: () => void) => void;
   /**
    * gRPC service register
@@ -162,7 +167,7 @@ export interface RouterImplementation {
   path?: string;
   method?: string;
   service?: ServiceDefinition;
-  implementation?: IHttpImplementation & IRpcImplementation & IWsImplementation;
+  implementation?: IHttpImplementation | IRpcImplementation | IWsImplementation;
 }
 
 /**

@@ -4,6 +4,7 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
+import { ServerUnaryCall } from "@grpc/grpc-js";
 import { IncomingMessage } from "http";
 import { Exception, HttpStatusCode, HttpStatusCodeMap } from "koatty_exception";
 import { Helper } from "koatty_lib";
@@ -57,7 +58,7 @@ function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestT
     // originalPath
     context.setMetaData("originalPath", cmd);
     // payload
-    context.setMetaData("_body", call.request || {});
+    context.setMetaData("_body", (<ServerUnaryCall<any, any>>call).request || {});
     // sendMetadata
     Helper.define(context, "sendMetadata", (data: KoattyMetadata) => {
       const m = data.getMap();

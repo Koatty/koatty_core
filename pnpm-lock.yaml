@@ -22,7 +22,7 @@ importers:
         version: 1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
       koatty_exception:
         specifier: ^1.x.x
-        version: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+        version: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib:
         specifier: ^1.x.x
         version: 1.4.0
@@ -31,7 +31,7 @@ importers:
         version: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
       koatty_trace:
         specifier: ^1.x.x
-        version: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+        version: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       on-finished:
         specifier: ^2.4.1
         version: 2.4.1
@@ -82,7 +82,7 @@ importers:
         specifier: ^6.x.x
         version: 6.0.2
       '@types/ws':
-        specifier: ^8.x.x
+        specifier: ^8.5.13
         version: 8.5.13
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.x.x
@@ -2441,8 +2441,8 @@ packages:
       koatty_lib: ^1.x.x
       koatty_logger: ^2.x.x
 
-  koatty_core@1.10.0-16:
-    resolution: {integrity: sha512-j6GnktXCKAY2QZAU20NyZbw0zbexraDnNS6pWHpv4/p4+7oxx73/pSBqeTeFgjnvbQBtGZFLVC7B1eOU3uA/FA==}
+  koatty_core@1.10.0:
+    resolution: {integrity: sha512-R1D/V1LWkw/V5vf5V4JjFznpn2Xel4sPHC9oeFGG7ch6+8L1sBk2u0k4QQwIbsr+05maRObdxc4kfOt3jIjVzQ==}
     engines: {node: '>10.0.0'}
     peerDependencies:
       koa: ^2.x.x
@@ -2450,6 +2450,7 @@ packages:
       koatty_exception: ^1.x.x
       koatty_lib: ^1.x.x
       koatty_logger: ^2.x.x
+      koatty_trace: ^1.x.x
 
   'koatty_core@file:':
     resolution: {directory: '', type: directory}
@@ -6359,7 +6360,7 @@ snapshots:
 
   koatty_container@1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1):
     dependencies:
-      koatty_container: koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
+      koatty_container: koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
       koatty_lib: 1.4.0
       koatty_logger: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
     transitivePeerDependencies:
@@ -6367,45 +6368,46 @@ snapshots:
       - koatty_exception
       - koatty_trace
 
-  koatty_core@1.10.0-16(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8):
+  koatty_core@1.10.0(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1):
     dependencies:
       http-assert: 1.5.0
       koa: 2.15.3
       koa-compose: 4.1.0
       koatty_container: 1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
-      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib: 1.4.0
       koatty_logger: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
+      koatty_trace: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       on-finished: 2.4.1
 
-  koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1):
+  koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1):
     dependencies:
       http-assert: 1.5.0
       koa: 2.15.3
       koa-compose: 4.1.0
       koatty_container: 1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
-      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib: 1.4.0
-      koatty_logger: koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)
-      koatty_trace: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_logger: koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)
+      koatty_trace: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       on-finished: 2.4.1
 
-  koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1):
+  koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1):
     dependencies:
       http-assert: 1.5.0
       koa: 2.15.3
       koa-compose: 4.1.0
-      koatty_container: koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
-      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_container: koatty_core@file:(koa@2.15.3)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
+      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib: 1.4.0
       koatty_logger: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
-      koatty_trace: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_trace: 1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       on-finished: 2.4.1
 
-  koatty_exception@1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8):
+  koatty_exception@1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8):
     dependencies:
       koatty_container: 1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
-      koatty_core: 1.10.0-16(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_core: 1.10.0(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
       koatty_lib: 1.4.0
       koatty_logger: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
       opentracing: 0.14.7
@@ -6420,7 +6422,7 @@ snapshots:
   koatty_logger@2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2):
     dependencies:
       koatty_lib: 1.4.0
-      koatty_logger: koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)
+      koatty_logger: koatty_core@file:(koa@2.15.3)(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)
       tslib: 2.6.2
       winston: 3.16.0
       winston-daily-rotate-file: 4.7.1(winston@3.16.0)
@@ -6430,11 +6432,11 @@ snapshots:
       - koatty_exception
       - koatty_trace
 
-  koatty_trace@1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8):
+  koatty_trace@1.13.1(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8):
     dependencies:
       koatty_container: 1.9.4(koa@2.15.3)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
-      koatty_core: 1.10.0-16(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
-      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0-16)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
+      koatty_core: 1.10.0(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_logger@2.1.8)(koatty_trace@1.13.1)
+      koatty_exception: 1.4.6(koatty_container@1.9.4)(koatty_core@1.10.0)(koatty_lib@1.4.0)(koatty_logger@2.1.8)
       koatty_lib: 1.4.0
       koatty_logger: 2.1.8(koa@2.15.3)(koatty_container@1.9.4)(koatty_exception@1.4.6)(koatty_lib@1.4.0)(koatty_trace@1.13.1)(tslib@2.6.2)
       opentracing: 0.14.7
