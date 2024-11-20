@@ -29,13 +29,13 @@ export interface KoattyApplication extends Koa
 |  [getMetaData](./koatty_core.koattyapplication.getmetadata.md) | <code>readonly</code> | (key: string) =&gt; any\[\] | <p>Application metadata operation</p><p> Context</p> |
 |  [init](./koatty_core.koattyapplication.init.md) |  | () =&gt; void | app custom init, must be defined options |
 |  [koattyPath](./koatty_core.koattyapplication.koattypath.md) |  | string |  |
-|  [listen](./koatty_core.koattyapplication.listen.md) | <code>readonly</code> | (listenCallback?: any) =&gt; any | Listening and start server |
+|  [listen](./koatty_core.koattyapplication.listen.md) | <code>readonly</code> | (listenCallback?: any) =&gt; any | <p>Listening and start server</p><p>Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or Websocket</p> |
 |  [logsPath](./koatty_core.koattyapplication.logspath.md) |  | string |  |
 |  [name](./koatty_core.koattyapplication.name.md) |  | string |  |
 |  [options](./koatty_core.koattyapplication.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
 |  [rootPath](./koatty_core.koattyapplication.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koattyapplication.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
-|  [server](./koatty_core.koattyapplication.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) \| [KoattyServer](./koatty_core.koattyserver.md)<!-- -->\[\] |  |
+|  [server](./koatty_core.koattyapplication.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
 |  [setMetaData](./koatty_core.koattyapplication.setmetadata.md) | <code>readonly</code> | (key: string, value: unknown) =&gt; void |  |
 |  [use](./koatty_core.koattyapplication.use.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use middleware |
 |  [useExp](./koatty_core.koattyapplication.useexp.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use the given Express middleware |

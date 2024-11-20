@@ -6,6 +6,8 @@
 
 listening and start server
 
+Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or Websocket
+
 **Signature:**
 
 ```typescript
@@ -22,5 +24,5 @@ listen(listenCallback?: any): any;
 
 any
 
-{<!-- -->\*<!-- -->} any  Koatty
+{<!-- -->NativeServer<!-- -->} NativeServer  Koatty
 
