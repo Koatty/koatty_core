@@ -109,7 +109,7 @@ export interface KoattyContext extends KoaContext {
    *
    * @memberof KoattyContext
    */
-  readonly sendMetadata?: (data: KoattyMetadata) => void;
+  readonly sendMetadata: (data?: KoattyMetadata) => void;
 
   /**
    * Replace ctx.throw

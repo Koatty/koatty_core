@@ -27,10 +27,10 @@ import { KoattyMetadata } from "./Metadata";
 export function createKoattyContext(ctx: KoaContext, protocol: string,
   req: any, res: any): KoattyContext {
   const context = initBaseContext(ctx, protocol);
-  if (ctx.protocol === "ws" || ctx.protocol === "wss") {
+  if (context.protocol === "ws" || context.protocol === "wss") {
     return createWsContext(context, req, res);
   }
-  if (ctx.protocol === "grpc") {
+  if (context.protocol === "grpc") {
     return createGrpcContext(context, req, res);
   }
   return context;
@@ -124,7 +124,17 @@ function initBaseContext(ctx: KoaContext, protocol: string): KoattyContext {
   // setMetaData
   Helper.define(context, "setMetaData", (key: string, value: any) => context.metadata.set(key, value));
   // sendMetadata
-  Helper.define(context, "sendMetadata", (data: KoattyMetadata) => context.set(data.toJSON()), true);
+  Helper.define(context, "sendMetadata", (data?: KoattyMetadata) => {
+    // data ?
+    // context.set(data.toJSON()) : context.set(context.metadata.toJSON())
+    if (data) {
+      context.set(data.toJSON())
+    } else {
+      data = context.metadata.toJSON();
+      context.set(data as any);
+    }
+
+  }, true);
 
   return context;
 }

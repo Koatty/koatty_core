@@ -19,6 +19,10 @@ describe("App", () => {
       ctx.body = 'Hello, World!';
     });
   })
+
+  afterAll(() => {
+    jest.clearAllMocks();
+  })
   test("getMetaData", async () => {
     assert.equal(app.getMetaData("aa"), "bb")
   })
