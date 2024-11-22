@@ -65,7 +65,7 @@ export class KoattyMetadata {
     this._internalRepo.forEach((values, key) => {
       if (values.length > 0) {
         const v = values[0];
-        result[key] = v instanceof Buffer ? v.slice() : v;
+        result[key] = v instanceof Buffer ? Buffer.from(v) : v;
       }
     });
     return result;
