@@ -7,7 +7,10 @@
 
 import { Server as grpcServer, ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
 import { Server } from "http";
+import { Http2SecureServer } from "http2";
+import { Server as SecureServer } from "https";
 import Koa from "koa";
+import { WebSocketServer } from "ws";
 import { KoattyContext, KoattyNext, RequestType, ResponseType } from "./IContext";
 
 /**
@@ -26,7 +29,7 @@ export interface InitOptions {
 }
 
 // 
-export type NativeServer = Server | grpcServer | WebSocket;
+export type NativeServer = Server | SecureServer | Http2SecureServer | grpcServer | WebSocketServer;
 
 /**
  * Koatty Application interface

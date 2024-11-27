@@ -201,8 +201,8 @@ export class Koatty extends Koa implements KoattyApplication {
    * listening and start server
    * 
    * Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here.
-   * When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or
-   * Websocket
+   * When calling, note that Koatty.listen returns a NativeServer: http/https Server or 
+   * grpcServer or Websocket
    * @param {Function} [listenCallback] (app: Koatty) => void
    * @returns {NativeServer}  NativeServer
    * @memberof Koatty
