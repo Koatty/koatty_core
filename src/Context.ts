@@ -68,15 +68,13 @@ function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestT
   callback: IRpcServerCallback<any>): KoattyContext {
   context.status = 200;
 
-  // getMetaData
-  Helper.define(context, "getMetaData", (key: string) => context.metadata.get(key));
-  // setMetaData
-  Helper.define(context, "setMetaData", (key: string, value: any) => context.metadata.set(key, value));
-
   if (call) {
     Helper.define(context, "rpc", { call, callback });
     // metadata
     Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
+    // getMetaData
+    Helper.define(context, "getMetaData", (key: string) => context.metadata.get(key));
+
     const handler = Reflect.get(call, "handler") || Reflect.get(Reflect.get(call, "call"), "handler") || {};
     // originalPath
     context.setMetaData("originalPath", handler.path || '');
