@@ -11,8 +11,9 @@ import assert from 'assert';
 import request from 'supertest';
 import { App } from "./app";
 
-let app: App;
 describe("App", () => {
+
+  let app: App;
   beforeAll(() => {
     app = new App();
     app.use(async (ctx: any) => {
@@ -20,9 +21,11 @@ describe("App", () => {
     });
   })
 
-  afterAll(() => {
+  afterAll(done => {
+    done();
     jest.clearAllMocks();
-  })
+  });
+
   test("getMetaData", async () => {
     assert.equal(app.getMetaData("aa"), "bb")
   })

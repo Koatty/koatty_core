@@ -2,10 +2,10 @@ import assert from "assert";
 import { KoattyContext } from "../src/IContext";
 import { App } from "./app";
 const http = require('http');
-let app = new App();
 
-let ctx: KoattyContext;
 describe("Context", () => {
+  let app = new App();
+  let ctx: KoattyContext;
   beforeAll(() => {
     jest.useFakeTimers();
     // Mock IncomingMessage
@@ -25,9 +25,10 @@ describe("Context", () => {
     ctx.setMetaData("aa", "bb")
   })
 
-  afterAll(() => {
+  afterAll(done => {
+    done();
     jest.clearAllMocks();
-  })
+  });
   test("protocol", async () => {
     assert.equal(ctx.protocol, "http")
   })
