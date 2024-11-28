@@ -5,7 +5,7 @@
  * @ version: 2020-07-06 11:21:37
  */
 
-import { Server as grpcServer, ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
+import { Server as gRPCServer, ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
 import { Server } from "http";
 import { Http2SecureServer } from "http2";
 import { Server as SecureServer } from "https";
@@ -29,7 +29,7 @@ export interface InitOptions {
 }
 
 // 
-export type NativeServer = Server | SecureServer | Http2SecureServer | grpcServer | WebSocketServer;
+export type NativeServer = Server | SecureServer | Http2SecureServer | gRPCServer | WebSocketServer;
 
 /**
  * Koatty Application interface
