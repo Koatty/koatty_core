@@ -10,7 +10,9 @@ Indicates that an decorated class is a "controller".
 **Signature:**
 
 ```typescript
-export declare function Controller(path?: string, options?: object): ClassDecorator;
+export declare function Controller(path?: string, options?: {
+    [key: string]: any;
+}): ClassDecorator;
 ```
 
 ## Parameters
@@ -18,7 +20,7 @@ export declare function Controller(path?: string, options?: object): ClassDecora
 |  Parameter | Type | Description |
 |  --- | --- | --- |
 |  path | string | _(Optional)_ controller router path |
-|  options | object | _(Optional)_ controller router options, the feature is not implemented yet (lll￢ω￢) |
+|  options | { \[key: string\]: any; } | _(Optional)_ controller router options |
 
 **Returns:**
 

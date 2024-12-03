@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export type NativeServer = Server | grpcServer | WebSocket;
+export type NativeServer = Server | SecureServer | Http2SecureServer | gRPCServer | WebSocketServer;
 ```
