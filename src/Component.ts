@@ -3,14 +3,13 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2023-12-09 21:56:32
- * @LastEditTime: 2024-11-12 13:39:45
+ * @LastEditTime: 2024-11-28 13:59:55
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
 
 import { IAspect, IOC } from "koatty_container";
 import { Helper } from "koatty_lib";
-import { DefaultLogger as logger } from "koatty_logger";
 import "reflect-metadata";
 import { KoattyApplication } from "./IApplication";
 import { KoattyContext, KoattyNext } from "./IContext";
@@ -74,16 +73,18 @@ export function Component(identifier?: string): ClassDecorator {
  *
  * @export
  * @param {string} [path] controller router path
- * @param {object} [options] controller router options, the feature is not implemented yet (lll￢ω￢)
+ * @param {object} [options] controller router options
  * @returns {ClassDecorator}
  */
-export function Controller(path = "", options?: object): ClassDecorator {
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  options ? logger.Debug("controller router options, the feature is not implemented yet (lll￢ω￢)") : "";
+export function Controller(path = "", options?: { [key: string]: any }): ClassDecorator {
   return (target: Function) => {
     const identifier = IOC.getIdentifier(target);
     IOC.saveClass("CONTROLLER", target, identifier);
-    IOC.savePropertyData(CONTROLLER_ROUTER, path, target, identifier);
+    options = options || {
+      protocol: "http",
+    };
+    options.path = path;
+    IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
   };
 }
 
