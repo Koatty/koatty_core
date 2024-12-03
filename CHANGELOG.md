@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/koatty/koatty_core/compare/v1.10.1...v1.11.0) (2024-12-03)
+
+
+### Features
+
+* add default name property to application options ([f1f6a6b](https://github.com/koatty/koatty_core/commit/f1f6a6bc3a82a55ba152c88d1b47a5beb91483c6))
+* enhance router options handling ([3426508](https://github.com/koatty/koatty_core/commit/3426508b109917ca73f93a39e9527f42cd76dc2d))
+
+
+### Bug Fixes
+
+* add `setMetaData` method to gRPC context ([0116ca7](https://github.com/koatty/koatty_core/commit/0116ca7e13cf5d171baf9dcc6a228fece082cd8b))
+* grpc metadata sending ([be9a3b9](https://github.com/koatty/koatty_core/commit/be9a3b9a4bf8bfdd45ad9041eb2459ca72c2fbb8))
+* NativeServer types ([1a7dd5a](https://github.com/koatty/koatty_core/commit/1a7dd5a05e293e3ae99c3e81a91e970f2215ae3a))
+
 ### [1.10.1](https://github.com/koatty/koatty_core/compare/v1.10.0...v1.10.1) (2024-11-20)
 
 ## [1.10.0](https://github.com/koatty/koatty_core/compare/v1.10.0-20...v1.10.0) (2024-11-12)
