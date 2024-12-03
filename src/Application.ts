@@ -65,6 +65,7 @@ export class Koatty extends Koa implements KoattyApplication {
     appPath: '',
     rootPath: '',
     koattyPath: '',
+    name: 'KoattyApplication project',
   }) {
     super();
     this.options = options ?? {};
