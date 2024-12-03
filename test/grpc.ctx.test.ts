@@ -1,14 +1,10 @@
 import { IRpcServerCall, IRpcServerCallback, KoattyContext } from '../src/IContext';
 import { KoattyMetadata } from '../src/Metadata';
 import { App } from "./app";
-let app = new App();
-
-let ctx: KoattyContext;
-
-// 创建模拟的 IRpcServerCallback 对象
-const callback: IRpcServerCallback<any> = jest.fn();
 
 describe('createGrpcContext', () => {
+  let app = new App();
+  let ctx: KoattyContext;
   let call: IRpcServerCall<any, any>;
   let callback: IRpcServerCallback<any>;
 
@@ -32,6 +28,10 @@ describe('createGrpcContext', () => {
     ctx = app.createContext(call, callback, 'grpc');
     // ctx.set = jest.fn();
   })
+  afterAll(done => {
+    done();
+    jest.clearAllMocks();
+  });
 
   test('should set status to 200', () => {
     expect(ctx.status).toBe(200);
