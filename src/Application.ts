@@ -74,11 +74,12 @@ export class Koatty extends Koa implements KoattyApplication {
     this.version = options.version;
     const { appDebug, appPath, rootPath, koattyPath } = this.options;
     this.appDebug = appDebug;
-    const env = (process.execArgv ?? []).join(",");
-    if (env.includes('ts-node') || env.includes('--debug')) this.appDebug = true;
+    const envArg = (process.execArgv ?? []).join(",");
+    if (envArg.includes('ts-node') || envArg.includes('--debug')) this.appDebug = true;
     // app.env
-    if ((process.env.KOATTY_ENV || process.env.NODE_ENV).includes("dev")) this.env = 'development';
-    if ((process.env.KOATTY_ENV || process.env.NODE_ENV).includes("pro")) this.env = 'production';
+    const env = process.env.KOATTY_ENV || process.env.NODE_ENV || "";
+    if (env.includes("dev")) this.env = 'development';
+    if (env.includes("pro")) this.env = 'production';
     if (this.appDebug) this.env = "development";
     this.appPath = appPath;
     this.rootPath = rootPath;
