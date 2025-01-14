@@ -80,7 +80,6 @@ export class Koatty extends Koa implements KoattyApplication {
     const { appDebug, appPath, rootPath, koattyPath } = this.options;
     this.appDebug = appDebug;
     if (this.appDebug) this.env = "development";
-    if (this.env = "development") this.appDebug = true;
     this.appPath = appPath;
     this.rootPath = rootPath;
     this.koattyPath = koattyPath;
