@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.2-0](https://github.com/koatty/koatty_core/compare/v1.11.1...v1.11.2-0) (2025-01-14)
+
+
+### Bug Fixes
+
+* env判断逻辑 ([95da7d8](https://github.com/koatty/koatty_core/commit/95da7d8aca190886f2edbf064fd56e98d959590d))
+
 ### [1.11.1](https://github.com/koatty/koatty_core/compare/v1.11.0...v1.11.1) (2025-01-14)
 
 
