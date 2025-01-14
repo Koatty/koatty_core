@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.4](https://github.com/koatty/koatty_core/compare/v1.11.3...v1.11.4) (2025-01-14)
+
+
+### Bug Fixes
+
+* appdebug逻辑 ([1fc2fce](https://github.com/koatty/koatty_core/commit/1fc2fce99e4162868b987f8bf662e83f3974127b))
+
 ### [1.11.3](https://github.com/koatty/koatty_core/compare/v1.11.2...v1.11.3) (2025-01-14)
 
 
