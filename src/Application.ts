@@ -33,7 +33,7 @@ import { asyncEvent, bindProcessEvent, isPrevent, parseExp } from "./Utils";
  */
 export class Koatty extends Koa implements KoattyApplication {
   // runtime env mode
-  public env: string = "development";
+  public env: string = "production";
   // app name
   public name: string;
   // app version
@@ -61,19 +61,25 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   protected constructor(options: InitOptions = {
-    appDebug: true,
+    appDebug: false,
     appPath: '',
     rootPath: '',
     koattyPath: '',
     name: 'KoattyApplication project',
+    version: "0.0.1",
   }) {
     super();
     this.options = options ?? {};
     this.name = options.name;
     this.version = options.version;
+    const env = (process.execArgv ?? []).join(",");
+    if (env.includes('ts-node') || env.includes('--debug')) this.env = 'development';
+    // app.env
     this.env = process.env.KOATTY_ENV || process.env.NODE_ENV;
+    if (this.env.includes("pro")) this.env = 'production';
     const { appDebug, appPath, rootPath, koattyPath } = this.options;
     this.appDebug = appDebug;
+    if (this.appDebug) this.env = "development";
     this.appPath = appPath;
     this.rootPath = rootPath;
     this.koattyPath = koattyPath;
