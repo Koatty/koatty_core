@@ -11,5 +11,5 @@ send metadata to http request header. then gRPC request to send metadata
 **Signature:**
 
 ```typescript
-readonly sendMetadata?: (data: KoattyMetadata) => void;
+readonly sendMetadata: (data?: KoattyMetadata) => void;
 ```

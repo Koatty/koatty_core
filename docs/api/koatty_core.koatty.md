@@ -4,7 +4,7 @@
 
 ## Koatty class
 
-Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
+Koatty Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
 
 **Signature:**
 
@@ -35,7 +35,7 @@ export declare class Koatty extends Koa implements KoattyApplication
 |  [options](./koatty_core.koatty.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
 |  [rootPath](./koatty_core.koatty.rootpath.md) |  | string |  |
 |  [router](./koatty_core.koatty.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
-|  [server](./koatty_core.koatty.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) \| [KoattyServer](./koatty_core.koattyserver.md)<!-- -->\[\] |  |
+|  [server](./koatty_core.koatty.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
 |  [version](./koatty_core.koatty.version.md) |  | string |  |
 
 ## Methods
@@ -47,7 +47,7 @@ export declare class Koatty extends Koa implements KoattyApplication
 |  [createContext(req, res, protocol)](./koatty_core.koatty.createcontext.md) |  | Create Context for every request |
 |  [getMetaData(key)](./koatty_core.koatty.getmetadata.md) |  | Get application metadata by key |
 |  [init()](./koatty_core.koatty.init.md) |  | app custom init, must be defined options |
-|  [listen(listenCallback)](./koatty_core.koatty.listen.md) |  | listening and start server |
+|  [listen(listenCallback)](./koatty_core.koatty.listen.md) |  | <p>listening and start server</p><p>Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer: http/https Server or grpcServer or Websocket</p> |
 |  [setMetaData(key, value)](./koatty_core.koatty.setmetadata.md) |  | Set application metadata |
 |  [use(fn)](./koatty_core.koatty.use.md) |  | Use the given koa middleware <code>fn</code>. support generator func |
 |  [useExp(fn)](./koatty_core.koatty.useexp.md) |  | Use the given Express middleware <code>fn</code>. |

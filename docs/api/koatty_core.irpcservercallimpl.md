@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export type IRpcServerCallImpl<ReqType, ResType> = ServerUnaryCallImpl<ReqType, ResType> & ServerReadableStreamImpl<ReqType, ResType>;
+export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType> | ServerReadableStreamImpl<RequestType, ResponseType>;
 ```

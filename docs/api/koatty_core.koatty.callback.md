@@ -9,7 +9,7 @@ return a request handler callback for http/gRPC/ws server.
 **Signature:**
 
 ```typescript
-callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): (req: unknown, res: unknown) => Promise<any>;
+callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): (req: RequestType, res: ResponseType) => Promise<any>;
 ```
 
 ## Parameters
@@ -21,7 +21,7 @@ callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): 
 
 **Returns:**
 
-(req: unknown, res: unknown) =&gt; Promise&lt;any&gt;
+(req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->) =&gt; Promise&lt;any&gt;
 
 {<!-- -->\*<!-- -->}  Koatty
 

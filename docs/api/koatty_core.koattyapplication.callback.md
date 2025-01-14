@@ -8,6 +8,6 @@
 
 ```typescript
 readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
-        (req: unknown, res: unknown): Promise<any>;
+        (req: RequestType, res: ResponseType): Promise<any>;
     };
 ```

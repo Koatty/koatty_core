@@ -2,6 +2,102 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.5](https://github.com/koatty/koatty_core/compare/v1.11.4...v1.11.5) (2025-01-14)
+
+
+### Bug Fixes
+
+* env undefined ([ee39277](https://github.com/koatty/koatty_core/commit/ee3927750544be0dfc4e35f4896e6cbcf0154461))
+
+### [1.11.4](https://github.com/koatty/koatty_core/compare/v1.11.3...v1.11.4) (2025-01-14)
+
+
+### Bug Fixes
+
+* appdebug逻辑 ([1fc2fce](https://github.com/koatty/koatty_core/commit/1fc2fce99e4162868b987f8bf662e83f3974127b))
+
+### [1.11.3](https://github.com/koatty/koatty_core/compare/v1.11.2...v1.11.3) (2025-01-14)
+
+
+### Bug Fixes
+
+* appDebug逻辑 ([f477a6a](https://github.com/koatty/koatty_core/commit/f477a6a09026089576da6381a22af705484e809c))
+* appDebug逻辑 ([f35e785](https://github.com/koatty/koatty_core/commit/f35e785a6ac54fa5ec7bee2008701588bdf7838c))
+
+### [1.11.2](https://github.com/koatty/koatty_core/compare/v1.11.2-0...v1.11.2) (2025-01-14)
+
+### [1.11.2-0](https://github.com/koatty/koatty_core/compare/v1.11.1...v1.11.2-0) (2025-01-14)
+
+
+### Bug Fixes
+
+* env判断逻辑 ([95da7d8](https://github.com/koatty/koatty_core/commit/95da7d8aca190886f2edbf064fd56e98d959590d))
+
+### [1.11.1](https://github.com/koatty/koatty_core/compare/v1.11.0...v1.11.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* app.env逻辑修改 ([163f105](https://github.com/koatty/koatty_core/commit/163f10540c2a327575d397669c9ef4dd54132db6))
+
+## [1.11.0](https://github.com/koatty/koatty_core/compare/v1.10.1...v1.11.0) (2024-12-03)
+
+
+### Features
+
+* add default name property to application options ([f1f6a6b](https://github.com/koatty/koatty_core/commit/f1f6a6bc3a82a55ba152c88d1b47a5beb91483c6))
+* enhance router options handling ([3426508](https://github.com/koatty/koatty_core/commit/3426508b109917ca73f93a39e9527f42cd76dc2d))
+
+
+### Bug Fixes
+
+* add `setMetaData` method to gRPC context ([0116ca7](https://github.com/koatty/koatty_core/commit/0116ca7e13cf5d171baf9dcc6a228fece082cd8b))
+* grpc metadata sending ([be9a3b9](https://github.com/koatty/koatty_core/commit/be9a3b9a4bf8bfdd45ad9041eb2459ca72c2fbb8))
+* NativeServer types ([1a7dd5a](https://github.com/koatty/koatty_core/commit/1a7dd5a05e293e3ae99c3e81a91e970f2215ae3a))
+
+### [1.10.1](https://github.com/koatty/koatty_core/compare/v1.10.0...v1.10.1) (2024-11-20)
+
+## [1.10.0](https://github.com/koatty/koatty_core/compare/v1.10.0-20...v1.10.0) (2024-11-12)
+
+
+### Bug Fixes
+
+* fix ([10a36e7](https://github.com/koatty/koatty_core/commit/10a36e743c79dd844b53a2bcf64791e1e27665a5))
+
+## [1.10.0-20](https://github.com/koatty/koatty_core/compare/v1.10.0-19...v1.10.0-20) (2024-11-11)
+
+
+### Bug Fixes
+
+* Cannot set property server of app ([3be538a](https://github.com/koatty/koatty_core/commit/3be538a0603224793651eec7d5e18d6b1e278661))
+* redefined ([1d73d6d](https://github.com/koatty/koatty_core/commit/1d73d6da7b3aa9e9865b96c8510267d7634977ef))
+
+## [1.10.0-19](https://github.com/koatty/koatty_core/compare/v1.10.0-18...v1.10.0-19) (2024-11-11)
+
+## [1.10.0-18](https://github.com/koatty/koatty_core/compare/v1.10.0-17...v1.10.0-18) (2024-11-11)
+
+## [1.10.0-17](https://github.com/koatty/koatty_core/compare/v1.10.0-16...v1.10.0-17) (2024-11-08)
+
+
+### Bug Fixes
+
+* server ([9a8a1aa](https://github.com/koatty/koatty_core/commit/9a8a1aa7ef40d2cea6c0234de7ae87e0bbfdaa1f))
+
+## [1.10.0-16](https://github.com/koatty/koatty_core/compare/v1.10.0-15...v1.10.0-16) (2024-11-08)
+
+## [1.10.0-15](https://github.com/koatty/koatty_core/compare/v1.10.0-14...v1.10.0-15) (2024-11-07)
+
+## [1.10.0-14](https://github.com/koatty/koatty_core/compare/v1.10.0-13...v1.10.0-14) (2024-11-06)
+
+
+### Bug Fixes
+
+* build ([3124135](https://github.com/koatty/koatty_core/commit/3124135a75b690129d489e9d2219158768b2a6c5))
+
+## [1.10.0-13](https://github.com/koatty/koatty_core/compare/v1.10.0-12...v1.10.0-13) (2024-11-06)
+
+## [1.10.0-12](https://github.com/koatty/koatty_core/compare/v1.10.0-11...v1.10.0-12) (2024-11-06)
+
 ## [1.10.0-11](https://github.com/koatty/koatty_core/compare/v1.10.0-10...v1.10.0-11) (2024-11-04)
 
 ## [1.10.0-10](https://github.com/koatty/koatty_core/compare/v1.10.0-9...v1.10.0-10) (2024-11-04)

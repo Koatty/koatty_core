@@ -5,9 +5,13 @@
  * @ version: 2020-07-06 11:21:37
  */
 
-import { ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
+import { Server as gRPCServer, ServiceDefinition, UntypedHandleCall } from "@grpc/grpc-js";
+import { Server } from "http";
+import { Http2SecureServer } from "http2";
+import { Server as SecureServer } from "https";
 import Koa from "koa";
-import { KoattyContext, KoattyNext } from "./IContext";
+import { WebSocketServer } from "ws";
+import { KoattyContext, KoattyNext, RequestType, ResponseType } from "./IContext";
 
 /**
  * InitOptions
@@ -24,8 +28,15 @@ export interface InitOptions {
   koattyPath?: string;
 }
 
+// 
+export type NativeServer = Server | SecureServer | Http2SecureServer | gRPCServer | WebSocketServer;
+
 /**
- * Koatty Application Object
+ * Koatty Application interface
+ *
+ * @export
+ * @interface KoattyApplication
+ * @extends {Koa}
  */
 export interface KoattyApplication extends Koa {
   env: string;
@@ -34,7 +45,7 @@ export interface KoattyApplication extends Koa {
 
   options: InitOptions;
 
-  server: KoattyServer | KoattyServer[];
+  server: KoattyServer;
   router: KoattyRouter;
 
   appPath: string;
@@ -92,8 +103,12 @@ export interface KoattyApplication extends Koa {
 
   /**
    * Listening and start server
+   * 
+   * Since Koa.listen returns an http.Server type, the return value must be defined
+   *  as 'any' type here. When calling, note that Koatty.listen returns a NativeServer,
+   *  such as http/https Server or grpcServer or Websocket
    * @param listenCallback 
-   * @returns 
+   * @returns NativeServer
    */
   readonly listen: (listenCallback?: any) => any;
 
@@ -103,12 +118,11 @@ export interface KoattyApplication extends Koa {
    * @param reqHandler 
    * @returns 
    */
-  readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => { (req: unknown, res: unknown): Promise<any> };
+  readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
+    (req: RequestType, res: ResponseType): Promise<any>
+  };
 
 }
-
-
-type unknownServer = unknown;
 
 /**
  * interface Server
@@ -118,10 +132,10 @@ type unknownServer = unknown;
  */
 export interface KoattyServer {
   options: any;
-  server: unknownServer;
+  server: NativeServer;
   status: number;
 
-  readonly Start: (listenCallback: () => void) => unknownServer;
+  readonly Start: (listenCallback: () => void) => NativeServer;
   readonly Stop: (callback?: () => void) => void;
   /**
    * gRPC service register

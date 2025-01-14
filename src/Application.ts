@@ -4,26 +4,28 @@
  * @ license: BSD (3-Clause)
  * @ version: 2020-07-06 11:21:37
  */
-import EventEmitter from "events";
-import { ServerResponse } from "http";
+import { AsyncLocalStorage } from "async_hooks";
+import { IncomingMessage, ServerResponse } from "http";
 import Koa from "koa";
 import koaCompose from "koa-compose";
-import { isPrevent } from "koatty_exception";
 import { Helper } from "koatty_lib";
 import { DefaultLogger as Logger } from "koatty_logger";
+import { Trace } from "koatty_trace";
 import onFinished from "on-finished";
+import { KoattyMiddleware } from "./Component";
 import { createKoattyContext } from "./Context";
 import {
   AppEvent,
   InitOptions,
   KoattyApplication,
-  KoattyRouter, KoattyServer
+  KoattyRouter, KoattyServer,
 } from "./IApplication";
-import { KoattyContext } from "./IContext";
+import { KoattyContext, RequestType, ResponseType } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
+import { asyncEvent, bindProcessEvent, isPrevent, parseExp } from "./Utils";
 
 /**
- * Application 
+ * Koatty Application 
  * @export
  * @class Koatty
  * @extends {Koa}
@@ -31,14 +33,14 @@ import { KoattyMetadata } from "./Metadata";
  */
 export class Koatty extends Koa implements KoattyApplication {
   // runtime env mode
-  public env: string;
+  public env: string = "production";
   // app name
   public name: string;
   // app version
   public version: string;
   // app options
   public options: InitOptions;
-  public server: KoattyServer | KoattyServer[];
+  public server: KoattyServer;
   public router: KoattyRouter;
   // env var
   public appPath: string;
@@ -49,7 +51,9 @@ export class Koatty extends Koa implements KoattyApplication {
   public appDebug: boolean;
 
   public context: KoattyContext;
+  private tracer: KoattyMiddleware;
   private metadata: KoattyMetadata;
+  private ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
    * Creates an instance of Koatty.
@@ -57,22 +61,33 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   protected constructor(options: InitOptions = {
-    appDebug: true,
+    appDebug: false,
     appPath: '',
     rootPath: '',
     koattyPath: '',
+    name: 'KoattyApplication project',
+    version: "0.0.1",
   }) {
     super();
     this.options = options ?? {};
     this.name = options.name;
     this.version = options.version;
-    this.env = process.env.KOATTY_ENV || process.env.NODE_ENV;
     const { appDebug, appPath, rootPath, koattyPath } = this.options;
     this.appDebug = appDebug;
+    const envArg = (process.execArgv ?? []).join(",");
+    if (envArg.includes('ts-node') || envArg.includes('--debug')) this.appDebug = true;
+    // app.env
+    const env = process.env.KOATTY_ENV || process.env.NODE_ENV || "";
+    if (env.includes("dev")) this.env = 'development';
+    if (env.includes("pro")) this.env = 'production';
+    if (this.appDebug) this.env = "development";
     this.appPath = appPath;
     this.rootPath = rootPath;
     this.koattyPath = koattyPath;
+
     this.metadata = new KoattyMetadata();
+    this.ctxStorage = new AsyncLocalStorage();
+
     // constructor
     this.init();
     // catch error
@@ -127,7 +142,7 @@ export class Koatty extends Koa implements KoattyApplication {
    */
   public use(fn: Function): any {
     if (!Helper.isFunction) {
-      Logger.Error('The paramter is not a function.');
+      Logger.Error('The parameter is not a function.');
       return;
     }
     return super.use(<any>fn);
@@ -142,11 +157,10 @@ export class Koatty extends Koa implements KoattyApplication {
    */
   public useExp(fn: Function): any {
     if (!Helper.isFunction) {
-      Logger.Error('The paramter is not a function.');
+      Logger.Error('The parameter is not a function.');
       return;
     }
-    fn = parseExp(fn);
-    return this.use(fn);
+    return this.use(parseExp(fn));
   }
 
   /**
@@ -159,10 +173,12 @@ export class Koatty extends Koa implements KoattyApplication {
   public config(name: string, type = 'config') {
     try {
       const caches = this.getMetaData('_configs')[0] || {};
-      if (!caches[type]) caches[type] = {};
+      caches[type] = caches[type] || {};
       if (name === undefined) return caches[type];
+
       if (Helper.isString(name)) {
-        return name.indexOf('.') === -1 ? caches[type][name] : caches[type][name.split('.')[0]]?.[name.split('.')[1]];
+        const keys = name.split('.');
+        return keys.length === 1 ? caches[type][name] : caches[type][keys[0]]?.[keys[1]];
       }
       return caches[type][name];
     } catch (err) {
@@ -176,33 +192,41 @@ export class Koatty extends Koa implements KoattyApplication {
    *
    * @param {*} req
    * @param {*} res
-   * @param {string} [protocol]
+   * @param {KoattyProtocol} [protocol]
    * @returns {KoattyContext}  {*}
    * @memberof Koatty
    */
-  public createContext(req: any, res: any, protocol?: string): KoattyContext {
-    const resp = ['ws', 'wss', 'grpc'].includes(protocol ?? 'http') ? new ServerResponse(req) : res;
+  public createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
+    const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
+      new ServerResponse(<IncomingMessage>req) : res;
     // create context
-    const context = super.createContext(req, resp);
+    const context = super.createContext(req as IncomingMessage, resp as ServerResponse);
     Helper.define(context, "app", this);
     return createKoattyContext(context, protocol, req, res);
   }
 
   /**
    * listening and start server
-   *
+   * 
+   * Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here.
+   * When calling, note that Koatty.listen returns a NativeServer: http/https Server or 
+   * grpcServer or Websocket
    * @param {Function} [listenCallback] (app: Koatty) => void
-   * @returns {*}  any
+   * @returns {NativeServer}  NativeServer
    * @memberof Koatty
    */
-  public listen(listenCallback?: any): any {
-    const callback = () => {
-      // Emit app started event
+  public listen(listenCallback?: any) {//:NativeServer {
+    const callbackFuncAndEmit = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
       asyncEvent(this, AppEvent.appStart);
-      listenCallback(this);
+      listenCallback?.(this);
     };
-    return (<KoattyServer>this.server).Start(callback);
+
+    // binding event "appStop"
+    Logger.Log('Koatty', '', 'Bind App Stop event ...');
+    bindProcessEvent(this, 'appStop');
+    const server = this.server.Start(callbackFuncAndEmit);
+    return server as any;
   }
 
   /**
@@ -215,13 +239,23 @@ export class Koatty extends Koa implements KoattyApplication {
    * @memberof Koatty
    */
   callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
+    // inject response processed and opentrace
+    if (!this.tracer) this.middleware.unshift(this.handleResponse());
+    // req handler from router 
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }
     const fn = koaCompose(this.middleware);
-    return (req: unknown, res: unknown) => {
-      const context = this.createContext(req, res, protocol);
-      return this.handleRequest(context, fn);
+    if (!this.listenerCount('error')) this.on('error', this.onerror);
+
+    return (req: RequestType, res: ResponseType) => {
+      const ctx: any = this.createContext(req, res, protocol);
+      if (!this.ctxStorage) {
+        return this.handleRequest(ctx, fn);
+      }
+      return this.ctxStorage.run(ctx, async () => {
+        return this.handleRequest(ctx, fn);
+      });
     }
   }
 
@@ -237,11 +271,36 @@ export class Koatty extends Koa implements KoattyApplication {
   private async handleRequest(
     ctx: KoattyContext,
     fnMiddleware: (ctx: KoattyContext) => Promise<any>,
-  ) {
+  ): Promise<any> {
     const res = ctx.res;
     res.statusCode = 404;
-    onFinished(ctx.res, (err: Error) => ctx.onerror(err));
-    return fnMiddleware(ctx);
+    const onerror = (err: Error) => ctx.onerror(err);
+    onFinished(res, onerror);
+    return fnMiddleware(ctx).catch(onerror);
+  }
+  /**
+   * @description: handle Response & opentrace
+   * @return {*}
+   */
+  private handleResponse() {
+    const timeout = (this.config('http_timeout') || 10) * 1000;
+    const encoding = this.config('encoding') || 'utf-8';
+    const openTrace = this.config("open_trace") || false;
+    const asyncHooks = this.config("async_hooks") || false;
+
+    const options = {
+      RequestIdHeaderName: this.config('trace_header') || 'X-Request-Id',
+      RequestIdName: this.config('trace_id') || "requestId",
+      Timeout: timeout,
+      Encoding: encoding,
+      OpenTrace: openTrace,
+      AsyncHooks: asyncHooks,
+    }
+
+    // used trace middleware
+    const tracer = Trace(options, <any>this);
+    Helper.define(this, "tracer", tracer);
+    return tracer;
   }
 
   /**
@@ -298,40 +357,3 @@ export class Koatty extends Koa implements KoattyApplication {
 //         return Reflect.construct(target, args, newTarget);
 //     }
 // });
-
-
-/**
- * Convert express middleware for koa
- *
- * @param {function} fn
- * @returns
- * @memberof Koatty
- */
-function parseExp(fn: Function) {
-  return function (ctx: KoattyContext, next: Function) {
-    if (fn.length < 3) {
-      fn(ctx.req, ctx.res);
-      return next();
-    }
-    return new Promise((resolve, reject) => {
-      fn(ctx.req, ctx.res, (err: Error) => {
-        if (err) return reject(err);
-        resolve(next());
-      });
-    });
-  };
-}
-/**
- * Execute event as async
- * 
- * @param {EventEmitter} event
- * @param {string} eventName
- * @return {*}
- */
-async function asyncEvent(event: EventEmitter, eventName: string) {
-  const listeners = event.listeners(eventName);
-  for (const func of listeners) {
-    if (Helper.isFunction(func)) await func();
-  }
-  return event.removeAllListeners(eventName);
-}

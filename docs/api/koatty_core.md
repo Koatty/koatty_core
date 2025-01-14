@@ -8,7 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
-|  [Koatty](./koatty_core.koatty.md) | Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
+|  [Koatty](./koatty_core.koatty.md) | Koatty Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
 |  [KoattyMetadata](./koatty_core.koattymetadata.md) | <p>KoattyMetadata</p><p>  KoattyMetadata</p> |
 
 ## Enumerations
@@ -21,15 +21,29 @@
 
 |  Function | Description |
 |  --- | --- |
+|  [Component(identifier)](./koatty_core.component.md) | <p>Indicates that an decorated class is a "component".</p> |
+|  [Controller(path, options)](./koatty_core.controller.md) | <p>Indicates that an decorated class is a "controller".</p> |
 |  [createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md) | Create KoattyContext |
+|  [implementsAspectInterface(cls)](./koatty_core.implementsaspectinterface.md) | check is implements Aspect Interface |
+|  [implementsControllerInterface(cls)](./koatty_core.implementscontrollerinterface.md) | check is implements Controller Interface |
+|  [implementsMiddlewareInterface(cls)](./koatty_core.implementsmiddlewareinterface.md) | check is implements Middleware Interface |
+|  [implementsPluginInterface(cls)](./koatty_core.implementsplugininterface.md) | check is implements Plugin Interface |
+|  [implementsServiceInterface(cls)](./koatty_core.implementsserviceinterface.md) | check is implements Service Interface |
+|  [Middleware(identifier)](./koatty_core.middleware.md) | <p>Indicates that an decorated class is a "middleware".</p> |
+|  [Plugin(identifier)](./koatty_core.plugin.md) | <p>Indicates that an decorated class is a "plugin".</p> |
+|  [Service(identifier)](./koatty_core.service.md) | <p>Indicates that an decorated class is a "service".</p> |
 
 ## Interfaces
 
 |  Interface | Description |
 |  --- | --- |
+|  [IController](./koatty_core.icontroller.md) | Interface for Controller |
+|  [IMiddleware](./koatty_core.imiddleware.md) | Interface for Middleware class |
 |  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
+|  [IPlugin](./koatty_core.iplugin.md) | Interface for Plugin class |
 |  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
-|  [KoattyApplication](./koatty_core.koattyapplication.md) | Koatty Application Object |
+|  [IService](./koatty_core.iservice.md) | Interface for Service class |
+|  [KoattyApplication](./koatty_core.koattyapplication.md) | <p>Koatty Application interface</p><p>  KoattyApplication  {<!-- -->Koa<!-- -->}</p> |
 |  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
 |  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
 |  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
@@ -40,6 +54,7 @@
 |  Variable | Description |
 |  --- | --- |
 |  [AppEventArr](./koatty_core.appeventarr.md) |  |
+|  [CONTROLLER\_ROUTER](./koatty_core.controller_router.md) |  |
 
 ## Type Aliases
 
@@ -53,7 +68,9 @@
 |  [IWebSocket](./koatty_core.iwebsocket.md) |  |
 |  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
 |  [KoaContext](./koatty_core.koacontext.md) |  |
+|  [KoattyMiddleware](./koatty_core.koattymiddleware.md) | @<!-- -->description: koatty middleware function |
 |  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
+|  [NativeServer](./koatty_core.nativeserver.md) |  |
 |  [RequestType](./koatty_core.requesttype.md) |  |
 |  [ResponseType](./koatty_core.responsetype.md) |  |
 

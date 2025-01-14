@@ -7,8 +7,12 @@
 import {
   ServerReadableStream, ServerUnaryCall, ServerWritableStream
 } from "@grpc/grpc-js";
-import { sendUnaryData, ServerReadableStreamImpl, ServerUnaryCallImpl } from "@grpc/grpc-js/build/src/server-call";
-import { IncomingMessage, OutgoingMessage } from "http";
+import {
+  sendUnaryData, ServerReadableStreamImpl,
+  ServerUnaryCallImpl
+} from "@grpc/grpc-js/build/src/server-call";
+import { IncomingMessage, OutgoingMessage, ServerResponse } from "http";
+import { Http2ServerRequest, Http2ServerResponse } from "http2";
 import Koa from "koa";
 import { WebSocket } from "ws";
 import { KoattyMetadata } from "./Metadata";
@@ -20,26 +24,29 @@ export type KoaContext = Koa.ParameterizedContext;
  */
 export type KoattyNext = Koa.Next;
 
-export type RequestType = IncomingMessage & IRpcServerCall<any, any> & {
+// RequestType
+export type RequestType = IncomingMessage | Http2ServerRequest | IRpcServerCall<any, any> | {
   data: Buffer | ArrayBuffer | Buffer[];
 };
 
-export type ResponseType = OutgoingMessage & IRpcServerCallback<any> & IWebSocket;
-
-// redefine ServerCall
-export type IRpcServerCall<ReqType, ResType> = ServerUnaryCall<ReqType, ResType>
-  & ServerReadableStream<ReqType, ResType>
-  & ServerWritableStream<ReqType, ResType>
-  ;
-// redefine ServerCallImpl
-export type IRpcServerCallImpl<ReqType, ResType> = ServerUnaryCallImpl<ReqType, ResType>
-  & ServerReadableStreamImpl<ReqType, ResType>;
-
 // redefine ServerCallback
-export type IRpcServerCallback<ResType> = sendUnaryData<ResType>;
+export type IRpcServerCallback<Response> = sendUnaryData<Response>;
 
 // redefine WebSocket
 export type IWebSocket = WebSocket;
+
+// ResponseType
+export type ResponseType = ServerResponse | Http2ServerResponse | OutgoingMessage | IRpcServerCallback<any> | IWebSocket;
+
+// redefine ServerCall
+export type IRpcServerCall<RequestType, ResponseType> = ServerUnaryCall<RequestType, ResponseType>
+  | ServerReadableStream<RequestType, ResponseType>
+  | ServerWritableStream<RequestType, ResponseType>
+  ;
+
+// redefine ServerCallImpl
+export type IRpcServerCallImpl<RequestType, ResponseType> = ServerUnaryCallImpl<RequestType, ResponseType>
+  | ServerReadableStreamImpl<RequestType, ResponseType>;
 
 /**
  * Koatty Context.
@@ -102,7 +109,7 @@ export interface KoattyContext extends KoaContext {
    *
    * @memberof KoattyContext
    */
-  readonly sendMetadata?: (data: KoattyMetadata) => void;
+  readonly sendMetadata: (data?: KoattyMetadata) => void;
 
   /**
    * Replace ctx.throw

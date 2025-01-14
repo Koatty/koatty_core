@@ -7,7 +7,7 @@
 **Signature:**
 
 ```typescript
-export type ResponseType = OutgoingMessage & IRpcServerCallback<any> & IWebSocket;
+export type ResponseType = ServerResponse | Http2ServerResponse | OutgoingMessage | IRpcServerCallback<any> | IWebSocket;
 ```
 **References:** [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->, [IWebSocket](./koatty_core.iwebsocket.md)
 

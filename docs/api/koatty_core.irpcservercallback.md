@@ -7,5 +7,5 @@
 **Signature:**
 
 ```typescript
-export type IRpcServerCallback<ResType> = sendUnaryData<ResType>;
+export type IRpcServerCallback<Response> = sendUnaryData<Response>;
 ```
