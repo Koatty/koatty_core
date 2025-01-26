@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.11.6](https://github.com/koatty/koatty_core/compare/v1.11.5...v1.11.6) (2025-01-26)
+
+
+### Bug Fixes
+
+* Adjustment of the priority of operating environment attributes ([20af6e1](https://github.com/koatty/koatty_core/commit/20af6e1cb53bd1628c134434afa07797179bf865))
+
 ### [1.11.5](https://github.com/koatty/koatty_core/compare/v1.11.4...v1.11.5) (2025-01-14)
 
 
