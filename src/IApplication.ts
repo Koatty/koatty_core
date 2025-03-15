@@ -160,6 +160,16 @@ export type IHttpImplementation = (ctx: KoattyContext, next?: KoattyNext) => Pro
 // IWsImplementation
 export type IWsImplementation = (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
 
+// IGraphQLImplementation
+export type IGraphQLImplementation = {
+  [methodName: string]: (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
+};
+
+/**
+ * GraphQLSchemaDefinition
+ * TODO
+ */
+type GraphQLSchemaDefinition = any;
 /**
  * RouterImplementation
  *
@@ -170,7 +180,8 @@ export interface RouterImplementation {
   path?: string;
   method?: string;
   service?: ServiceDefinition;
-  implementation?: IHttpImplementation | IRpcImplementation | IWsImplementation;
+  schema?: GraphQLSchemaDefinition;
+  implementation?: IHttpImplementation | IRpcImplementation | IWsImplementation | IGraphQLImplementation;
 }
 
 /**

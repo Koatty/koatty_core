@@ -24,6 +24,8 @@
 |  [Component(identifier)](./koatty_core.component.md) | <p>Indicates that an decorated class is a "component".</p> |
 |  [Controller(path, options)](./koatty_core.controller.md) | <p>Indicates that an decorated class is a "controller".</p> |
 |  [createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md) | Create KoattyContext |
+|  [GraphQLController(path, options)](./koatty_core.graphqlcontroller.md) | Indicates that an decorated class is a "graphql controller".  |
+|  [GrpcController(path, options)](./koatty_core.grpccontroller.md) | Indicates that an decorated class is a "grpc controller".  |
 |  [implementsAspectInterface(cls)](./koatty_core.implementsaspectinterface.md) | check is implements Aspect Interface |
 |  [implementsControllerInterface(cls)](./koatty_core.implementscontrollerinterface.md) | check is implements Controller Interface |
 |  [implementsMiddlewareInterface(cls)](./koatty_core.implementsmiddlewareinterface.md) | check is implements Middleware Interface |
@@ -32,6 +34,7 @@
 |  [Middleware(identifier)](./koatty_core.middleware.md) | <p>Indicates that an decorated class is a "middleware".</p> |
 |  [Plugin(identifier)](./koatty_core.plugin.md) | <p>Indicates that an decorated class is a "plugin".</p> |
 |  [Service(identifier)](./koatty_core.service.md) | <p>Indicates that an decorated class is a "service".</p> |
+|  [WebSocketController(path, options)](./koatty_core.websocketcontroller.md) | Indicates that an decorated class is a "websocket controller".  |
 
 ## Interfaces
 
@@ -61,6 +64,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [EventHookFunc](./koatty_core.eventhookfunc.md) |  |
+|  [IGraphQLImplementation](./koatty_core.igraphqlimplementation.md) |  |
 |  [IHttpImplementation](./koatty_core.ihttpimplementation.md) |  |
 |  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
 |  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |

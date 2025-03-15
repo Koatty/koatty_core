@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/koatty/koatty_core/compare/v1.12.0...v1.13.0) (2025-03-13)
+
+
+### Features
+
+* 添加 GrpcController、WebSocketController 和 GraphQLController 装饰器 ([7f716c2](https://github.com/koatty/koatty_core/commit/7f716c2618f9dd13e50d77b7780f22568249789a))
+* 添加 IGraphQLImplementation 类型和更新 RouterImplementation 接口 ([5059371](https://github.com/koatty/koatty_core/commit/5059371532cf4afd22d7b702a8dc0693edf79c47))
+
+## [1.12.0](https://github.com/koatty/koatty_core/compare/v1.11.6...v1.12.0) (2025-03-12)
+
+
+### Features
+
+* add IGraphQLImplementation and GraphQLSchemaDefinition types ([3d227d0](https://github.com/koatty/koatty_core/commit/3d227d0acb7e675fe52ec2b2bfe74881e7c296fd))
+
+### [1.11.6](https://github.com/koatty/koatty_core/compare/v1.11.5...v1.11.6) (2025-01-26)
+
+
+### Bug Fixes
+
+* Adjustment of the priority of operating environment attributes ([20af6e1](https://github.com/koatty/koatty_core/commit/20af6e1cb53bd1628c134434afa07797179bf865))
+
 ### [1.11.5](https://github.com/koatty/koatty_core/compare/v1.11.4...v1.11.5) (2025-01-14)
 
 

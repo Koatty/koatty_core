@@ -3,7 +3,7 @@
  * @Usage: 
  * @Author: richen
  * @Date: 2023-12-09 21:56:32
- * @LastEditTime: 2024-11-28 13:59:55
+ * @LastEditTime: 2025-03-13 16:31:11
  * @License: BSD (3-Clause)
  * @Copyright (c): <richenlin(at)gmail.com>
  */
@@ -82,6 +82,63 @@ export function Controller(path = "", options?: { [key: string]: any }): ClassDe
     IOC.saveClass("CONTROLLER", target, identifier);
     options = options || {
       protocol: "http",
+    };
+    options.path = path;
+    IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
+  };
+}
+
+/**
+ * Indicates that an decorated class is a "grpc controller".
+ * @export
+ * @param {*} path 
+ * @param {object} options 
+ * @return {*}
+ */
+export function GrpcController(path = "", options?: { [key: string]: any }): ClassDecorator {
+  return (target: Function) => {
+    const identifier = IOC.getIdentifier(target);
+    IOC.saveClass("CONTROLLER", target, identifier);
+    options = options || {
+      protocol: "grpc",
+    };
+    options.path = path;
+    IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
+  };
+}
+
+/**
+ * Indicates that an decorated class is a "websocket controller".
+ * @export
+ * @param {*} path 
+ * @param {object} options 
+ * @return {*}
+ */
+export function WebSocketController(path = "", options?: { [key: string]: any }): ClassDecorator {
+  return (target: Function) => {
+    const identifier = IOC.getIdentifier(target);
+    IOC.saveClass("CONTROLLER", target, identifier);
+    options = options || {
+      protocol: "ws",
+    };
+    options.path = path;
+    IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
+  };
+}
+
+/**
+ * Indicates that an decorated class is a "graphql controller".
+ * @export
+ * @param {*} path 
+ * @param {object} options 
+ * @return {*}
+ */
+export function GraphQLController(path = "", options?: { [key: string]: any }): ClassDecorator {
+  return (target: Function) => {
+    const identifier = IOC.getIdentifier(target);
+    IOC.saveClass("CONTROLLER", target, identifier);
+    options = options || {
+      protocol: "graphql",
     };
     options.path = path;
     IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
