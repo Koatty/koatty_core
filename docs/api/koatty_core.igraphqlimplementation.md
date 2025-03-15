@@ -8,7 +8,7 @@
 
 ```typescript
 export type IGraphQLImplementation = {
-    [methodName: string]: (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
+    [methodName: string]: (args: any, ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
 };
 ```
 **References:** [KoattyContext](./koatty_core.koattycontext.md)<!-- -->, [KoattyNext](./koatty_core.koattynext.md)
