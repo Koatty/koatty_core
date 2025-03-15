@@ -162,7 +162,7 @@ export type IWsImplementation = (ctx: KoattyContext, next?: KoattyNext) => Promi
 
 // IGraphQLImplementation
 export type IGraphQLImplementation = {
-  [methodName: string]: (ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
+  [methodName: string]: (args: any, ctx: KoattyContext, next?: KoattyNext) => Promise<any>;
 };
 
 /**
