@@ -53,7 +53,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public context: KoattyContext;
   private tracer: KoattyMiddleware;
   private metadata: KoattyMetadata;
-  private ctxStorage: AsyncLocalStorage<unknown>;
+  // public ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
    * Protected constructor for the Application class.
