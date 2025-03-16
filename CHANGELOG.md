@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/koatty/koatty_core/compare/v1.14.0...v1.15.0) (2025-03-16)
+
+
+### Features
+
+* 更新 IGraphQLImplementation 类型以接受 args 参数并升级版本至 1.13.0 ([fc8d9b5](https://github.com/koatty/koatty_core/commit/fc8d9b52dcb0d0275f3e2d20f4c4f569868ac6b3))
+
 ## [1.14.0](https://github.com/koatty/koatty_core/compare/v1.13.0...v1.14.0) (2025-03-15)
 
 
