@@ -17,12 +17,13 @@ import { KoattyMetadata } from "./Metadata";
 
 
 /**
- * Create KoattyContext
- * @param ctx  koa context
- * @param protocol server protocol
- * @param req  request 
- * @param res  response
- * @returns 
+ * Create Koatty context instance based on protocol type.
+ * 
+ * @param {KoaContext} ctx - Koa context object
+ * @param {string} protocol - Protocol type ('http'|'https'|'ws'|'wss'|'grpc')
+ * @param {any} req - Request object
+ * @param {any} res - Response object
+ * @returns {KoattyContext} Returns appropriate context instance based on protocol
  */
 export function createKoattyContext(ctx: KoaContext, protocol: string,
   req: any, res: any): KoattyContext {
@@ -37,9 +38,17 @@ export function createKoattyContext(ctx: KoaContext, protocol: string,
 }
 
 /**
- * @description: create http context
- * @param {KoattyContext} context
- * @return {KoattyContext} context
+ * Create HTTP context with metadata functionality.
+ * 
+ * @param {KoattyContext} context The Koatty context object
+ * @returns {KoattyContext} The enhanced context with metadata methods
+ * 
+ * @description
+ * Defines metadata-related methods on the context:
+ * - metadata: Stores KoattyMetadata instance
+ * - getMetaData: Retrieves metadata value by key
+ * - setMetaData: Sets metadata value for key
+ * - sendMetadata: Sends metadata as response headers
  */
 function createHttpContext(context: KoattyContext) {
   // metadata
@@ -56,13 +65,14 @@ function createHttpContext(context: KoattyContext) {
 }
 
 /**
- * Create Koatty gRPC Context
- *
- *
- * @param {KoattyContext} ctx
- * @param {IRpcServerUnaryCall<any, any>} call
- * @param {IRpcServerCallback<any>} rpcCallback
- * @returns {*}  {KoattyContext}
+ * Create a gRPC context by extending KoattyContext with gRPC-specific properties and methods.
+ * 
+ * @param context - The base KoattyContext instance
+ * @param call - The gRPC server call object containing request and metadata
+ * @param callback - The gRPC server callback function
+ * @returns The enhanced KoattyContext with gRPC capabilities
+ * 
+ * @internal
  */
 function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestType, ResponseType>,
   callback: IRpcServerCallback<any>): KoattyContext {
@@ -94,14 +104,13 @@ function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestT
   return context;
 }
 
-
 /**
- * Create Koatty Websocket Context
- *
- * @param {KoattyContext} ctx
- * @param {IncomingMessage} req
- * @param {WebSocket} socket
- * @returns {*}  {KoattyContext}
+ * Create WebSocket context from HTTP context.
+ * 
+ * @param {KoattyContext} context The original context object
+ * @param {IncomingMessage & { data: Buffer | ArrayBuffer | Buffer[] }} req WebSocket request object
+ * @param {IWebSocket} socket WebSocket connection instance
+ * @returns {KoattyContext} Enhanced context with WebSocket support
  */
 function createWsContext(context: KoattyContext, req: IncomingMessage & {
   data: Buffer | ArrayBuffer | Buffer[];
@@ -114,11 +123,11 @@ function createWsContext(context: KoattyContext, req: IncomingMessage & {
 }
 
 /**
- * Initializes the base context for the application.
- *
- * @param {KoaContext} ctx - The Koa context object.
- * @param {string} protocol - The protocol of the request (e.g., 'http', 'https').
- * @returns {KoattyContext} - The initialized Koatty context object.
+ * Initialize base context by extending KoaContext with additional properties and methods.
+ * 
+ * @param {KoaContext} ctx - The original Koa context object to extend from.
+ * @param {string} protocol - The protocol to be defined in the context.
+ * @returns {KoattyContext} The extended context object with additional properties and methods.
  */
 function initBaseContext(ctx: KoaContext, protocol: string): KoattyContext {
   const context: KoattyContext = Object.create(ctx);

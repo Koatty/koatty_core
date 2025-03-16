@@ -6,10 +6,11 @@
  */
 
 /**
- * KoattyMetadata
- *
- * @export
- * @class KoattyMetadata
+ * A class for managing metadata with key-value pairs storage.
+ * Provides methods to set, get, add, remove, merge, and clone metadata.
+ * Values are stored as arrays to support multiple values for a single key.
+ * Supports Buffer values and handles their cloning appropriately.
+ * Can be serialized to JSON and created from plain objects.
  */
 export class KoattyMetadata {
   protected _internalRepo = new Map<string, any[]>();

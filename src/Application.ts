@@ -56,9 +56,13 @@ export class Koatty extends Koa implements KoattyApplication {
   private ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
-   * Creates an instance of Koatty.
-   * @param {InitOptions} options
-   * @memberof Koatty
+   * Protected constructor for the Application class.
+   * Initializes a new instance with configuration options and sets up the application environment.
+   * 
+   * @remarks
+   * - Sets up environment based on debug mode and environment variables
+   * - Initializes metadata and context storage
+   * - Calls init() and error capture methods
    */
   protected constructor(options: InitOptions = {
     appDebug: false,
@@ -97,16 +101,15 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * app custom init, must be defined options
+   * Initialize application.
+   * This method can be overridden in subclasses to perform initialization tasks.
    */
   public init(): void { }
 
   /**
-   * Set application metadata
-   *
-   * @param {string} key
-   * @param {*} value
-   * @memberof Koatty
+   * Set metadata value by key.
+   * @param key The key of metadata. If key starts with "_", it will be defined as private property.
+   * @param value The value to be set.
    */
   setMetaData(key: string, value: any) {
     // private
@@ -118,10 +121,9 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Get application metadata by key
-   *
-   * @param {string} key
-   * @memberof Koatty
+   * Get metadata by key from application instance
+   * @param key The metadata key to retrieve
+   * @returns An array containing the metadata value(s). Returns empty array if not found
    */
   getMetaData(key: string): any[] {
     // private
@@ -136,11 +138,10 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Use the given koa middleware `fn`.
-   * support generator func
-   * @param {Function} fn
-   * @returns {any}
-   * @memberof Koatty
+   * Add middleware to the application.
+   * @param {Function} fn The middleware function to be added
+   * @returns {any} Returns the result of adding the middleware
+   * @throws {Error} When the parameter is not a function
    */
   public use(fn: Function): any {
     if (!Helper.isFunction) {
@@ -151,11 +152,12 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Use the given Express middleware `fn`.
-   *
-   * @param {function} fn
-   * @returns {any}
-   * @memberof Koatty
+   * Use express-style middleware function.
+   * Convert express-style middleware to koa-style middleware.
+   * 
+   * @param {Function} fn Express-style middleware function
+   * @returns {any} Returns the result of middleware execution
+   * @throws {Error} When parameter is not a function
    */
   public useExp(fn: Function): any {
     if (!Helper.isFunction) {
@@ -166,11 +168,20 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Read app configuration
-   *
-   * @param {any} name
-   * @param {string} [type="config"]
-   * @memberof Koatty
+   * Get configuration value by name and type.
+   * @param {string} name Configuration key name, support dot notation (e.g. 'app.port')
+   * @param {string} [type='config'] Configuration type, defaults to 'config'
+   * @returns {any} Configuration value or null if error occurs
+   * 
+   * @example
+   * // Get single level config
+   * app.config('port');
+   * 
+   * // Get nested config
+   * app.config('database.host');
+   * 
+   * // Get all configs of specific type
+   * app.config(undefined, 'middleware');
    */
   public config(name: string, type = 'config') {
     try {
@@ -190,13 +201,13 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Create Context for every request 
-   *
-   * @param {*} req
-   * @param {*} res
-   * @param {KoattyProtocol} [protocol]
-   * @returns {KoattyContext}  {*}
-   * @memberof Koatty
+   * Create a Koatty context object.
+   * 
+   * @param {RequestType} req Request object
+   * @param {ResponseType} res Response object
+   * @param {string} [protocol='http'] Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'grpc'
+   * @returns {any} Koatty context object
+   * @public
    */
   public createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
     const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
@@ -208,14 +219,13 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * listening and start server
+   * Listening and start server
    * 
-   * Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here.
-   * When calling, note that Koatty.listen returns a NativeServer: http/https Server or 
-   * grpcServer or Websocket
-   * @param {Function} [listenCallback] (app: Koatty) => void
-   * @returns {NativeServer}  NativeServer
-   * @memberof Koatty
+   * Since Koa.listen returns an http.Server type, the return value must be defined
+   *  as 'any' type here. When calling, note that Koatty.listen returns a NativeServer,
+   *  such as http/https Server or grpcServer or Websocket
+   * @param {Function} [listenCallback] Optional callback function to be executed after server starts
+   * @returns {NativeServer} The native server instance
    */
   public listen(listenCallback?: any) {//:NativeServer {
     const callbackFuncAndEmit = () => {
@@ -232,13 +242,12 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * return a request handler callback
-   * for http/gRPC/ws server.
-   *
-   * @param {KoattyProtocol} [protocol] 
-   * @param {(ctx: KoattyContext) => Promise<any>} [reqHandler]
-   * @returns {*}  
-   * @memberof Koatty
+   * Create a callback function for handling requests.
+   * 
+   * @param protocol - The protocol type, defaults to "http"
+   * @param reqHandler - Optional request handler function for processing requests
+   * @returns A function that handles incoming requests with the configured middleware stack
+   * ```
    */
   callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
     // inject response processed and opentrace
@@ -262,13 +271,12 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Handle request in callback.
-   *
+   * Handle request with middleware.
+   * 
+   * @param ctx KoattyContext instance
+   * @param fnMiddleware Composed middleware function
+   * @returns Promise<any>
    * @private
-   * @param {KoattyContext} ctx
-   * @param {(ctx: KoattyContext) => Promise<any>} fnMiddleware
-   * @returns {*}  
-   * @memberof Koatty
    */
   private async handleRequest(
     ctx: KoattyContext,
@@ -280,9 +288,14 @@ export class Koatty extends Koa implements KoattyApplication {
     onFinished(res, onerror);
     return fnMiddleware(ctx).catch(onerror);
   }
+
   /**
-   * @description: handle Response & opentrace
-   * @return {*}
+   * Handle response middleware configuration and setup trace functionality.
+   * Initialize trace middleware with configuration options including timeout, encoding,
+   * request ID headers and async hooks settings.
+   * 
+   * @private
+   * @returns {Function} Returns configured trace middleware
    */
   private handleResponse() {
     const timeout = (this.config('http_timeout') || 10) * 1000;
@@ -306,9 +319,16 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * registration exception handling
-   *
-   * @memberof Koatty
+   * Capture and handle various error events.
+   * - Handles Koa application errors
+   * - Handles process warnings
+   * - Handles unhandled promise rejections
+   * - Handles uncaught exceptions
+   * 
+   * If the error is not prevented (via isPrevent), it will be logged.
+   * For EADDRINUSE errors, the process will exit with code -1.
+   * 
+   * @private
    */
   private captureError(): void {
     // koa error

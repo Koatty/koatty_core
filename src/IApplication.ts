@@ -32,11 +32,11 @@ export interface InitOptions {
 export type NativeServer = Server | SecureServer | Http2SecureServer | gRPCServer | WebSocketServer;
 
 /**
- * Koatty Application interface
- *
- * @export
+ * Interface representing a Koatty application that extends Koa.
+ * Defines the structure and capabilities of a Koatty application instance.
+ * 
  * @interface KoattyApplication
- * @extends {Koa}
+ * @extends Koa
  */
 export interface KoattyApplication extends Koa {
   env: string;
@@ -58,46 +58,68 @@ export interface KoattyApplication extends Koa {
   context: KoattyContext;
 
   /**
-   * app custom init, must be defined options
+   * Initialize application.
+   * This method can be overridden in subclasses to perform initialization tasks.
    */
   init: () => void;
 
   /**
-  * Application metadata operation
-  * 
-  * @memberof Context
-  */
+   * Get metadata by key from application instance
+   * @param key The metadata key to retrieve
+   * @returns An array containing the metadata value(s). Returns empty array if not found
+   */
   readonly getMetaData: (key: string) => any[];
+  /**
+   * Set metadata value by key.
+   * @param key The key of metadata. If key starts with "_", it will be defined as private property.
+   * @param value The value to be set.
+   */
   readonly setMetaData: (key: string, value: unknown) => void;
 
   /**
-   * Use middleware
-   * @param fn 
-   * @returns 
+   * Add middleware to the application.
+   * @param {Function} fn The middleware function to be added
+   * @returns {any} Returns the result of adding the middleware
+   * @throws {Error} When the parameter is not a function
    */
   readonly use: (fn: Function) => any;
 
   /**
-   * Use the given Express middleware
-   * @param fn 
-   * @returns 
+   * Use express-style middleware function.
+   * Convert express-style middleware to koa-style middleware.
+   * 
+   * @param {Function} fn Express-style middleware function
+   * @returns {any} Returns the result of middleware execution
+   * @throws {Error} When parameter is not a function
    */
   readonly useExp: (fn: Function) => any;
 
   /**
-   * Read app configuration
-   * @param name 
-   * @param type 
-   * @returns 
+   * Get configuration value by name and type.
+   * @param {string} name Configuration key name, support dot notation (e.g. 'app.port')
+   * @param {string} [type='config'] Configuration type, defaults to 'config'
+   * @returns {any} Configuration value or null if error occurs
+   * 
+   * @example
+   * // Get single level config
+   * app.config('port');
+   * 
+   * // Get nested config
+   * app.config('database.host');
+   * 
+   * // Get all configs of specific type
+   * app.config(undefined, 'middleware');
    */
   readonly config: (name: string, type?: string) => any;
 
   /**
-   * Create context
-   * @param req 
-   * @param res 
-   * @param protocol 
-   * @returns 
+   * Create a Koatty context object.
+   * 
+   * @param {RequestType} req Request object
+   * @param {ResponseType} res Response object
+   * @param {string} [protocol='http'] Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'grpc'
+   * @returns {any} Koatty context object
+   * @public
    */
   readonly createContext: (req: any, res: any, protocol?: string) => KoattyContext;
 
@@ -107,16 +129,18 @@ export interface KoattyApplication extends Koa {
    * Since Koa.listen returns an http.Server type, the return value must be defined
    *  as 'any' type here. When calling, note that Koatty.listen returns a NativeServer,
    *  such as http/https Server or grpcServer or Websocket
-   * @param listenCallback 
-   * @returns NativeServer
+   * @param {Function} [listenCallback] Optional callback function to be executed after server starts
+   * @returns {NativeServer} The native server instance
    */
   readonly listen: (listenCallback?: any) => any;
 
   /**
+   * Create a callback function for handling requests.
    * 
-   * @param protocol 
-   * @param reqHandler 
-   * @returns 
+   * @param protocol - The protocol type, defaults to "http"
+   * @param reqHandler - Optional request handler function for processing requests
+   * @returns A function that handles incoming requests with the configured middleware stack
+   * ```
    */
   readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
     (req: RequestType, res: ResponseType): Promise<any>
@@ -125,10 +149,15 @@ export interface KoattyApplication extends Koa {
 }
 
 /**
- * interface Server
- *
- * @export
+ * Interface for Koatty server instance
+ * 
  * @interface KoattyServer
+ * @property {any} options - Server configuration options
+ * @property {NativeServer} server - Native server instance
+ * @property {number} status - Current server status
+ * @property {Function} Start - Start the server and return native server instance
+ * @property {Function} Stop - Stop the server
+ * @property {Function} RegisterService - Register gRPC service implementation
  */
 export interface KoattyServer {
   options: any;
@@ -145,10 +174,9 @@ export interface KoattyServer {
 }
 
 /**
- * gRPC Implementation
- *
- * @export
+ * Interface for gRPC method implementations.
  * @interface IRpcImplementation
+ * @description Key-value pairs where keys are method names and values are untyped handle call functions.
  */
 export interface IRpcImplementation {
   [methodName: string]: UntypedHandleCall;
@@ -185,10 +213,19 @@ export interface RouterImplementation {
 }
 
 /**
- * Router interface
- *
- * @export
+ * Interface for Koatty router
+ * 
  * @interface KoattyRouter
+ * @description
+ * Defines the structure and behavior of a router in Koatty framework.
+ * Provides methods for setting routes, loading router configurations,
+ * and managing router implementations.
+ * 
+ * @property {any} options - Router configuration options
+ * @property {any} router - Instance of KoaRouter or custom router implementation
+ * @property {Function} SetRouter - Method to set router implementation for a route
+ * @property {Function} LoadRouter - Method to load and register router configurations
+ * @property {Function} ListRouter - Optional method to get list of registered routers
  */
 export interface KoattyRouter {
   /**
