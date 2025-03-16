@@ -4,9 +4,7 @@
 
 ## KoattyApplication.getMetaData property
 
-Application metadata operation
-
- Context
+Get metadata by key from application instance
 
 **Signature:**
 

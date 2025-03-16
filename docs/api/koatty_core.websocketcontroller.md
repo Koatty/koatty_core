@@ -4,7 +4,7 @@
 
 ## WebSocketController() function
 
-Indicates that an decorated class is a "websocket controller". 
+WebSocket controller decorator. Define a class as WebSocket controller.
 
 **Signature:**
 
@@ -16,12 +16,66 @@ export declare function WebSocketController(path?: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ |
-|  options | { \[key: string\]: any; } | _(Optional)_  {<!-- -->\*<!-- -->} |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Base path for the WebSocket controller
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ \[key: string\]: any; }
+
+
+</td><td>
+
+_(Optional)_ WebSocket controller configuration options
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
+
+{<!-- -->ClassDecorator<!-- -->} Returns a class decorator function
+
+## Example
+
+
+```typescript
+@WebSocketController('/ws')
+export class MyWSController {}
+```
 

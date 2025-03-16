@@ -4,7 +4,7 @@
 
 ## implementsMiddlewareInterface() function
 
-check is implements Middleware Interface
+Check if a class implements the IMiddleware interface.
 
 **Signature:**
 
@@ -14,12 +14,42 @@ export declare function implementsMiddlewareInterface(cls: any): cls is IMiddlew
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cls | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cls
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The class to check
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 cls is [IMiddleware](./koatty_core.imiddleware.md)
 
+True if the class implements IMiddleware interface, false otherwise
 

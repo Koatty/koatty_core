@@ -4,7 +4,7 @@
 
 ## implementsControllerInterface() function
 
-check is implements Controller Interface
+Check if a class implements the IController interface.
 
 **Signature:**
 
@@ -14,12 +14,42 @@ export declare function implementsControllerInterface(cls: any): cls is IControl
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cls | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cls
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The class to check
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 cls is [IController](./koatty_core.icontroller.md)
 
+True if the class implements IController interface, false otherwise
 

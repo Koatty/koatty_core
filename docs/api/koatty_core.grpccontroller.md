@@ -4,7 +4,7 @@
 
 ## GrpcController() function
 
-Indicates that an decorated class is a "grpc controller". 
+GrpcController decorator for registering gRPC controller class.
 
 **Signature:**
 
@@ -16,12 +16,66 @@ export declare function GrpcController(path?: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ |
-|  options | { \[key: string\]: any; } | _(Optional)_  {<!-- -->\*<!-- -->} |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The base path for the gRPC service
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ \[key: string\]: any; }
+
+
+</td><td>
+
+_(Optional)_ Configuration options for the gRPC controller
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
+
+ClassDecorator function that registers the controller class
+
+## Example
+
+
+```typescript
+@GrpcController("/user")
+class UserController {}
+```
 

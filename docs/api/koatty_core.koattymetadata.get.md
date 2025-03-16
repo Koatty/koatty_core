@@ -14,10 +14,39 @@ get(key: string): any[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string | The key whose value should be retrieved.  A list of values associated with the given key. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The key whose value should be retrieved.  A list of values associated with the given key.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any\[\]

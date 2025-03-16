@@ -4,9 +4,9 @@
 
 ## KoattyServer interface
 
-interface Server
+Interface for Koatty server instance
 
-  KoattyServer
+ KoattyServer  {<!-- -->any<!-- -->} options - Server configuration options  {<!-- -->NativeServer<!-- -->} server - Native server instance  {<!-- -->number<!-- -->} status - Current server status  {<!-- -->Function<!-- -->} Start - Start the server and return native server instance  {<!-- -->Function<!-- -->} Stop - Stop the server  {<!-- -->Function<!-- -->} RegisterService - Register gRPC service implementation
 
 **Signature:**
 
@@ -16,12 +16,135 @@ export interface KoattyServer
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [options](./koatty_core.koattyserver.options.md) |  | any |  |
-|  [RegisterService?](./koatty_core.koattyserver.registerservice.md) | <code>readonly</code> | (impl: any) =&gt; void | _(Optional)_ gRPC service register |
-|  [server](./koatty_core.koattyserver.server.md) |  | [NativeServer](./koatty_core.nativeserver.md) |  |
-|  [Start](./koatty_core.koattyserver.start.md) | <code>readonly</code> | (listenCallback: () =&gt; void) =&gt; [NativeServer](./koatty_core.nativeserver.md) |  |
-|  [status](./koatty_core.koattyserver.status.md) |  | number |  |
-|  [Stop](./koatty_core.koattyserver.stop.md) | <code>readonly</code> | (callback?: () =&gt; void) =&gt; void |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[options](./koatty_core.koattyserver.options.md)
+
+
+</td><td>
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[RegisterService?](./koatty_core.koattyserver.registerservice.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(impl: any) =&gt; void
+
+
+</td><td>
+
+_(Optional)_ gRPC service register
+
+
+</td></tr>
+<tr><td>
+
+[server](./koatty_core.koattyserver.server.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[NativeServer](./koatty_core.nativeserver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Start](./koatty_core.koattyserver.start.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(listenCallback: () =&gt; void) =&gt; [NativeServer](./koatty_core.nativeserver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[status](./koatty_core.koattyserver.status.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[Stop](./koatty_core.koattyserver.stop.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(callback?: () =&gt; void) =&gt; void
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

@@ -4,7 +4,7 @@
 
 ## Koatty.init() method
 
-app custom init, must be defined options
+Initialize application. This method can be overridden in subclasses to perform initialization tasks.
 
 **Signature:**
 

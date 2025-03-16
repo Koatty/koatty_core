@@ -4,7 +4,7 @@
 
 ## implementsAspectInterface() function
 
-check is implements Aspect Interface
+Check if a class implements the IAspect interface.
 
 **Signature:**
 
@@ -14,12 +14,42 @@ export declare function implementsAspectInterface(cls: any): cls is IAspect;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cls | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cls
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The class to check
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 cls is IAspect
 
+True if the class implements IAspect interface, false otherwise
 

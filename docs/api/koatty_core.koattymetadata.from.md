@@ -16,10 +16,37 @@ static from(obj: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  obj | { \[key: string\]: any; } |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+obj
+
+
+</td><td>
+
+{ \[key: string\]: any; }
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [KoattyMetadata](./koatty_core.koattymetadata.md)

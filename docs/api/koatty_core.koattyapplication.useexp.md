@@ -4,7 +4,7 @@
 
 ## KoattyApplication.useExp property
 
-Use the given Express middleware
+Use express-style middleware function. Convert express-style middleware to koa-style middleware.
 
 **Signature:**
 

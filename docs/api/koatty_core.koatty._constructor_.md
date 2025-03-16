@@ -4,7 +4,7 @@
 
 ## Koatty.(constructor)
 
-Creates an instance of Koatty.
+Protected constructor for the Application class. Initializes a new instance with configuration options and sets up the application environment.
 
 **Signature:**
 
@@ -14,7 +14,41 @@ protected constructor(options?: InitOptions);
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  options | [InitOptions](./koatty_core.initoptions.md) | _(Optional)_  Koatty |
+<table><thead><tr><th>
+
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+options
+
+
+</td><td>
+
+[InitOptions](./koatty_core.initoptions.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>
+
+## Remarks
+
+- Sets up environment based on debug mode and environment variables - Initializes metadata and context storage - Calls init() and error capture methods
 

@@ -4,7 +4,7 @@
 
 ## Koatty.setMetaData() method
 
-Set application metadata
+Set metadata value by key.
 
 **Signature:**
 
@@ -14,11 +14,55 @@ setMetaData(key: string, value: any): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string |  |
-|  value | any |  Koatty |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The key of metadata. If key starts with "\_", it will be defined as private property.
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The value to be set.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

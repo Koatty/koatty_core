@@ -4,7 +4,7 @@
 
 ## GraphQLController() function
 
-Indicates that an decorated class is a "graphql controller". 
+GraphQL controller decorator. Define a class as a GraphQL controller.
 
 **Signature:**
 
@@ -16,12 +16,66 @@ export declare function GraphQLController(path?: string, options?: {
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ |
-|  options | { \[key: string\]: any; } | _(Optional)_  {<!-- -->\*<!-- -->} |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The base path for the GraphQL controller. Default is empty string.
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+{ \[key: string\]: any; }
+
+
+</td><td>
+
+_(Optional)_ Configuration options for the GraphQL controller
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
+
+ClassDecorator
+
+## Example
+
+
+```typescript
+@GraphQLController('/api')
+export class UserController {}
+```
 

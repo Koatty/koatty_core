@@ -4,8 +4,7 @@
 
 ## Component() function
 
-Indicates that an decorated class is a "component".
-
+Component decorator, used to mark a class as a component and register it to IOC container.
 
 **Signature:**
 
@@ -15,13 +14,53 @@ export declare function Component(identifier?: string): ClassDecorator;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  identifier | string | _(Optional)_ component name |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+identifier
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Optional identifier for the component. If not provided, will use the class name.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
 
-{<!-- -->ClassDecorator<!-- -->}
+ClassDecorator function that registers the target class as a component.
+
+## Example
+
+
+```ts
+@Component()
+class UserDto {}
+
+@Component('customName')
+class OrderClass {}
+```
 

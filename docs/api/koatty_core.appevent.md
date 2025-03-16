@@ -16,10 +16,76 @@ export declare const enum AppEvent
 
 ## Enumeration Members
 
-|  Member | Value | Description |
-|  --- | --- | --- |
-|  appBoot | <code>&quot;appBoot&quot;</code> |  |
-|  appReady | <code>&quot;appReady&quot;</code> |  |
-|  appStart | <code>&quot;appStart&quot;</code> |  |
-|  appStop | <code>&quot;appStop&quot;</code> |  |
+<table><thead><tr><th>
 
+Member
+
+
+</th><th>
+
+Value
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+appBoot
+
+
+</td><td>
+
+`"appBoot"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+appReady
+
+
+</td><td>
+
+`"appReady"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+appStart
+
+
+</td><td>
+
+`"appStart"`
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+appStop
+
+
+</td><td>
+
+`"appStop"`
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

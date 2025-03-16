@@ -4,6 +4,8 @@
 
 ## KoattyApplication.callback property
 
+Create a callback function for handling requests.
+
 **Signature:**
 
 ```typescript

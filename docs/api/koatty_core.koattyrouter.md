@@ -4,9 +4,11 @@
 
 ## KoattyRouter interface
 
-Router interface
+Interface for Koatty router
 
-  KoattyRouter
+ KoattyRouter  Defines the structure and behavior of a router in Koatty framework. Provides methods for setting routes, loading router configurations, and managing router implementations.
+
+ {<!-- -->any<!-- -->} options - Router configuration options  {<!-- -->any<!-- -->} router - Instance of KoaRouter or custom router implementation  {<!-- -->Function<!-- -->} SetRouter - Method to set router implementation for a route  {<!-- -->Function<!-- -->} LoadRouter - Method to load and register router configurations  {<!-- -->Function<!-- -->} ListRouter - Optional method to get list of registered routers
 
 **Signature:**
 
@@ -16,11 +18,126 @@ export interface KoattyRouter
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [ListRouter?](./koatty_core.koattyrouter.listrouter.md) | <code>readonly</code> | () =&gt; Map&lt;string, [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->&gt; | _(Optional)_ return router list |
-|  [LoadRouter](./koatty_core.koattyrouter.loadrouter.md) | <code>readonly</code> | (app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->, list: any\[\]) =&gt; Promise&lt;void&gt; | load router list and register handler |
-|  [options](./koatty_core.koattyrouter.options.md) |  | any | router options |
-|  [router](./koatty_core.koattyrouter.router.md) |  | any | KoaRouter or custom router |
-|  [SetRouter](./koatty_core.koattyrouter.setrouter.md) | <code>readonly</code> | (name: string, impl?: [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->) =&gt; void | set router map |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ListRouter?](./koatty_core.koattyrouter.listrouter.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+() =&gt; Map&lt;string, [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_ return router list
+
+
+</td></tr>
+<tr><td>
+
+[LoadRouter](./koatty_core.koattyrouter.loadrouter.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->, list: any\[\]) =&gt; Promise&lt;void&gt;
+
+
+</td><td>
+
+load router list and register handler
+
+
+</td></tr>
+<tr><td>
+
+[options](./koatty_core.koattyrouter.options.md)
+
+
+</td><td>
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+router options
+
+
+</td></tr>
+<tr><td>
+
+[router](./koatty_core.koattyrouter.router.md)
+
+
+</td><td>
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+KoaRouter or custom router
+
+
+</td></tr>
+<tr><td>
+
+[SetRouter](./koatty_core.koattyrouter.setrouter.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(name: string, impl?: [RouterImplementation](./koatty_core.routerimplementation.md)<!-- -->) =&gt; void
+
+
+</td><td>
+
+set router map
+
+
+</td></tr>
+</tbody></table>

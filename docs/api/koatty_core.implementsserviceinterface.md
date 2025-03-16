@@ -4,7 +4,7 @@
 
 ## implementsServiceInterface() function
 
-check is implements Service Interface
+Check if a class implements the IService interface.
 
 **Signature:**
 
@@ -14,12 +14,42 @@ export declare function implementsServiceInterface(cls: any): cls is IService;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cls | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cls
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The class to check
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 cls is [IService](./koatty_core.iservice.md)
 
+True if the class implements IService interface, false otherwise
 

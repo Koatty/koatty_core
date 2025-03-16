@@ -4,8 +4,7 @@
 
 ## Plugin() function
 
-Indicates that an decorated class is a "plugin".
-
+Plugin decorator for registering plugin components. The decorated class must have a name ending with "Plugin" suffix.
 
 **Signature:**
 
@@ -15,13 +14,56 @@ export declare function Plugin(identifier?: string): ClassDecorator;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  identifier | string | _(Optional)_ class name |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+identifier
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Optional custom identifier for the plugin. If not provided, will use class name
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
 
-{<!-- -->ClassDecorator<!-- -->}
+ClassDecorator
+
+## Exceptions
+
+Error if class name doesn't end with "Plugin"
+
+## Example
+
+
+```ts
+@Plugin()
+class MyPlugin {
+  run(options: object, app: KoattyApplication) {}
+}
+```
 

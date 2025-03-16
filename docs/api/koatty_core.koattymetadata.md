@@ -4,9 +4,7 @@
 
 ## KoattyMetadata class
 
-KoattyMetadata
-
-  KoattyMetadata
+A class for managing metadata with key-value pairs storage. Provides methods to set, get, add, remove, merge, and clone metadata. Values are stored as arrays to support multiple values for a single key. Supports Buffer values and handles their cloning appropriately. Can be serialized to JSON and created from plain objects.
 
 **Signature:**
 
@@ -16,21 +14,192 @@ export declare class KoattyMetadata
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [\_internalRepo](./koatty_core.koattymetadata._internalrepo.md) | <code>protected</code> | Map&lt;string, any\[\]&gt; |  |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[\_internalRepo](./koatty_core.koattymetadata._internalrepo.md)
+
+
+</td><td>
+
+`protected`
+
+
+</td><td>
+
+Map&lt;string, any\[\]&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [add(key, value)](./koatty_core.koattymetadata.add.md) |  | Adds the given value for the given key by appending to a list of previous values associated with that key. |
-|  [clone()](./koatty_core.koattymetadata.clone.md) |  | Clones the metadata object.  The newly cloned object. |
-|  [from(obj)](./koatty_core.koattymetadata.from.md) | <code>static</code> | copy all key-value pairs from a given object into this new Metadata. |
-|  [get(key)](./koatty_core.koattymetadata.get.md) |  | Gets a list of all values associated with the key. Normalizes the key. |
-|  [getMap()](./koatty_core.koattymetadata.getmap.md) |  | Gets a plain object mapping each key to the first value associated with it. This reflects the most common way that people will want to see metadata.  A key/value mapping of the metadata. |
-|  [merge(other)](./koatty_core.koattymetadata.merge.md) |  | Merges all key-value pairs from a given Metadata object into this one. If both this object and the given object have values in the same key, values from the other Metadata object will be appended to this object's values. |
-|  [remove(key)](./koatty_core.koattymetadata.remove.md) |  | Removes the given key and any associated values. Normalizes the key. |
-|  [set(key, value)](./koatty_core.koattymetadata.set.md) |  | Set the given value for the given key |
-|  [toJSON()](./koatty_core.koattymetadata.tojson.md) |  | This modifies the behavior of JSON.stringify to show an object representation of the metadata map. |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[add(key, value)](./koatty_core.koattymetadata.add.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Adds the given value for the given key by appending to a list of previous values associated with that key.
+
+
+</td></tr>
+<tr><td>
+
+[clone()](./koatty_core.koattymetadata.clone.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Clones the metadata object.  The newly cloned object.
+
+
+</td></tr>
+<tr><td>
+
+[from(obj)](./koatty_core.koattymetadata.from.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+copy all key-value pairs from a given object into this new Metadata.
+
+
+</td></tr>
+<tr><td>
+
+[get(key)](./koatty_core.koattymetadata.get.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Gets a list of all values associated with the key. Normalizes the key.
+
+
+</td></tr>
+<tr><td>
+
+[getMap()](./koatty_core.koattymetadata.getmap.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Gets a plain object mapping each key to the first value associated with it. This reflects the most common way that people will want to see metadata.  A key/value mapping of the metadata.
+
+
+</td></tr>
+<tr><td>
+
+[merge(other)](./koatty_core.koattymetadata.merge.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Merges all key-value pairs from a given Metadata object into this one. If both this object and the given object have values in the same key, values from the other Metadata object will be appended to this object's values.
+
+
+</td></tr>
+<tr><td>
+
+[remove(key)](./koatty_core.koattymetadata.remove.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Removes the given key and any associated values. Normalizes the key.
+
+
+</td></tr>
+<tr><td>
+
+[set(key, value)](./koatty_core.koattymetadata.set.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Set the given value for the given key
+
+
+</td></tr>
+<tr><td>
+
+[toJSON()](./koatty_core.koattymetadata.tojson.md)
+
+
+</td><td>
+
+
+</td><td>
+
+This modifies the behavior of JSON.stringify to show an object representation of the metadata map.
+
+
+</td></tr>
+</tbody></table>

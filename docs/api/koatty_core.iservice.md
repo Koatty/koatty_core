@@ -14,7 +14,44 @@ export interface IService
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [app](./koatty_core.iservice.app.md) | <code>readonly</code> | [KoattyApplication](./koatty_core.koattyapplication.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[app](./koatty_core.iservice.app.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+[KoattyApplication](./koatty_core.koattyapplication.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

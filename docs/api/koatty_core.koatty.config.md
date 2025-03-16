@@ -4,7 +4,7 @@
 
 ## Koatty.config() method
 
-Read app configuration
+Get configuration value by name and type.
 
 **Signature:**
 
@@ -14,12 +14,66 @@ config(name: string, type?: string): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  name | string |  |
-|  type | string | _(Optional)_  Koatty |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+name
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Configuration key name, support dot notation (e.g. 'app.port')
+
+
+</td></tr>
+<tr><td>
+
+type
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Configuration type, defaults to 'config'
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any
+
+{<!-- -->any<!-- -->} Configuration value or null if error occurs
+
+## Example
+
+// Get single level config app.config('port');
+
+// Get nested config app.config('database.host');
+
+// Get all configs of specific type app.config(undefined, 'middleware');
 

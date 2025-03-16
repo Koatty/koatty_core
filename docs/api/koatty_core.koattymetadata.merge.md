@@ -14,10 +14,39 @@ merge(other: KoattyMetadata): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  other | [KoattyMetadata](./koatty_core.koattymetadata.md) | A Metadata object. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+other
+
+
+</td><td>
+
+[KoattyMetadata](./koatty_core.koattymetadata.md)
+
+
+</td><td>
+
+A Metadata object.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void
