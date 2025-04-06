@@ -18,7 +18,7 @@ export class KoattyMetadata {
    * Set the given value for the given key
    */
   set(key: string, value: any): void {
-    this._internalRepo.set(key, [value]);
+    this._internalRepo.set(key, Array.isArray(value) ? value : [value]);
   }
   /**
    * Adds the given value for the given key by appending to a list of previous
@@ -29,9 +29,10 @@ export class KoattyMetadata {
       key
     );
     if (existingValue === undefined) {
-      this._internalRepo.set(key, [value]);
+      this.set(key, value);
     } else {
-      existingValue.push(value);
+      const newValue = Array.isArray(value) ? [...existingValue, ...value] : [...existingValue, value];
+      this.set(key, newValue);
     }
   }
   /**
