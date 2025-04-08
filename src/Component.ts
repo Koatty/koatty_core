@@ -55,6 +55,15 @@ export interface IPlugin {
 }
 
 /**
+ * Interface for ControllerOptions
+ */
+export interface IControllerOptions {
+  path?: string;
+  protocol?: string;
+  middleware?: Function[];
+}
+
+/**
  * Component decorator, used to mark a class as a component and register it to IOC container.
  * 
  * @param identifier Optional identifier for the component. If not provided, will use the class name.
@@ -91,12 +100,13 @@ export function Component(identifier?: string): ClassDecorator {
  * export class UserController {}
  * ```
  */
-export function Controller(path = "", options?: { [key: string]: any }): ClassDecorator {
+export function Controller(path = "", options?: IControllerOptions): ClassDecorator {
   options = options || {
     protocol: "http",
+    middleware: [],
   };
   options.path = path;
-  return processController(options);
+  return parseControllerDecorator(options);
 }
 
 /**
@@ -105,11 +115,24 @@ export function Controller(path = "", options?: { [key: string]: any }): ClassDe
  * @param {Object} [options] - Controller configuration options
  * @returns {Function} Returns a decorator function
  */
-function processController(options?: { [key: string]: any }) {
+function parseControllerDecorator(options?: IControllerOptions) {
   return (target: Function) => {
     const identifier = IOC.getIdentifier(target);
     IOC.saveClass("CONTROLLER", target, identifier);
-    IOC.savePropertyData(CONTROLLER_ROUTER, options, target, identifier);
+    if (options.middleware) {
+      for (const m of options.middleware) {
+        if (typeof m !== 'function' || !('run' in m.prototype)) {
+          throw new Error(`Middleware must be a class implementing IMiddleware`);
+        }
+      }
+    }
+    // Get middleware names from options.middleware array
+    const middlewareNames = options.middleware?.map(m => m.name) || [];
+    IOC.savePropertyData(CONTROLLER_ROUTER, {
+      path: options.path,
+      protocol: options.protocol,
+      middleware: middlewareNames,
+    }, target, identifier);
   };
 }
 
@@ -126,12 +149,13 @@ function processController(options?: { [key: string]: any }) {
  * class UserController {}
  * ```
  */
-export function GrpcController(path = "", options?: { [key: string]: any }): ClassDecorator {
+export function GrpcController(path = "", options?: IControllerOptions): ClassDecorator {
   options = options || {
     protocol: "grpc",
+    middleware: [],
   };
   options.path = path;
-  return processController(options);
+  return parseControllerDecorator(options);
 }
 
 /**
@@ -149,12 +173,13 @@ export function GrpcController(path = "", options?: { [key: string]: any }): Cla
  * export class MyWSController {}
  * ```
  */
-export function WebSocketController(path = "", options?: { [key: string]: any }): ClassDecorator {
+export function WebSocketController(path = "", options?: IControllerOptions): ClassDecorator {
   options = options || {
     protocol: "ws",
+    middleware: [],
   };
   options.path = path;
-  return processController(options);
+  return parseControllerDecorator(options);
 }
 
 /**
@@ -171,12 +196,13 @@ export function WebSocketController(path = "", options?: { [key: string]: any })
  * export class UserController {}
  * ```
  */
-export function GraphQLController(path = "", options?: { [key: string]: any }): ClassDecorator {
+export function GraphQLController(path = "", options?: IControllerOptions): ClassDecorator {
   options = options || {
     protocol: "graphql",
+    middleware: [],
   };
   options.path = path;
-  return processController(options);
+  return parseControllerDecorator(options);
 }
 
 /**
