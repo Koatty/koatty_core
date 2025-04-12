@@ -9,7 +9,7 @@ GrpcController decorator for registering gRPC controller class.
 **Signature:**
 
 ```typescript
-export declare function GrpcController(path?: string, options?: IControllerOptions): ClassDecorator;
+export declare function GrpcController(path?: string, options?: IExtraControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
@@ -53,7 +53,7 @@ options
 
 </td><td>
 
-[IControllerOptions](./koatty_core.icontrolleroptions.md)
+[IExtraControllerOptions](./koatty_core.iextracontrolleroptions.md)
 
 
 </td><td>

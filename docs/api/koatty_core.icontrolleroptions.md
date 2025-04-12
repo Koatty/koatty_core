@@ -83,7 +83,7 @@ _(Optional)_
 
 </td><td>
 
-string
+[ControllerProtocol](./koatty_core.controllerprotocol.md)
 
 
 </td><td>

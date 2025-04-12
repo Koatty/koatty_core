@@ -67,6 +67,17 @@ app event
 
 
 </td></tr>
+<tr><td>
+
+[ControllerProtocol](./koatty_core.controllerprotocol.md)
+
+
+</td><td>
+
+Protocol types supported by the controller.
+
+
+</td></tr>
 </tbody></table>
 
 ## Functions
@@ -292,6 +303,17 @@ Interface for Controller
 </td><td>
 
 Interface for ControllerOptions
+
+
+</td></tr>
+<tr><td>
+
+[IExtraControllerOptions](./koatty_core.iextracontrolleroptions.md)
+
+
+</td><td>
+
+Interface for extra controller options
 
 
 </td></tr>
