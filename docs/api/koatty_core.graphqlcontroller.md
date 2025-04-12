@@ -9,9 +9,7 @@ GraphQL controller decorator. Define a class as a GraphQL controller.
 **Signature:**
 
 ```typescript
-export declare function GraphQLController(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function GraphQLController(path?: string, options?: IControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
@@ -55,7 +53,7 @@ options
 
 </td><td>
 
-{ \[key: string\]: any; }
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
 
 
 </td><td>

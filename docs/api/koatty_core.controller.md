@@ -9,9 +9,7 @@ Controller decorator for registering controller class. Used to mark a class as a
 **Signature:**
 
 ```typescript
-export declare function Controller(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function Controller(path?: string, options?: IControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
@@ -55,7 +53,7 @@ options
 
 </td><td>
 
-{ \[key: string\]: any; }
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
 
 
 </td><td>

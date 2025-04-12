@@ -194,12 +194,34 @@ Check if a class implements the IService interface.
 </td></tr>
 <tr><td>
 
+[isPrevent(err)](./koatty_core.isprevent.md)
+
+
+</td><td>
+
+Check is prevent error
+
+
+</td></tr>
+<tr><td>
+
 [Middleware(identifier)](./koatty_core.middleware.md)
 
 
 </td><td>
 
 Middleware decorator, used to mark a class as a middleware component.
+
+
+</td></tr>
+<tr><td>
+
+[parseExp(fn)](./koatty_core.parseexp.md)
+
+
+</td><td>
+
+Convert express middleware for koa
 
 
 </td></tr>
@@ -259,6 +281,17 @@ Description
 </td><td>
 
 Interface for Controller
+
+
+</td></tr>
+<tr><td>
+
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
+
+
+</td><td>
+
+Interface for ControllerOptions
 
 
 </td></tr>

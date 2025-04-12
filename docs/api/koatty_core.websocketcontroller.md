@@ -9,9 +9,7 @@ WebSocket controller decorator. Define a class as WebSocket controller.
 **Signature:**
 
 ```typescript
-export declare function WebSocketController(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function WebSocketController(path?: string, options?: IControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
@@ -55,7 +53,7 @@ options
 
 </td><td>
 
-{ \[key: string\]: any; }
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
 
 
 </td><td>
