@@ -22,7 +22,7 @@ import {
 } from "./IApplication";
 import { KoattyContext, RequestType, ResponseType } from "./IContext";
 import { KoattyMetadata } from "./Metadata";
-import { asyncEvent, bindProcessEvent, getSysConfig, isPrevent, parseExp } from "./Utils";
+import { asyncEvent, bindProcessEvent, isPrevent, parseExp } from "./Utils";
 
 /**
  * Koatty Application 
@@ -298,7 +298,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {Function} Returns configured trace middleware
    */
   private handleResponse() {
-    const options = getSysConfig(this, 'trace');
+    const options = this.config('trace')?? {};
     // used trace middleware
     const tracer = Trace(options, <any>this);
     Helper.define(this, "tracer", tracer);

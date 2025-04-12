@@ -10,4 +10,4 @@ export * from "./Context";
 export * from "./IApplication";
 export * from "./IContext";
 export * from "./Metadata";
-export { isPrevent, parseExp, getSysConfig } from "./Utils";
+export { isPrevent, parseExp } from "./Utils";
