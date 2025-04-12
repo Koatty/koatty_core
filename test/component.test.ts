@@ -4,7 +4,8 @@ import {
   Component, Controller, GrpcController, WebSocketController, GraphQLController,
   Middleware, Service, Plugin, implementsMiddlewareInterface, implementsControllerInterface,
   implementsServiceInterface, implementsPluginInterface, implementsAspectInterface,
-  IMiddleware, IController, IService, IPlugin
+  IMiddleware, IController, IService, IPlugin,
+  ControllerProtocol
 } from "../src/Component";
 import { IOC } from "koatty_container";
 import { KoattyApplication } from "../src/IApplication";

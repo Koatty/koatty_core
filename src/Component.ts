@@ -59,7 +59,25 @@ export interface IPlugin {
  */
 export interface IControllerOptions {
   path?: string;
-  protocol?: string;
+  protocol?: ControllerProtocol;
+  middleware?: Function[];
+}
+
+/**
+ * Protocol types supported by the controller.
+ */
+export enum ControllerProtocol {
+  http = "http",
+  websocket = "ws",
+  grpc = "grpc",
+  graphql = "graphql",
+}
+
+/**
+ * Interface for extra controller options
+ */
+export interface IExtraControllerOptions {
+  path?: string;
   middleware?: Function[];
 }
 
@@ -101,11 +119,11 @@ export function Component(identifier?: string): ClassDecorator {
  * ```
  */
 export function Controller(path = "", options?: IControllerOptions): ClassDecorator {
-  options = options || {
-    protocol: "http",
+  options = Object.assign({
+    path,
+    protocol: ControllerProtocol.http,
     middleware: [],
-  };
-  options.path = path;
+  }, options);
   return parseControllerDecorator(options);
 }
 
@@ -149,13 +167,16 @@ function parseControllerDecorator(options?: IControllerOptions) {
  * class UserController {}
  * ```
  */
-export function GrpcController(path = "", options?: IControllerOptions): ClassDecorator {
-  options = options || {
-    protocol: "grpc",
+export function GrpcController(path = "", options?: IExtraControllerOptions): ClassDecorator {
+  options = Object.assign({
+    path,
     middleware: [],
-  };
-  options.path = path;
-  return parseControllerDecorator(options);
+  }, options);
+  return parseControllerDecorator({
+    path,
+    protocol: ControllerProtocol.grpc,
+    middleware: options.middleware,
+  });
 }
 
 /**
@@ -164,7 +185,6 @@ export function GrpcController(path = "", options?: IControllerOptions): ClassDe
  * 
  * @param {string} [path=''] - Base path for the WebSocket controller
  * @param {Object} [options] - WebSocket controller configuration options
- * @param {string} [options.protocol='ws'] - WebSocket protocol
  * @returns {ClassDecorator} Returns a class decorator function
  * 
  * @example
@@ -173,13 +193,16 @@ export function GrpcController(path = "", options?: IControllerOptions): ClassDe
  * export class MyWSController {}
  * ```
  */
-export function WebSocketController(path = "", options?: IControllerOptions): ClassDecorator {
-  options = options || {
-    protocol: "ws",
+export function WebSocketController(path = "", options?: IExtraControllerOptions): ClassDecorator {
+  options = Object.assign({
+    path,
     middleware: [],
-  };
-  options.path = path;
-  return parseControllerDecorator(options);
+  }, options);
+  return parseControllerDecorator({
+    path,
+    protocol: ControllerProtocol.websocket,
+    middleware: options.middleware,
+  });
 }
 
 /**
@@ -197,12 +220,15 @@ export function WebSocketController(path = "", options?: IControllerOptions): Cl
  * ```
  */
 export function GraphQLController(path = "", options?: IControllerOptions): ClassDecorator {
-  options = options || {
-    protocol: "graphql",
+  options = Object.assign({
+    path,
     middleware: [],
-  };
-  options.path = path;
-  return parseControllerDecorator(options);
+  }, options);
+  return parseControllerDecorator({
+    path,
+    protocol: ControllerProtocol.graphql,
+    middleware: options.middleware,
+  });
 }
 
 /**
