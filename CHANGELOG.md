@@ -1,10 +1,8 @@
-## <small>1.16.1 (2025-04-12)</small>
+# Changelog
 
-* build: deps ([eceb04c](https://github.com/koatty/koatty_core/commit/eceb04c))
-* build: v1.16.1 ([01fe4eb](https://github.com/koatty/koatty_core/commit/01fe4eb))
-* refactor: enhance controller protocol support with enum and extra options ([373ae7e](https://github.com/koatty/koatty_core/commit/373ae7e))
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-
+### [1.16.2](https://github.com/koatty/koatty_core/compare/v1.16.1...v1.16.2) (2025-04-13)
 
 ## 1.16.0 (2025-04-12)
 
