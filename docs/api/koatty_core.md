@@ -95,6 +95,28 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[asyncEvent(event, eventName)](./koatty_core.asyncevent.md)
+
+
+</td><td>
+
+Execute event as async
+
+
+</td></tr>
+<tr><td>
+
+[bindProcessEvent(event, originEventName, targetEventName)](./koatty_core.bindprocessevent.md)
+
+
+</td><td>
+
+Bind event to the process
+
+
+</td></tr>
+<tr><td>
+
 [Component(identifier)](./koatty_core.component.md)
 
 
@@ -200,17 +222,6 @@ Check if a class implements the IPlugin interface.
 </td><td>
 
 Check if a class implements the IService interface.
-
-
-</td></tr>
-<tr><td>
-
-[isPrevent(err)](./koatty_core.isprevent.md)
-
-
-</td><td>
-
-Check is prevent error
 
 
 </td></tr>
