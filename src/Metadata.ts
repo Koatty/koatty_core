@@ -14,46 +14,56 @@
  */
 export class KoattyMetadata {
   protected _internalRepo = new Map<string, any[]>();
+  private _cachedMap: { [key: string]: any } | null = null;
+
   /**
    * Set the given value for the given key
    */
   set(key: string, value: any): void {
     this._internalRepo.set(key, Array.isArray(value) ? value : [value]);
+    this._cachedMap = null; // Invalidate cache
   }
+
   /**
-   * Adds the given value for the given key by appending to a list of previous
-   * values associated with that key. 
+   * Adds the given value for the given key
    */
   add(key: string, value: any): void {
-    const existingValue: any[] | undefined = this._internalRepo.get(
-      key
-    );
-    if (existingValue === undefined) {
-      this.set(key, value);
+    const existingValues = this._internalRepo.get(key);
+    if (existingValues) {
+      if (Array.isArray(value)) {
+        existingValues.push(...value);
+      } else {
+        existingValues.push(value);
+      }
     } else {
-      const newValue = Array.isArray(value) ? [...existingValue, ...value] : [...existingValue, value];
-      this.set(key, newValue);
+      this._internalRepo.set(key, Array.isArray(value) ? value : [value]);
     }
+    this._cachedMap = null; // Invalidate cache
   }
+
   /**
-   * Removes the given key and any associated values. Normalizes the key.
-   * @param key The key whose values should be removed.
+   * Gets a list of all values associated with the key
+   */
+  get(key: string): any[] {
+    return this._internalRepo.get(key) || [];
+  }
+
+  /**
+   * Gets the first value associated with the given key
+   */
+  getFirst(key: string): any {
+    const values = this._internalRepo.get(key);
+    return values && values.length > 0 ? values[0] : undefined;
+  }
+
+  /**
+   * Removes the given key and any associated values
    */
   remove(key: string): void {
     this._internalRepo.delete(key);
+    this._cachedMap = null; // Invalidate cache
   }
-  /**
-   * Gets a list of all values associated with the key. Normalizes the key.
-   * @param key The key whose value should be retrieved.
-   * @return A list of values associated with the given key.
-   */
-  get(key: string): any[] {
-    let existingValue: any[] | undefined = this._internalRepo.get(
-      key
-    );
-    existingValue = existingValue || [];
-    return existingValue;
-  }
+
   /**
    * Gets a plain object mapping each key to the first value associated with it.
    * This reflects the most common way that people will want to see metadata.
@@ -62,6 +72,11 @@ export class KoattyMetadata {
   getMap(): {
     [key: string]: any;
   } {
+    // Use cached result if available
+    if (this._cachedMap) {
+      return this._cachedMap;
+    }
+
     const result: { [key: string]: any } = {};
 
     this._internalRepo.forEach((values, key) => {
@@ -70,8 +85,12 @@ export class KoattyMetadata {
         result[key] = v instanceof Buffer ? Buffer.from(v) : v;
       }
     });
+    
+    // Cache the result for future calls
+    this._cachedMap = result;
     return result;
   }
+
   /**
    * Clones the metadata object.
    * @return The newly cloned object.
@@ -94,49 +113,59 @@ export class KoattyMetadata {
 
     return newMetadata;
   }
+
   /**
-   * Merges all key-value pairs from a given Metadata object into this one.
-   * If both this object and the given object have values in the same key,
-   * values from the other Metadata object will be appended to this object's
-   * values.
-   * @param other A Metadata object.
+   * Merges the given metadata into this metadata
    */
   merge(other: KoattyMetadata): void {
-    other._internalRepo.forEach((values: any, key: string) => {
-      const mergedValue: any[] = (
-        this._internalRepo.get(key) || []
-      ).concat(values);
-
-      this._internalRepo.set(key, mergedValue);
-    });
-  }
-  /**
-   * copy all key-value pairs from a given object into this new Metadata.
-   *
-   */
-  static from(obj: {
-    [key: string]: any;
-  }): KoattyMetadata {
-    const metadata = new this();
-    for (const key in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, key)) {
-        const values = obj[key];
-        metadata._internalRepo.set(key, values);
+    other._internalRepo.forEach((values, key) => {
+      const existingValues = this._internalRepo.get(key);
+      if (existingValues) {
+        existingValues.push(...values);
+      } else {
+        this._internalRepo.set(key, [...values]);
       }
-    }
+    });
+    this._cachedMap = null; // Invalidate cache
+  }
+
+  /**
+   * Creates a KoattyMetadata object from a plain object
+   */
+  static from(obj: { [key: string]: any }): KoattyMetadata {
+    const metadata = new KoattyMetadata();
+    Object.keys(obj).forEach(key => {
+      metadata.set(key, obj[key]);
+    });
     return metadata;
   }
+
   /**
-   * This modifies the behavior of JSON.stringify to show an object
-   * representation of the metadata map.
+   * Converts the metadata to a JSON object
    */
-  toJSON(): {
-    [key: string]: any;
-  } {
-    const result: { [key: string]: any[] } = {};
-    for (const [key, values] of this._internalRepo.entries()) {
-      result[key] = values;
-    }
-    return result;
+  toJSON(): { [key: string]: any } {
+    return this.getMap();
+  }
+
+  /**
+   * Gets the number of key-value pairs
+   */
+  get size(): number {
+    return this._internalRepo.size;
+  }
+
+  /**
+   * Checks if the metadata is empty
+   */
+  isEmpty(): boolean {
+    return this._internalRepo.size === 0;
+  }
+
+  /**
+   * Clears all metadata
+   */
+  clear(): void {
+    this._internalRepo.clear();
+    this._cachedMap = null;
   }
 }

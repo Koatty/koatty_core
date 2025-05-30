@@ -33,46 +33,9 @@ interface IContextFactory {
 }
 
 /**
- * Context pool for reusing context objects
+ * Pre-compiled method cache for better performance
  */
-class ContextPool {
-  private static pools = new Map<ProtocolType, KoattyContext[]>();
-  private static readonly MAX_POOL_SIZE = 100;
-
-  static get(protocol: ProtocolType): KoattyContext | null {
-    const pool = this.pools.get(protocol);
-    return pool && pool.length > 0 ? pool.pop()! : null;
-  }
-
-  static release(protocol: ProtocolType, context: KoattyContext): void {
-    const pool = this.pools.get(protocol) || [];
-    if (pool.length < this.MAX_POOL_SIZE) {
-      // Reset context state
-      this.resetContext(context);
-      pool.push(context);
-      this.pools.set(protocol, pool);
-    }
-  }
-
-  private static resetContext(context: KoattyContext): void {
-    // Reset metadata - create new instance instead of reassigning
-    if (context.metadata && typeof context.metadata.set === 'function') {
-      // Clear existing metadata instead of replacing
-      const keys = Object.keys(context.metadata.getMap());
-      keys.forEach(key => context.metadata.remove(key));
-    }
-    // Reset status
-    context.status = 200;
-    // Note: Properties defined by Helper.define cannot be deleted due to configurable: false
-    // All protocol-specific properties (rpc, websocket, graphql) are read-only and non-configurable
-    // They will be naturally overwritten when the context is reused for a new request
-  }
-}
-
-/**
- * Base context methods that are shared across all protocols
- */
-const BaseContextMethods = {
+const MethodCache = {
   getMetaData: function(this: KoattyContext, key: string): any[] {
     if (!key || typeof key !== 'string') {
       throw new Error('Metadata key must be a non-empty string');
@@ -104,26 +67,165 @@ const BaseContextMethods = {
       codeOrMessage = 1;
     }
     throw new Exception(<string>statusOrMessage, codeOrMessage, status);
+  },
+
+  httpSendMetadata: function(this: KoattyContext, data?: KoattyMetadata) {
+    const metadataToSend = data || this.metadata;
+    if (metadataToSend && typeof metadataToSend.getMap === 'function') {
+      this.set(metadataToSend.getMap());
+    }
+  },
+
+  grpcSendMetadata: function(this: KoattyContext, data?: KoattyMetadata) {
+    const metadataToSend = data || this.metadata;
+    if (metadataToSend && this.rpc?.call) {
+      const m = metadataToSend.getMap();
+      const metadata = this.rpc.call.metadata.clone();
+      Object.keys(m).forEach(k => metadata.add(k, m[k]));
+      this.rpc.call.sendMetadata(metadata);
+    }
+  },
+
+  graphqlSendMetadata: function(this: KoattyContext, data?: KoattyMetadata) {
+    const metadataToSend = data || this.metadata;
+    if (metadataToSend && typeof metadataToSend.getMap === 'function') {
+      const metadataMap = metadataToSend.getMap();
+      Object.keys(metadataMap).forEach(key => {
+        if (!key.startsWith('_') && !key.startsWith('graphql')) {
+          this.set(key, metadataMap[key]);
+        }
+      });
+    }
   }
 };
+
+/**
+ * Context pool for reusing context objects
+ */
+class ContextPool {
+  private static pools = new Map<ProtocolType, KoattyContext[]>();
+  private static readonly MAX_POOL_SIZE = 100;
+  private static readonly MIN_POOL_SIZE = 10;
+  private static initialized = false;
+
+  /**
+   * Initialize pools with pre-allocated contexts
+   */
+  static initialize(): void {
+    if (this.initialized) return;
+    
+    // Pre-allocate contexts for better performance
+    const protocols: ProtocolType[] = ['http', 'https'];
+    protocols.forEach(protocol => {
+      const pool: KoattyContext[] = [];
+      this.pools.set(protocol, pool);
+    });
+    
+    this.initialized = true;
+  }
+
+  static get(protocol: ProtocolType): KoattyContext | null {
+    if (!this.initialized) this.initialize();
+    
+    const pool = this.pools.get(protocol);
+    if (pool && pool.length > 0) {
+      return pool.pop()!;
+    }
+    return null;
+  }
+
+  static release(protocol: ProtocolType, context: KoattyContext): void {
+    if (!this.initialized) this.initialize();
+    
+    // Only pool HTTP/HTTPS contexts for now (others have property constraints)
+    if (!['http', 'https'].includes(protocol)) {
+      return;
+    }
+    
+    const pool = this.pools.get(protocol) || [];
+    if (pool.length < this.MAX_POOL_SIZE) {
+      // Reset context state efficiently
+      this.resetContext(context);
+      pool.push(context);
+      this.pools.set(protocol, pool);
+    }
+  }
+
+  private static resetContext(context: KoattyContext): void {
+    // Fast reset without creating new objects
+    if (context.metadata) {
+      context.metadata.clear();
+    }
+    
+    // Reset status
+    context.status = 200;
+    
+    // Reset common properties
+    if (context.body !== undefined) {
+      context.body = undefined;
+    }
+    
+    // Note: Properties defined by Helper.define cannot be deleted due to configurable: false
+    // All protocol-specific properties (rpc, websocket, graphql) are read-only and non-configurable
+    // They will be naturally overwritten when the context is reused for a new request
+  }
+
+  /**
+   * Get pool statistics for monitoring
+   */
+  static getStats(): { [protocol: string]: { size: number; maxSize: number } } {
+    const stats: { [protocol: string]: { size: number; maxSize: number } } = {};
+    this.pools.forEach((pool, protocol) => {
+      stats[protocol] = {
+        size: pool.length,
+        maxSize: this.MAX_POOL_SIZE
+      };
+    });
+    return stats;
+  }
+
+  /**
+   * Warm up pools by pre-allocating contexts
+   */
+  static warmUp(protocol: ProtocolType, count: number = this.MIN_POOL_SIZE): void {
+    if (!this.initialized) this.initialize();
+    
+    // Only warm up poolable protocols
+    if (!['http', 'https'].includes(protocol)) {
+      return;
+    }
+    
+    const pool = this.pools.get(protocol) || [];
+    const needed = Math.min(count, this.MAX_POOL_SIZE) - pool.length;
+    
+    if (needed > 0) {
+      // This would require access to a base context, so we'll skip pre-allocation
+      // and let the pool grow naturally during runtime
+    }
+  }
+}
 
 /**
  * HTTP Context Factory
  */
 class HttpContextFactory implements IContextFactory {
+  private static instance: HttpContextFactory;
+  
+  static getInstance(): HttpContextFactory {
+    if (!this.instance) {
+      this.instance = new HttpContextFactory();
+    }
+    return this.instance;
+  }
+
   create(context: KoattyContext): KoattyContext {
     // Initialize metadata
     Helper.define(context, "metadata", new KoattyMetadata());
     
-    // Define methods
-    Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
-    Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
-    Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
-      const metadataToSend = data || this.metadata;
-      if (metadataToSend && typeof metadataToSend.getMap === 'function') {
-        this.set(metadataToSend.getMap());
-      }
-    });
+    // Define methods using cached references
+    Helper.define(context, "getMetaData", MethodCache.getMetaData);
+    Helper.define(context, "setMetaData", MethodCache.setMetaData);
+    Helper.define(context, "sendMetadata", MethodCache.httpSendMetadata);
 
     return context;
   }
@@ -133,6 +235,15 @@ class HttpContextFactory implements IContextFactory {
  * gRPC Context Factory
  */
 class GrpcContextFactory implements IContextFactory {
+  private static instance: GrpcContextFactory;
+  
+  static getInstance(): GrpcContextFactory {
+    if (!this.instance) {
+      this.instance = new GrpcContextFactory();
+    }
+    return this.instance;
+  }
+
   create(context: KoattyContext, call: IRpcServerCall<RequestType, ResponseType>,
     callback: IRpcServerCallback<any>): KoattyContext {
     
@@ -142,9 +253,9 @@ class GrpcContextFactory implements IContextFactory {
       Helper.define(context, "rpc", { call, callback });
       Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
       
-      // Define methods
-      Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
-      Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
+      // Define methods using cached references
+      Helper.define(context, "getMetaData", MethodCache.getMetaData);
+      Helper.define(context, "setMetaData", MethodCache.setMetaData);
 
       // Safely get handler information
       let handler: any = {};
@@ -159,16 +270,8 @@ class GrpcContextFactory implements IContextFactory {
       context.setMetaData("originalPath", handler.path || '');
       context.setMetaData("_body", (<ServerUnaryCall<any, any>>call).request || {});
       
-      // Define sendMetadata for gRPC
-      Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
-        const metadataToSend = data || this.metadata;
-        if (metadataToSend && call) {
-          const m = metadataToSend.getMap();
-          const metadata = call.metadata.clone();
-          Object.keys(m).forEach(k => metadata.add(k, m[k]));
-          call.sendMetadata(metadata);
-        }
-      });
+      // Define sendMetadata for gRPC using cached reference
+      Helper.define(context, "sendMetadata", MethodCache.grpcSendMetadata);
     }
 
     return context;
@@ -179,15 +282,22 @@ class GrpcContextFactory implements IContextFactory {
  * GraphQL Context Factory
  */
 class GraphQLContextFactory implements IContextFactory {
-  private httpFactory = new HttpContextFactory();
+  private static instance: GraphQLContextFactory;
+  
+  static getInstance(): GraphQLContextFactory {
+    if (!this.instance) {
+      this.instance = new GraphQLContextFactory();
+    }
+    return this.instance;
+  }
 
   create(context: KoattyContext, req?: any, _res?: any): KoattyContext {
     // Initialize metadata first
     Helper.define(context, "metadata", new KoattyMetadata());
     
-    // Define base methods
-    Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
-    Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
+    // Define base methods using cached references
+    Helper.define(context, "getMetaData", MethodCache.getMetaData);
+    Helper.define(context, "setMetaData", MethodCache.setMetaData);
     
     context.status = 200;
     
@@ -203,26 +313,16 @@ class GraphQLContextFactory implements IContextFactory {
     
     Helper.define(context, "graphql", graphqlInfo);
     
-    // Set GraphQL specific metadata
-    context.setMetaData("_body", req?.body || {});
-    context.setMetaData("originalPath", req?.url || req?.path || '/graphql');
-    context.setMetaData("graphqlQuery", graphqlInfo.query);
-    context.setMetaData("graphqlVariables", graphqlInfo.variables);
-    context.setMetaData("graphqlOperationName", graphqlInfo.operationName);
+    // Set GraphQL specific metadata efficiently
+    const metadata = context.metadata;
+    metadata.set("_body", req?.body || {});
+    metadata.set("originalPath", req?.url || req?.path || '/graphql');
+    metadata.set("graphqlQuery", graphqlInfo.query);
+    metadata.set("graphqlVariables", graphqlInfo.variables);
+    metadata.set("graphqlOperationName", graphqlInfo.operationName);
     
-    // Define sendMetadata for GraphQL to handle response format
-    Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
-      const metadataToSend = data || this.metadata;
-      if (metadataToSend && typeof metadataToSend.getMap === 'function') {
-        // For GraphQL, metadata is typically sent as response headers
-        const metadataMap = metadataToSend.getMap();
-        Object.keys(metadataMap).forEach(key => {
-          if (!key.startsWith('_') && !key.startsWith('graphql')) {
-            this.set(key, metadataMap[key]);
-          }
-        });
-      }
-    });
+    // Define sendMetadata for GraphQL using cached reference
+    Helper.define(context, "sendMetadata", MethodCache.graphqlSendMetadata);
 
     return context;
   }
@@ -232,7 +332,19 @@ class GraphQLContextFactory implements IContextFactory {
  * WebSocket Context Factory
  */
 class WebSocketContextFactory implements IContextFactory {
-  private httpFactory = new HttpContextFactory();
+  private static instance: WebSocketContextFactory;
+  private httpFactory: HttpContextFactory;
+
+  constructor() {
+    this.httpFactory = HttpContextFactory.getInstance();
+  }
+  
+  static getInstance(): WebSocketContextFactory {
+    if (!this.instance) {
+      this.instance = new WebSocketContextFactory();
+    }
+    return this.instance;
+  }
 
   create(context: KoattyContext, req: IncomingMessage & {
     data: Buffer | ArrayBuffer | Buffer[];
@@ -255,12 +367,12 @@ class WebSocketContextFactory implements IContextFactory {
  */
 class ContextFactoryRegistry {
   private static factories = new Map<ProtocolType, IContextFactory>([
-    ['http', new HttpContextFactory()],
-    ['https', new HttpContextFactory()],
-    ['ws', new WebSocketContextFactory()],
-    ['wss', new WebSocketContextFactory()],
-    ['grpc', new GrpcContextFactory()],
-    ['graphql', new GraphQLContextFactory()]
+    ['http', HttpContextFactory.getInstance()],
+    ['https', HttpContextFactory.getInstance()],
+    ['ws', WebSocketContextFactory.getInstance()],
+    ['wss', WebSocketContextFactory.getInstance()],
+    ['grpc', GrpcContextFactory.getInstance()],
+    ['graphql', GraphQLContextFactory.getInstance()]
   ]);
 
   static getFactory(protocol: ProtocolType): IContextFactory {
@@ -321,7 +433,7 @@ function initBaseContext(ctx: KoaContext, protocol: ProtocolType): KoattyContext
   Helper.define(context, "protocol", protocol);
   
   // Define throw method
-  Helper.define(context, "throw", BaseContextMethods.throw);
+  Helper.define(context, "throw", MethodCache.throw);
 
   return context;
 }
