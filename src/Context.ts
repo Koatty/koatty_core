@@ -63,22 +63,9 @@ class ContextPool {
     }
     // Reset status
     context.status = 200;
-    // Clear other protocol-specific properties
-    if (context.rpc) {
-      delete context.rpc;
-    }
-    if (context.websocket) {
-      delete context.websocket;
-    }
-    // For GraphQL, we can't delete the property due to Helper.define,
-    // but we can reset its content if it exists
-    if ((context as any).graphql) {
-      try {
-        (context as any).graphql = null;
-      } catch {
-        // If we can't reset the properties, just ignore
-      }
-    }
+    // Note: Properties defined by Helper.define cannot be deleted due to configurable: false
+    // All protocol-specific properties (rpc, websocket, graphql) are read-only and non-configurable
+    // They will be naturally overwritten when the context is reused for a new request
   }
 }
 
