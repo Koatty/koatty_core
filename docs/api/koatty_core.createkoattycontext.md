@@ -58,7 +58,7 @@ string
 
 </td><td>
 
-Protocol type ('http'\|'https'\|'ws'\|'wss'\|'grpc')
+Protocol type ('http'\|'https'\|'ws'\|'wss'\|'grpc'\|'graphql')
 
 
 </td></tr>

@@ -19,6 +19,28 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[ContextFactoryRegistry](./koatty_core.contextfactoryregistry.md)
+
+
+</td><td>
+
+Context factory registry
+
+
+</td></tr>
+<tr><td>
+
+[ContextPool](./koatty_core.contextpool.md)
+
+
+</td><td>
+
+Context pool for reusing context objects
+
+
+</td></tr>
+<tr><td>
+
 [Koatty](./koatty_core.koatty.md)
 
 
@@ -296,6 +318,17 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[IContextFactory](./koatty_core.icontextfactory.md)
+
+
+</td><td>
+
+Context factory interface for different protocols
+
+
+</td></tr>
+<tr><td>
 
 [IController](./koatty_core.icontroller.md)
 
@@ -609,6 +642,17 @@ KoattyNext
 
 
 </td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ProtocolType](./koatty_core.protocoltype.md)
+
+
+</td><td>
+
+Protocol types supported by Koatty
 
 
 </td></tr>

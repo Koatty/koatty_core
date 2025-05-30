@@ -127,6 +127,23 @@ string
 </td></tr>
 <tr><td>
 
+[ctxStorage](./koatty_core.koatty.ctxstorage.md)
+
+
+</td><td>
+
+
+</td><td>
+
+AsyncLocalStorage&lt;unknown&gt;
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
 [env](./koatty_core.koatty.env.md)
 
 
