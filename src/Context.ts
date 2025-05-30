@@ -15,132 +15,86 @@ import {
 } from './IContext';
 import { KoattyMetadata } from "./Metadata";
 
+/**
+ * Protocol types supported by Koatty
+ */
+type ProtocolType = 'http' | 'https' | 'ws' | 'wss' | 'grpc';
 
 /**
- * Create Koatty context instance based on protocol type.
- * 
- * @param {KoaContext} ctx - Koa context object
- * @param {string} protocol - Protocol type ('http'|'https'|'ws'|'wss'|'grpc')
- * @param {any} req - Request object
- * @param {any} res - Response object
- * @returns {KoattyContext} Returns appropriate context instance based on protocol
+ * Protocol types supported by Koatty
  */
-export function createKoattyContext(ctx: KoaContext, protocol: string,
-  req: any, res: any): KoattyContext {
-  const context = initBaseContext(ctx, protocol);
-  if (context.protocol === "ws" || context.protocol === "wss") {
-    return createWsContext(context, req, res);
-  }
-  if (context.protocol === "grpc") {
-    return createGrpcContext(context, req, res);
-  }
-  return createHttpContext(context);
+const ProtocolTypeArray: ProtocolType[] = ['http', 'https', 'ws', 'wss', 'grpc'];
+
+/**
+ * Context factory interface for different protocols
+ */
+interface IContextFactory {
+  create(context: KoattyContext, req?: any, res?: any): KoattyContext;
 }
 
 /**
- * Create HTTP context with metadata functionality.
- * 
- * @param {KoattyContext} context The Koatty context object
- * @returns {KoattyContext} The enhanced context with metadata methods
- * 
- * @description
- * Defines metadata-related methods on the context:
- * - metadata: Stores KoattyMetadata instance
- * - getMetaData: Retrieves metadata value by key
- * - setMetaData: Sets metadata value for key
- * - sendMetadata: Sends metadata as response headers
+ * Context pool for reusing context objects
  */
-function createHttpContext(context: KoattyContext) {
-  // metadata
-  Helper.define(context, "metadata", new KoattyMetadata());
-  // getMetaData
-  Helper.define(context, "getMetaData", (key: string) => context.metadata.get(key));
-  // setMetaData
-  Helper.define(context, "setMetaData", (key: string, value: any) => context.metadata.set(key, value));
-  // sendMetadata
-  Helper.define(context, "sendMetadata", (data?: KoattyMetadata) => context.set((data ||
-    context.metadata).getMap()));
+class ContextPool {
+  private static pools = new Map<ProtocolType, KoattyContext[]>();
+  private static readonly MAX_POOL_SIZE = 100;
 
-  return context;
-}
-
-/**
- * Create a gRPC context by extending KoattyContext with gRPC-specific properties and methods.
- * 
- * @param context - The base KoattyContext instance
- * @param call - The gRPC server call object containing request and metadata
- * @param callback - The gRPC server callback function
- * @returns The enhanced KoattyContext with gRPC capabilities
- * 
- * @internal
- */
-function createGrpcContext(context: KoattyContext, call: IRpcServerCall<RequestType, ResponseType>,
-  callback: IRpcServerCallback<any>): KoattyContext {
-  context.status = 200;
-
-  if (call) {
-    Helper.define(context, "rpc", { call, callback });
-    // metadata
-    Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
-    // getMetaData
-    Helper.define(context, "getMetaData", (key: string) => context.metadata.get(key));
-    // setMetaData
-    Helper.define(context, "setMetaData", (key: string, value: any) => context.metadata.set(key, value));
-
-    const handler = Reflect.get(call, "handler") || Reflect.get(Reflect.get(call, "call"), "handler") || {};
-    // originalPath
-    context.setMetaData("originalPath", handler.path || '');
-    // payload
-    context.setMetaData("_body", (<ServerUnaryCall<any, any>>call).request || {});
-    // sendMetadata
-    Helper.define(context, "sendMetadata", (data: KoattyMetadata) => {
-      const m = data.getMap();
-      const metadata = call.metadata.clone();
-      Object.keys(m).forEach(k => metadata.add(k, m[k]));
-      call.sendMetadata(metadata);
-    });
+  static get(protocol: ProtocolType): KoattyContext | null {
+    const pool = this.pools.get(protocol);
+    return pool && pool.length > 0 ? pool.pop()! : null;
   }
 
-  return context;
+  static release(protocol: ProtocolType, context: KoattyContext): void {
+    const pool = this.pools.get(protocol) || [];
+    if (pool.length < this.MAX_POOL_SIZE) {
+      // Reset context state
+      this.resetContext(context);
+      pool.push(context);
+      this.pools.set(protocol, pool);
+    }
+  }
+
+  private static resetContext(context: KoattyContext): void {
+    // Reset metadata - create new instance instead of reassigning
+    if (context.metadata && typeof context.metadata.set === 'function') {
+      // Clear existing metadata instead of replacing
+      const keys = Object.keys(context.metadata.getMap());
+      keys.forEach(key => context.metadata.remove(key));
+    }
+    // Reset status
+    context.status = 200;
+    // Clear other protocol-specific properties
+    if (context.rpc) {
+      delete context.rpc;
+    }
+    if (context.websocket) {
+      delete context.websocket;
+    }
+  }
 }
 
 /**
- * Create WebSocket context from HTTP context.
- * 
- * @param {KoattyContext} context The original context object
- * @param {IncomingMessage & { data: Buffer | ArrayBuffer | Buffer[] }} req WebSocket request object
- * @param {IWebSocket} socket WebSocket connection instance
- * @returns {KoattyContext} Enhanced context with WebSocket support
+ * Base context methods that are shared across all protocols
  */
-function createWsContext(context: KoattyContext, req: IncomingMessage & {
-  data: Buffer | ArrayBuffer | Buffer[];
-}, socket: IWebSocket): KoattyContext {
-  context = createHttpContext(context);
-  context.status = 200;
-  Helper.define(context, "websocket", socket);
-  context.setMetaData("_body", (req.data ?? "").toString());
-  return context;
-}
+const BaseContextMethods = {
+  getMetaData: function(this: KoattyContext, key: string): any[] {
+    if (!key || typeof key !== 'string') {
+      throw new Error('Metadata key must be a non-empty string');
+    }
+    return this.metadata?.get(key) || [];
+  },
 
-/**
- * Initialize base context by extending KoaContext with additional properties and methods.
- * 
- * @param {KoaContext} ctx - The original Koa context object to extend from.
- * @param {string} protocol - The protocol to be defined in the context.
- * @returns {KoattyContext} The extended context object with additional properties and methods.
- */
-function initBaseContext(ctx: KoaContext, protocol: string): KoattyContext {
-  const context: KoattyContext = Object.create(ctx);
-  Helper.define(context, "protocol", protocol);
-  /**
-   * Throws an exception with the specified status code and message.
-   *
-   * @param {HttpStatusCode | string} statusOrMessage - The status code or message of the exception.
-   * @param {string | number} codeOrMessage - The error code or message of the exception.
-   * @param {HttpStatusCode} status - The HTTP status code of the exception.
-   * @throws {Exception} - Always throws an exception with the specified status and message.
-   */
-  Helper.define(context, "throw", function (statusOrMessage: HttpStatusCode | string,
+  setMetaData: function(this: KoattyContext, key: string, value: any): void {
+    if (!key || typeof key !== 'string') {
+      throw new Error('Metadata key must be a non-empty string');
+    }
+    if (!this.metadata) {
+      this.metadata = new KoattyMetadata();
+    }
+    this.metadata.set(key, value);
+  },
+
+  throw: function(this: KoattyContext, statusOrMessage: HttpStatusCode | string,
     codeOrMessage: string | number = 1, status?: HttpStatusCode): never {
     if (typeof statusOrMessage !== "string") {
       const httpStatus = HttpStatusCodeMap.get(statusOrMessage);
@@ -154,7 +108,173 @@ function initBaseContext(ctx: KoaContext, protocol: string): KoattyContext {
       codeOrMessage = 1;
     }
     throw new Exception(<string>statusOrMessage, codeOrMessage, status);
-  });
+  }
+};
+
+/**
+ * HTTP Context Factory
+ */
+class HttpContextFactory implements IContextFactory {
+  create(context: KoattyContext): KoattyContext {
+    // Initialize metadata
+    Helper.define(context, "metadata", new KoattyMetadata());
+    
+    // Define methods
+    Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
+    Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
+    Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
+      const metadataToSend = data || this.metadata;
+      if (metadataToSend && typeof metadataToSend.getMap === 'function') {
+        this.set(metadataToSend.getMap());
+      }
+    });
+
+    return context;
+  }
+}
+
+/**
+ * gRPC Context Factory
+ */
+class GrpcContextFactory implements IContextFactory {
+  create(context: KoattyContext, call: IRpcServerCall<RequestType, ResponseType>,
+    callback: IRpcServerCallback<any>): KoattyContext {
+    
+    context.status = 200;
+
+    if (call) {
+      Helper.define(context, "rpc", { call, callback });
+      Helper.define(context, "metadata", KoattyMetadata.from(call.metadata.toJSON()));
+      
+      // Define methods
+      Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
+      Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
+
+      // Safely get handler information
+      let handler: any = {};
+      try {
+        handler = Reflect.get(call, 'handler') || {};
+      } catch {
+        // 如果反射失败，使用空的handler
+        handler = {};
+      }
+      
+      // Set initial metadata
+      context.setMetaData("originalPath", handler.path || '');
+      context.setMetaData("_body", (<ServerUnaryCall<any, any>>call).request || {});
+      
+      // Define sendMetadata for gRPC
+      Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
+        const metadataToSend = data || this.metadata;
+        if (metadataToSend && call) {
+          const m = metadataToSend.getMap();
+          const metadata = call.metadata.clone();
+          Object.keys(m).forEach(k => metadata.add(k, m[k]));
+          call.sendMetadata(metadata);
+        }
+      });
+    }
+
+    return context;
+  }
+}
+
+/**
+ * WebSocket Context Factory
+ */
+class WebSocketContextFactory implements IContextFactory {
+  private httpFactory = new HttpContextFactory();
+
+  create(context: KoattyContext, req: IncomingMessage & {
+    data: Buffer | ArrayBuffer | Buffer[];
+  }, socket: IWebSocket): KoattyContext {
+    
+    // First create HTTP context
+    context = this.httpFactory.create(context);
+    context.status = 200;
+    
+    // Add WebSocket specific properties
+    Helper.define(context, "websocket", socket);
+    context.setMetaData("_body", (req.data ?? "").toString());
+    
+    return context;
+  }
+}
+
+/**
+ * Context factory registry
+ */
+class ContextFactoryRegistry {
+  private static factories = new Map<ProtocolType, IContextFactory>([
+    ['http', new HttpContextFactory()],
+    ['https', new HttpContextFactory()],
+    ['ws', new WebSocketContextFactory()],
+    ['wss', new WebSocketContextFactory()],
+    ['grpc', new GrpcContextFactory()]
+  ]);
+
+  static getFactory(protocol: ProtocolType): IContextFactory {
+    const factory = this.factories.get(protocol);
+    if (!factory) {
+      throw new Error(`Unsupported protocol: ${protocol}`);
+    }
+    return factory;
+  }
+
+  static registerFactory(protocol: ProtocolType, factory: IContextFactory): void {
+    this.factories.set(protocol, factory);
+  }
+}
+
+/**
+ * Create Koatty context instance based on protocol type.
+ * 
+ * @param {KoaContext} ctx - Koa context object
+ * @param {string} protocol - Protocol type ('http'|'https'|'ws'|'wss'|'grpc')
+ * @param {any} req - Request object
+ * @param {any} res - Response object
+ * @returns {KoattyContext} Returns appropriate context instance based on protocol
+ */
+export function createKoattyContext(ctx: KoaContext, protocol: string,
+  req: any, res: any): KoattyContext {
+  
+  try {
+    // Validate protocol
+    const protocolType = protocol as ProtocolType;
+    if (!ProtocolTypeArray.includes(protocolType)) {
+      throw new Error(`Invalid protocol: ${protocol}`);
+    }
+
+    // Initialize base context
+    const context = initBaseContext(ctx, protocolType);
+    
+    // Get factory and create context
+    const factory = ContextFactoryRegistry.getFactory(protocolType);
+    return factory.create(context, req, res);
+    
+  } catch (error) {
+    throw new Error(`Failed to create context for protocol ${protocol}: ${error.message}`);
+  }
+}
+
+/**
+ * Initialize base context by extending KoaContext with additional properties and methods.
+ * 
+ * @param {KoaContext} ctx - The original Koa context object to extend from.
+ * @param {ProtocolType} protocol - The protocol to be defined in the context.
+ * @returns {KoattyContext} The extended context object with additional properties and methods.
+ */
+function initBaseContext(ctx: KoaContext, protocol: ProtocolType): KoattyContext {
+  const context: KoattyContext = Object.create(ctx);
+  
+  // Define protocol
+  Helper.define(context, "protocol", protocol);
+  
+  // Define throw method
+  Helper.define(context, "throw", BaseContextMethods.throw);
 
   return context;
 }
+
+// Export for external use
+export { ContextPool, ContextFactoryRegistry, type IContextFactory, type ProtocolType };

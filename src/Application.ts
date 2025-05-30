@@ -53,7 +53,7 @@ export class Koatty extends Koa implements KoattyApplication {
   public context: KoattyContext;
   private tracer: KoattyMiddleware;
   private metadata: KoattyMetadata;
-  // public ctxStorage: AsyncLocalStorage<unknown>;
+  ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
    * Protected constructor for the Application class.
@@ -144,7 +144,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @throws {Error} When the parameter is not a function
    */
   public use(fn: Function): any {
-    if (!Helper.isFunction) {
+    if (!Helper.isFunction(fn)) {
       Logger.Error('The parameter is not a function.');
       return;
     }
@@ -160,7 +160,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @throws {Error} When parameter is not a function
    */
   public useExp(fn: Function): any {
-    if (!Helper.isFunction) {
+    if (!Helper.isFunction(fn)) {
       Logger.Error('The parameter is not a function.');
       return;
     }
