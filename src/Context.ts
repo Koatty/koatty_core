@@ -18,18 +18,18 @@ import { KoattyMetadata } from "./Metadata";
 /**
  * Protocol types supported by Koatty
  */
-type ProtocolType = 'http' | 'https' | 'ws' | 'wss' | 'grpc';
+type ProtocolType = 'http' | 'https' | 'ws' | 'wss' | 'grpc' | 'graphql';
 
 /**
  * Protocol types supported by Koatty
  */
-const ProtocolTypeArray: ProtocolType[] = ['http', 'https', 'ws', 'wss', 'grpc'];
+const ProtocolTypeArray: ProtocolType[] = ['http', 'https', 'ws', 'wss', 'grpc', 'graphql'];
 
 /**
  * Context factory interface for different protocols
  */
 interface IContextFactory {
-  create(context: KoattyContext, req?: any, res?: any): KoattyContext;
+  create(context: KoattyContext, req?: any, _res?: any): KoattyContext;
 }
 
 /**
@@ -69,6 +69,15 @@ class ContextPool {
     }
     if (context.websocket) {
       delete context.websocket;
+    }
+    // For GraphQL, we can't delete the property due to Helper.define,
+    // but we can reset its content if it exists
+    if ((context as any).graphql) {
+      try {
+        (context as any).graphql = null;
+      } catch {
+        // If we can't reset the properties, just ignore
+      }
     }
   }
 }
@@ -180,6 +189,59 @@ class GrpcContextFactory implements IContextFactory {
 }
 
 /**
+ * GraphQL Context Factory
+ */
+class GraphQLContextFactory implements IContextFactory {
+  private httpFactory = new HttpContextFactory();
+
+  create(context: KoattyContext, req?: any, _res?: any): KoattyContext {
+    // Initialize metadata first
+    Helper.define(context, "metadata", new KoattyMetadata());
+    
+    // Define base methods
+    Helper.define(context, "getMetaData", BaseContextMethods.getMetaData);
+    Helper.define(context, "setMetaData", BaseContextMethods.setMetaData);
+    
+    context.status = 200;
+    
+    // Add GraphQL specific properties
+    const graphqlInfo = {
+      query: req?.body?.query || req?.query?.query || '',
+      variables: req?.body?.variables || req?.query?.variables || {},
+      operationName: req?.body?.operationName || req?.query?.operationName || null,
+      schema: null as any, // Will be set by GraphQL middleware
+      rootValue: null as any, // Will be set by GraphQL middleware
+      contextValue: context, // Reference to the context itself
+    };
+    
+    Helper.define(context, "graphql", graphqlInfo);
+    
+    // Set GraphQL specific metadata
+    context.setMetaData("_body", req?.body || {});
+    context.setMetaData("originalPath", req?.url || req?.path || '/graphql');
+    context.setMetaData("graphqlQuery", graphqlInfo.query);
+    context.setMetaData("graphqlVariables", graphqlInfo.variables);
+    context.setMetaData("graphqlOperationName", graphqlInfo.operationName);
+    
+    // Define sendMetadata for GraphQL to handle response format
+    Helper.define(context, "sendMetadata", function(this: KoattyContext, data?: KoattyMetadata) {
+      const metadataToSend = data || this.metadata;
+      if (metadataToSend && typeof metadataToSend.getMap === 'function') {
+        // For GraphQL, metadata is typically sent as response headers
+        const metadataMap = metadataToSend.getMap();
+        Object.keys(metadataMap).forEach(key => {
+          if (!key.startsWith('_') && !key.startsWith('graphql')) {
+            this.set(key, metadataMap[key]);
+          }
+        });
+      }
+    });
+
+    return context;
+  }
+}
+
+/**
  * WebSocket Context Factory
  */
 class WebSocketContextFactory implements IContextFactory {
@@ -210,7 +272,8 @@ class ContextFactoryRegistry {
     ['https', new HttpContextFactory()],
     ['ws', new WebSocketContextFactory()],
     ['wss', new WebSocketContextFactory()],
-    ['grpc', new GrpcContextFactory()]
+    ['grpc', new GrpcContextFactory()],
+    ['graphql', new GraphQLContextFactory()]
   ]);
 
   static getFactory(protocol: ProtocolType): IContextFactory {
@@ -230,7 +293,7 @@ class ContextFactoryRegistry {
  * Create Koatty context instance based on protocol type.
  * 
  * @param {KoaContext} ctx - Koa context object
- * @param {string} protocol - Protocol type ('http'|'https'|'ws'|'wss'|'grpc')
+ * @param {string} protocol - Protocol type ('http'|'https'|'ws'|'wss'|'grpc'|'graphql')
  * @param {any} req - Request object
  * @param {any} res - Response object
  * @returns {KoattyContext} Returns appropriate context instance based on protocol

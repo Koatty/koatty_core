@@ -95,6 +95,29 @@ describe("Context Creation Optimization", () => {
     expect(context.getMetaData('_body')).toEqual(['test message']);
   });
 
+  test("should create GraphQL context correctly", () => {
+    const mockReq = Object.assign(createMockRequest({ url: '/graphql', method: 'POST' }), {
+      body: {
+        query: 'query { user { id name } }',
+        variables: { userId: '123' },
+        operationName: 'GetUser'
+      }
+    });
+    const mockRes = createMockResponse();
+    const koaCtx = app.createContext(mockReq, mockRes);
+    
+    const context = createKoattyContext(koaCtx, 'graphql', mockReq, mockRes);
+    
+    expect(context.protocol).toBe('graphql');
+    expect((context as any).graphql).toBeDefined();
+    expect((context as any).graphql.query).toBe('query { user { id name } }');
+    expect((context as any).graphql.variables).toEqual({ userId: '123' });
+    expect((context as any).graphql.operationName).toBe('GetUser');
+    expect(context.getMetaData('graphqlQuery')).toEqual(['query { user { id name } }']);
+    expect(context.getMetaData('graphqlVariables')).toEqual([{ userId: '123' }]);
+    expect(context.getMetaData('graphqlOperationName')).toEqual(['GetUser']);
+  });
+
   test("should validate protocol types", () => {
     const mockReq = createMockRequest({ url: '/test' });
     const mockRes = createMockResponse();
@@ -141,48 +164,55 @@ describe("Context Creation Optimization", () => {
 
   test("performance: context creation should be efficient", () => {
     const iterations = 1000;
-    const mockReq = createMockRequest({ url: '/test', method: 'GET' });
-    const mockRes = createMockResponse();
+    const protocols: ProtocolType[] = ['http', 'graphql'];
     
-    const startTime = process.hrtime.bigint();
-    
-    for (let i = 0; i < iterations; i++) {
-      const koaCtx = app.createContext(mockReq, mockRes);
-      createKoattyContext(koaCtx, 'http', mockReq, mockRes);
-    }
-    
-    const endTime = process.hrtime.bigint();
-    const duration = Number(endTime - startTime) / 1000000; // Convert to milliseconds
-    
-    console.log(`Created ${iterations} contexts in ${duration.toFixed(2)}ms`);
-    console.log(`Average: ${(duration / iterations).toFixed(4)}ms per context`);
-    
-    // Should create contexts reasonably fast (less than 1ms per context on average)
-    expect(duration / iterations).toBeLessThan(1);
+    protocols.forEach(protocol => {
+      const mockReq = createMockRequest({ url: '/test', method: 'GET' });
+      const mockRes = createMockResponse();
+      
+      const startTime = process.hrtime.bigint();
+      
+      for (let i = 0; i < iterations; i++) {
+        const koaCtx = app.createContext(mockReq, mockRes);
+        createKoattyContext(koaCtx, protocol, mockReq, mockRes);
+      }
+      
+      const endTime = process.hrtime.bigint();
+      const duration = Number(endTime - startTime) / 1000000; // Convert to milliseconds
+      
+      console.log(`Created ${iterations} ${protocol} contexts in ${duration.toFixed(2)}ms`);
+      console.log(`Average: ${(duration / iterations).toFixed(4)}ms per ${protocol} context`);
+      
+      // Should create contexts reasonably fast (less than 1ms per context on average)
+      expect(duration / iterations).toBeLessThan(1);
+    });
   });
 
-  test("should handle context pool operations", () => {
-    const protocol: ProtocolType = 'http';
-    const mockReq = createMockRequest({ url: '/test' });
-    const mockRes = createMockResponse();
-    const koaCtx = app.createContext(mockReq, mockRes);
-    const context = createKoattyContext(koaCtx, protocol, mockReq, mockRes);
+  test("should handle context pool operations for all protocols", () => {
+    const protocols: ProtocolType[] = ['http', 'graphql'];
     
-    // Initially pool should be empty
-    expect(ContextPool.get(protocol)).toBeNull();
-    
-    // Release context to pool
-    ContextPool.release(protocol, context);
-    
-    // Should be able to get context from pool
-    const pooledContext = ContextPool.get(protocol);
-    expect(pooledContext).toBeDefined();
-    expect(pooledContext).not.toBeNull();
-    if (pooledContext) {
-      expect(pooledContext.protocol).toBe(protocol);
-    }
-    
-    // Pool should be empty again
-    expect(ContextPool.get(protocol)).toBeNull();
+    protocols.forEach(protocol => {
+      const mockReq = createMockRequest({ url: '/test' });
+      const mockRes = createMockResponse();
+      const koaCtx = app.createContext(mockReq, mockRes);
+      const context = createKoattyContext(koaCtx, protocol, mockReq, mockRes);
+      
+      // Initially pool should be empty
+      expect(ContextPool.get(protocol)).toBeNull();
+      
+      // Release context to pool
+      ContextPool.release(protocol, context);
+      
+      // Should be able to get context from pool
+      const pooledContext = ContextPool.get(protocol);
+      expect(pooledContext).toBeDefined();
+      expect(pooledContext).not.toBeNull();
+      if (pooledContext) {
+        expect(pooledContext.protocol).toBe(protocol);
+      }
+      
+      // Pool should be empty again
+      expect(ContextPool.get(protocol)).toBeNull();
+    });
   });
 });
