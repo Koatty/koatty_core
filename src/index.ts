@@ -10,4 +10,4 @@ export * from "./Context";
 export * from "./IApplication";
 export * from "./IContext";
 export * from "./Metadata";
-export { parseExp, asyncEvent, bindProcessEvent } from "./Utils";
+export * from "./Utils";
