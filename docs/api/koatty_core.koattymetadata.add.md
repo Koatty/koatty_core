@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.add() method
 
-Adds the given value for the given key by appending to a list of previous values associated with that key.
+Adds the given value for the given key
 
 **Signature:**
 

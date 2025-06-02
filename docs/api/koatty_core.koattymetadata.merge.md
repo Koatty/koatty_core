@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.merge() method
 
-Merges all key-value pairs from a given Metadata object into this one. If both this object and the given object have values in the same key, values from the other Metadata object will be appended to this object's values.
+Merges the given metadata into this metadata
 
 **Signature:**
 
@@ -41,8 +41,6 @@ other
 
 
 </td><td>
-
-A Metadata object.
 
 
 </td></tr>

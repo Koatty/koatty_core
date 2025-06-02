@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.from() method
 
-copy all key-value pairs from a given object into this new Metadata.
+Creates a KoattyMetadata object from a plain object
 
 **Signature:**
 

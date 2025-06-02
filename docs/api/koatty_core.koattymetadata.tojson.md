@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.toJSON() method
 
-This modifies the behavior of JSON.stringify to show an object representation of the metadata map.
+Converts the metadata to a JSON object
 
 **Signature:**
 

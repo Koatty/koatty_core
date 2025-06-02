@@ -139,17 +139,6 @@ Bind event to the process
 </td></tr>
 <tr><td>
 
-[Component(identifier)](./koatty_core.component.md)
-
-
-</td><td>
-
-Component decorator, used to mark a class as a component and register it to IOC container.
-
-
-</td></tr>
-<tr><td>
-
 [Controller(path, options)](./koatty_core.controller.md)
 
 
@@ -244,6 +233,17 @@ Check if a class implements the IPlugin interface.
 </td><td>
 
 Check if a class implements the IService interface.
+
+
+</td></tr>
+<tr><td>
+
+[isPrevent(err)](./koatty_core.isprevent.md)
+
+
+</td><td>
+
+Check is prevent error
 
 
 </td></tr>
@@ -534,6 +534,15 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[ComponentType](./koatty_core.componenttype.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
 
 [EventHookFunc](./koatty_core.eventhookfunc.md)
 

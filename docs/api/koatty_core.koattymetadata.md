@@ -54,6 +54,27 @@ Map&lt;string, any\[\]&gt;
 
 
 </td></tr>
+<tr><td>
+
+[size](./koatty_core.koattymetadata.size.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+Gets the number of key-value pairs
+
+
+</td></tr>
 </tbody></table>
 
 ## Methods
@@ -84,7 +105,21 @@ Description
 
 </td><td>
 
-Adds the given value for the given key by appending to a list of previous values associated with that key.
+Adds the given value for the given key
+
+
+</td></tr>
+<tr><td>
+
+[clear()](./koatty_core.koattymetadata.clear.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Clears all metadata
 
 
 </td></tr>
@@ -114,7 +149,7 @@ Clones the metadata object.  The newly cloned object.
 
 </td><td>
 
-copy all key-value pairs from a given object into this new Metadata.
+Creates a KoattyMetadata object from a plain object
 
 
 </td></tr>
@@ -128,7 +163,21 @@ copy all key-value pairs from a given object into this new Metadata.
 
 </td><td>
 
-Gets a list of all values associated with the key. Normalizes the key.
+Gets a list of all values associated with the key
+
+
+</td></tr>
+<tr><td>
+
+[getFirst(key)](./koatty_core.koattymetadata.getfirst.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Gets the first value associated with the given key
 
 
 </td></tr>
@@ -148,6 +197,20 @@ Gets a plain object mapping each key to the first value associated with it. This
 </td></tr>
 <tr><td>
 
+[isEmpty()](./koatty_core.koattymetadata.isempty.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Checks if the metadata is empty
+
+
+</td></tr>
+<tr><td>
+
 [merge(other)](./koatty_core.koattymetadata.merge.md)
 
 
@@ -156,7 +219,7 @@ Gets a plain object mapping each key to the first value associated with it. This
 
 </td><td>
 
-Merges all key-value pairs from a given Metadata object into this one. If both this object and the given object have values in the same key, values from the other Metadata object will be appended to this object's values.
+Merges the given metadata into this metadata
 
 
 </td></tr>
@@ -170,7 +233,7 @@ Merges all key-value pairs from a given Metadata object into this one. If both t
 
 </td><td>
 
-Removes the given key and any associated values. Normalizes the key.
+Removes the given key and any associated values
 
 
 </td></tr>
@@ -198,7 +261,7 @@ Set the given value for the given key
 
 </td><td>
 
-This modifies the behavior of JSON.stringify to show an object representation of the metadata map.
+Converts the metadata to a JSON object
 
 
 </td></tr>

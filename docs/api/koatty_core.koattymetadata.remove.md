@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.remove() method
 
-Removes the given key and any associated values. Normalizes the key.
+Removes the given key and any associated values
 
 **Signature:**
 
@@ -41,8 +41,6 @@ string
 
 
 </td><td>
-
-The key whose values should be removed.
 
 
 </td></tr>

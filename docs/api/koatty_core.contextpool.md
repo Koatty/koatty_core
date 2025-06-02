@@ -46,6 +46,38 @@ Description
 </td></tr>
 <tr><td>
 
+[getStats()](./koatty_core.contextpool.getstats.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+Get pool statistics for monitoring
+
+
+</td></tr>
+<tr><td>
+
+[initialize()](./koatty_core.contextpool.initialize.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+Initialize pools with pre-allocated contexts
+
+
+</td></tr>
+<tr><td>
+
 [release(protocol, context)](./koatty_core.contextpool.release.md)
 
 
@@ -55,6 +87,22 @@ Description
 
 
 </td><td>
+
+
+</td></tr>
+<tr><td>
+
+[warmUp(protocol, count)](./koatty_core.contextpool.warmup.md)
+
+
+</td><td>
+
+`static`
+
+
+</td><td>
+
+Warm up pools by pre-allocating contexts
 
 
 </td></tr>
