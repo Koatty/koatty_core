@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0-0](https://github.com/koatty/koatty_core/compare/v1.16.2...v1.17.0-0) (2025-06-02)
+
+
+### Features
+
+* add GraphQL protocol support to context creation and factory system ([d60f4bd](https://github.com/koatty/koatty_core/commit/d60f4bdd0275d07bd8450ea6401a719304312e8e))
+
 ### [1.16.3](https://github.com/koatty/koatty_core/compare/v1.16.2...v1.16.3) (2024-11-20)
 
 #### 🚀 性能优化 (Performance Improvements)
@@ -774,6 +781,3 @@ All notable changes to this project will be documented in this file. See [standa
 
 * chore(release): 1.1.1 ([f1e1cc4](https://github.com/koatty/koatty_core/commit/f1e1cc4))
 * Initial commit ([93a3332](https://github.com/koatty/koatty_core/commit/93a3332))
-
-
-
