@@ -39,6 +39,48 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[getNativeServer?](./koatty_core.koattyserver.getnativeserver.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(protocolType?: string, port?: number) =&gt; [NativeServer](./koatty_core.nativeserver.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[getStatus?](./koatty_core.koattyserver.getstatus.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(protocolType?: string, port?: number) =&gt; number
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
 [options](./koatty_core.koattyserver.options.md)
 
 
@@ -71,24 +113,7 @@ any
 
 </td><td>
 
-_(Optional)_ gRPC service register
-
-
-</td></tr>
-<tr><td>
-
-[server](./koatty_core.koattyserver.server.md)
-
-
-</td><td>
-
-
-</td><td>
-
-[NativeServer](./koatty_core.nativeserver.md)
-
-
-</td><td>
+_(Optional)_ service register(exp: gRPC)
 
 
 </td></tr>
@@ -105,23 +130,6 @@ _(Optional)_ gRPC service register
 </td><td>
 
 (listenCallback: () =&gt; void) =&gt; [NativeServer](./koatty_core.nativeserver.md)
-
-
-</td><td>
-
-
-</td></tr>
-<tr><td>
-
-[status](./koatty_core.koattyserver.status.md)
-
-
-</td><td>
-
-
-</td><td>
-
-number
 
 
 </td><td>
