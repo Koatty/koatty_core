@@ -14,6 +14,9 @@ import "reflect-metadata";
 import { KoattyApplication } from "./IApplication";
 import { KoattyContext, KoattyNext } from "./IContext";
 
+export type ComponentType = 'COMPONENT' | 'CONTROLLER' | 'MIDDLEWARE' | 'SERVICE';
+
+
 // used to store router 
 export const CONTROLLER_ROUTER = "CONTROLLER_ROUTER";
 /**
@@ -79,28 +82,6 @@ export enum ControllerProtocol {
 export interface IExtraControllerOptions {
   path?: string;
   middleware?: Function[];
-}
-
-/**
- * Component decorator, used to mark a class as a component and register it to IOC container.
- * 
- * @param identifier Optional identifier for the component. If not provided, will use the class name.
- * @returns ClassDecorator function that registers the target class as a component.
- * 
- * @example
- * ```ts
- * @Component()
- * class UserDto {}
- * 
- * @Component('customName')
- * class OrderClass {}
- * ```
- */
-export function Component(identifier?: string): ClassDecorator {
-  return (target: Function) => {
-    identifier = identifier || IOC.getIdentifier(target);
-    IOC.saveClass("COMPONENT", target, identifier);
-  };
 }
 
 /**
