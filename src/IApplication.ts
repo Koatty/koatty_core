@@ -161,13 +161,13 @@ export interface KoattyApplication extends Koa {
  */
 export interface KoattyServer {
   options: any;
-  server: NativeServer;
-  status: number;
-
   readonly Start: (listenCallback: () => void) => NativeServer;
   readonly Stop: (callback?: () => void) => void;
+
+  readonly getStatus?: (protocolType?: string, port?: number) => number;
+  readonly getNativeServer?: (protocolType?: string, port?: number) => NativeServer;
   /**
-   * gRPC service register
+   * service register(exp: gRPC)
    * @param {ServiceImplementation} impl
    */
   readonly RegisterService?: (impl: any) => void;
