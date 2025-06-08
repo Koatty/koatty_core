@@ -14,8 +14,63 @@ export interface IController
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [app](./koatty_core.icontroller.app.md) | <code>readonly</code> | [KoattyApplication](./koatty_core.koattyapplication.md) |  |
-|  [ctx](./koatty_core.icontroller.ctx.md) | <code>readonly</code> | [KoattyContext](./koatty_core.koattycontext.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[app](./koatty_core.icontroller.app.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+[KoattyApplication](./koatty_core.koattyapplication.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ctx](./koatty_core.icontroller.ctx.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+[KoattyContext](./koatty_core.koattycontext.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

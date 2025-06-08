@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.add() method
 
-Adds the given value for the given key by appending to a list of previous values associated with that key.
+Adds the given value for the given key
 
 **Signature:**
 
@@ -14,11 +14,51 @@ add(key: string, value: any): void;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string |  |
-|  value | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 void

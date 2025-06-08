@@ -4,8 +4,7 @@
 
 ## Service() function
 
-Indicates that an decorated class is a "service".
-
+Service decorator, used to mark a class as a service component. The decorated class will be registered in the IOC container.
 
 **Signature:**
 
@@ -15,13 +14,46 @@ export declare function Service(identifier?: string): ClassDecorator;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  identifier | string | _(Optional)_ class name |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+identifier
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Optional service identifier. If not provided, will use the class name.
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
 
-{<!-- -->ClassDecorator<!-- -->}
+ClassDecorator
+
+## Example
+
+\`\`\`<!-- -->ts @<!-- -->Service() export class UserService { // do something }
 

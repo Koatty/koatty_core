@@ -4,6 +4,8 @@
 
 ## KoattyApplication.setMetaData property
 
+Set metadata value by key.
+
 **Signature:**
 
 ```typescript

@@ -4,8 +4,7 @@
 
 ## Middleware() function
 
-Indicates that an decorated class is a "middleware".
-
+Middleware decorator, used to mark a class as a middleware component.
 
 **Signature:**
 
@@ -15,13 +14,58 @@ export declare function Middleware(identifier?: string): ClassDecorator;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  identifier | string | _(Optional)_ class name |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+identifier
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Optional custom identifier for the middleware. If not provided, the class name will be used as identifier
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
 
-{<!-- -->ClassDecorator<!-- -->}
+ClassDecorator function that registers the middleware class in IOC container
+
+## Example
+
+
+```ts
+@Middleware()
+export class LogMiddleware {
+  // middleware implementation
+  run(options: any, app: KoattyApplication) {
+    // do something
+    return (ctx: KoattyContext, next: KoattyNext) {
+      // do something
+    }
+  }
+}
+```
 

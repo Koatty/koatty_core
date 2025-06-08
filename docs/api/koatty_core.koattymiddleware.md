@@ -4,7 +4,7 @@
 
 ## KoattyMiddleware type
 
-@<!-- -->description: koatty middleware function
+koatty middleware function
 
 **Signature:**
 

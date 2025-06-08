@@ -4,7 +4,7 @@
 
 ## createKoattyContext() function
 
-Create KoattyContext
+Create Koatty context instance based on protocol type.
 
 **Signature:**
 
@@ -14,15 +14,90 @@ export declare function createKoattyContext(ctx: KoaContext, protocol: string, r
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  ctx | [KoaContext](./koatty_core.koacontext.md) | koa context |
-|  protocol | string | server protocol |
-|  req | any | request |
-|  res | any | response |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+ctx
+
+
+</td><td>
+
+[KoaContext](./koatty_core.koacontext.md)
+
+
+</td><td>
+
+Koa context object
+
+
+</td></tr>
+<tr><td>
+
+protocol
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+Protocol type ('http'\|'https'\|'ws'\|'wss'\|'grpc'\|'graphql')
+
+
+</td></tr>
+<tr><td>
+
+req
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+Request object
+
+
+</td></tr>
+<tr><td>
+
+res
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+Response object
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 [KoattyContext](./koatty_core.koattycontext.md)
 
+{<!-- -->KoattyContext<!-- -->} Returns appropriate context instance based on protocol
 

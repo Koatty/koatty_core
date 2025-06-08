@@ -4,7 +4,7 @@
 
 ## Koatty.getMetaData() method
 
-Get application metadata by key
+Get metadata by key from application instance
 
 **Signature:**
 
@@ -14,11 +14,42 @@ getMetaData(key: string): any[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string |  Koatty |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+The metadata key to retrieve
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any\[\]
+
+An array containing the metadata value(s). Returns empty array if not found
 

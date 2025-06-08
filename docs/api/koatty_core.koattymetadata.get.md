@@ -4,7 +4,7 @@
 
 ## KoattyMetadata.get() method
 
-Gets a list of all values associated with the key. Normalizes the key.
+Gets a list of all values associated with the key
 
 **Signature:**
 
@@ -14,10 +14,37 @@ get(key: string): any[];
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  key | string | The key whose value should be retrieved.  A list of values associated with the given key. |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+key
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any\[\]

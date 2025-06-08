@@ -14,7 +14,42 @@ export interface IMiddleware
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [run](./koatty_core.imiddleware.run.md) |  | (options: any, app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->) =&gt; [KoattyMiddleware](./koatty_core.koattymiddleware.md) |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[run](./koatty_core.imiddleware.run.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(options: any, app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->) =&gt; [KoattyMiddleware](./koatty_core.koattymiddleware.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

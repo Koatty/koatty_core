@@ -4,7 +4,7 @@
 
 ## Koatty.createContext() method
 
-Create Context for every request
+Create a Koatty context object.
 
 **Signature:**
 
@@ -14,15 +14,74 @@ createContext(req: RequestType, res: ResponseType, protocol?: string): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  req | [RequestType](./koatty_core.requesttype.md) |  |
-|  res | [ResponseType](./koatty_core.responsetype.md) |  |
-|  protocol | string | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+req
+
+
+</td><td>
+
+[RequestType](./koatty_core.requesttype.md)
+
+
+</td><td>
+
+Request object
+
+
+</td></tr>
+<tr><td>
+
+res
+
+
+</td><td>
+
+[ResponseType](./koatty_core.responsetype.md)
+
+
+</td><td>
+
+Response object
+
+
+</td></tr>
+<tr><td>
+
+protocol
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'grpc'
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any
 
-{<!-- -->KoattyContext<!-- -->} {<!-- -->\*<!-- -->}  Koatty
+{<!-- -->any<!-- -->} Koatty context object
 

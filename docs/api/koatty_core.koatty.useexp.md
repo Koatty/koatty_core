@@ -4,7 +4,7 @@
 
 ## Koatty.useExp() method
 
-Use the given Express middleware `fn`<!-- -->.
+Use express-style middleware function. Convert express-style middleware to koa-style middleware.
 
 **Signature:**
 
@@ -14,13 +14,46 @@ useExp(fn: Function): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  fn | Function |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+fn
+
+
+</td><td>
+
+Function
+
+
+</td><td>
+
+Express-style middleware function
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any
 
-{<!-- -->any<!-- -->}  Koatty
+{<!-- -->any<!-- -->} Returns the result of middleware execution
+
+## Exceptions
+
+{<!-- -->Error<!-- -->} When parameter is not a function
 

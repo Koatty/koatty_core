@@ -4,27 +4,76 @@
 
 ## Controller() function
 
-Indicates that an decorated class is a "controller".
-
+Controller decorator for registering controller class. Used to mark a class as a Controller and define its routing path.
 
 **Signature:**
 
 ```typescript
-export declare function Controller(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function Controller(path?: string, options?: IControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ controller router path |
-|  options | { \[key: string\]: any; } | _(Optional)_ controller router options |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The base path for all routes in this controller
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
+
+
+</td><td>
+
+_(Optional)_ Additional configuration options for the controller
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
 
-{<!-- -->ClassDecorator<!-- -->}
+{<!-- -->ClassDecorator<!-- -->} Returns a class decorator function
+
+## Example
+
+
+```
+@Controller('/api')
+export class UserController {}
+```
 

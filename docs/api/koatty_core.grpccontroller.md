@@ -4,24 +4,76 @@
 
 ## GrpcController() function
 
-Indicates that an decorated class is a "grpc controller". 
+GrpcController decorator for registering gRPC controller class.
 
 **Signature:**
 
 ```typescript
-export declare function GrpcController(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function GrpcController(path?: string, options?: IExtraControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ |
-|  options | { \[key: string\]: any; } | _(Optional)_  {<!-- -->\*<!-- -->} |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The base path for the gRPC service
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[IExtraControllerOptions](./koatty_core.iextracontrolleroptions.md)
+
+
+</td><td>
+
+_(Optional)_ Configuration options for the gRPC controller
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
+
+ClassDecorator function that registers the controller class
+
+## Example
+
+
+```typescript
+@GrpcController("/user")
+class UserController {}
+```
 

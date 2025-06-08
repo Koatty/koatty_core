@@ -4,7 +4,7 @@
 
 ## KoattyApplication.createContext property
 
-Create context
+Create a Koatty context object.
 
 **Signature:**
 

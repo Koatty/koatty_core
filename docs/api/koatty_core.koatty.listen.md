@@ -4,9 +4,9 @@
 
 ## Koatty.listen() method
 
-listening and start server
+Listening and start server
 
-Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer: http/https Server or grpcServer or Websocket
+Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or Websocket
 
 **Signature:**
 
@@ -16,13 +16,42 @@ listen(listenCallback?: any): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  listenCallback | any | _(Optional)_ (app: Koatty) =<!-- -->&gt; void |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+listenCallback
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_ Optional callback function to be executed after server starts
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any
 
-{<!-- -->NativeServer<!-- -->} NativeServer  Koatty
+{<!-- -->NativeServer<!-- -->} The native server instance
 

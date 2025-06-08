@@ -4,7 +4,7 @@
 
 ## KoattyServer.RegisterService property
 
-gRPC service register
+service register(exp: gRPC)
 
 **Signature:**
 

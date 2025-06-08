@@ -4,9 +4,9 @@
 
 ## KoattyApplication interface
 
-Koatty Application interface
+Interface representing a Koatty application that extends Koa. Defines the structure and capabilities of a Koatty application instance.
 
-  KoattyApplication  {<!-- -->Koa<!-- -->}
+ KoattyApplication  Koa
 
 **Signature:**
 
@@ -17,27 +17,418 @@ export interface KoattyApplication extends Koa
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [appDebug](./koatty_core.koattyapplication.appdebug.md) |  | boolean |  |
-|  [appPath](./koatty_core.koattyapplication.apppath.md) |  | string |  |
-|  [callback](./koatty_core.koattyapplication.callback.md) | <code>readonly</code> | (protocol?: string, reqHandler?: (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt;) =&gt; { (req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->): Promise&lt;any&gt;; } |  |
-|  [config](./koatty_core.koattyapplication.config.md) | <code>readonly</code> | (name: string, type?: string) =&gt; any | Read app configuration |
-|  [context](./koatty_core.koattyapplication.context.md) |  | [KoattyContext](./koatty_core.koattycontext.md) |  |
-|  [createContext](./koatty_core.koattyapplication.createcontext.md) | <code>readonly</code> | (req: any, res: any, protocol?: string) =&gt; [KoattyContext](./koatty_core.koattycontext.md) | Create context |
-|  [env](./koatty_core.koattyapplication.env.md) |  | string |  |
-|  [getMetaData](./koatty_core.koattyapplication.getmetadata.md) | <code>readonly</code> | (key: string) =&gt; any\[\] | <p>Application metadata operation</p><p> Context</p> |
-|  [init](./koatty_core.koattyapplication.init.md) |  | () =&gt; void | app custom init, must be defined options |
-|  [koattyPath](./koatty_core.koattyapplication.koattypath.md) |  | string |  |
-|  [listen](./koatty_core.koattyapplication.listen.md) | <code>readonly</code> | (listenCallback?: any) =&gt; any | <p>Listening and start server</p><p>Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or Websocket</p> |
-|  [logsPath](./koatty_core.koattyapplication.logspath.md) |  | string |  |
-|  [name](./koatty_core.koattyapplication.name.md) |  | string |  |
-|  [options](./koatty_core.koattyapplication.options.md) |  | [InitOptions](./koatty_core.initoptions.md) |  |
-|  [rootPath](./koatty_core.koattyapplication.rootpath.md) |  | string |  |
-|  [router](./koatty_core.koattyapplication.router.md) |  | [KoattyRouter](./koatty_core.koattyrouter.md) |  |
-|  [server](./koatty_core.koattyapplication.server.md) |  | [KoattyServer](./koatty_core.koattyserver.md) |  |
-|  [setMetaData](./koatty_core.koattyapplication.setmetadata.md) | <code>readonly</code> | (key: string, value: unknown) =&gt; void |  |
-|  [use](./koatty_core.koattyapplication.use.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use middleware |
-|  [useExp](./koatty_core.koattyapplication.useexp.md) | <code>readonly</code> | (fn: Function) =&gt; any | Use the given Express middleware |
-|  [version](./koatty_core.koattyapplication.version.md) |  | string |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[appDebug](./koatty_core.koattyapplication.appdebug.md)
+
+
+</td><td>
+
+
+</td><td>
+
+boolean
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[appPath](./koatty_core.koattyapplication.apppath.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[callback](./koatty_core.koattyapplication.callback.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(protocol?: string, reqHandler?: (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt;) =&gt; { (req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->): Promise&lt;any&gt;; }
+
+
+</td><td>
+
+Create a callback function for handling requests.
+
+
+</td></tr>
+<tr><td>
+
+[config](./koatty_core.koattyapplication.config.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(name: string, type?: string) =&gt; any
+
+
+</td><td>
+
+Get configuration value by name and type.
+
+
+</td></tr>
+<tr><td>
+
+[context](./koatty_core.koattyapplication.context.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[KoattyContext](./koatty_core.koattycontext.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[createContext](./koatty_core.koattyapplication.createcontext.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(req: any, res: any, protocol?: string) =&gt; [KoattyContext](./koatty_core.koattycontext.md)
+
+
+</td><td>
+
+Create a Koatty context object.
+
+
+</td></tr>
+<tr><td>
+
+[env](./koatty_core.koattyapplication.env.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[getMetaData](./koatty_core.koattyapplication.getmetadata.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(key: string) =&gt; any\[\]
+
+
+</td><td>
+
+Get metadata by key from application instance
+
+
+</td></tr>
+<tr><td>
+
+[init](./koatty_core.koattyapplication.init.md)
+
+
+</td><td>
+
+
+</td><td>
+
+() =&gt; void
+
+
+</td><td>
+
+Initialize application. This method can be overridden in subclasses to perform initialization tasks.
+
+
+</td></tr>
+<tr><td>
+
+[koattyPath](./koatty_core.koattyapplication.koattypath.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[listen](./koatty_core.koattyapplication.listen.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(listenCallback?: any) =&gt; any
+
+
+</td><td>
+
+Listening and start server
+
+Since Koa.listen returns an http.Server type, the return value must be defined as 'any' type here. When calling, note that Koatty.listen returns a NativeServer, such as http/https Server or grpcServer or Websocket
+
+
+</td></tr>
+<tr><td>
+
+[logsPath](./koatty_core.koattyapplication.logspath.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[name](./koatty_core.koattyapplication.name.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[options](./koatty_core.koattyapplication.options.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[InitOptions](./koatty_core.initoptions.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[rootPath](./koatty_core.koattyapplication.rootpath.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[router](./koatty_core.koattyapplication.router.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[KoattyRouter](./koatty_core.koattyrouter.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[server](./koatty_core.koattyapplication.server.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[KoattyServer](./koatty_core.koattyserver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[setMetaData](./koatty_core.koattyapplication.setmetadata.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(key: string, value: unknown) =&gt; void
+
+
+</td><td>
+
+Set metadata value by key.
+
+
+</td></tr>
+<tr><td>
+
+[use](./koatty_core.koattyapplication.use.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(fn: Function) =&gt; any
+
+
+</td><td>
+
+Add middleware to the application.
+
+
+</td></tr>
+<tr><td>
+
+[useExp](./koatty_core.koattyapplication.useexp.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(fn: Function) =&gt; any
+
+
+</td><td>
+
+Use express-style middleware function. Convert express-style middleware to koa-style middleware.
+
+
+</td></tr>
+<tr><td>
+
+[version](./koatty_core.koattyapplication.version.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

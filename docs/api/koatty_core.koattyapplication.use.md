@@ -4,7 +4,7 @@
 
 ## KoattyApplication.use property
 
-Use middleware
+Add middleware to the application.
 
 **Signature:**
 

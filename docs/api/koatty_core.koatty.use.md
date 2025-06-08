@@ -4,7 +4,7 @@
 
 ## Koatty.use() method
 
-Use the given koa middleware `fn`<!-- -->. support generator func
+Add middleware to the application.
 
 **Signature:**
 
@@ -14,13 +14,46 @@ use(fn: Function): any;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  fn | Function |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+fn
+
+
+</td><td>
+
+Function
+
+
+</td><td>
+
+The middleware function to be added
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 any
 
-{<!-- -->any<!-- -->}  Koatty
+{<!-- -->any<!-- -->} Returns the result of adding the middleware
+
+## Exceptions
+
+{<!-- -->Error<!-- -->} When the parameter is not a function
 

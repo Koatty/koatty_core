@@ -4,7 +4,7 @@
 
 ## implementsPluginInterface() function
 
-check is implements Plugin Interface
+Check if a class implements the IPlugin interface.
 
 **Signature:**
 
@@ -14,12 +14,42 @@ export declare function implementsPluginInterface(cls: any): cls is IPlugin;
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  cls | any |  |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+cls
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+The class to check
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 cls is [IPlugin](./koatty_core.iplugin.md)
 
+True if the class implements IPlugin interface, false otherwise
 

@@ -6,75 +6,681 @@
 
 ## Classes
 
-|  Class | Description |
-|  --- | --- |
-|  [Koatty](./koatty_core.koatty.md) | Koatty Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->} |
-|  [KoattyMetadata](./koatty_core.koattymetadata.md) | <p>KoattyMetadata</p><p>  KoattyMetadata</p> |
+<table><thead><tr><th>
+
+Class
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ContextFactoryRegistry](./koatty_core.contextfactoryregistry.md)
+
+
+</td><td>
+
+Context factory registry
+
+
+</td></tr>
+<tr><td>
+
+[ContextPool](./koatty_core.contextpool.md)
+
+
+</td><td>
+
+Context pool for reusing context objects
+
+
+</td></tr>
+<tr><td>
+
+[Koatty](./koatty_core.koatty.md)
+
+
+</td><td>
+
+Koatty Application   Koatty  {<!-- -->Koa<!-- -->}  {<!-- -->BaseApp<!-- -->}
+
+
+</td></tr>
+<tr><td>
+
+[KoattyMetadata](./koatty_core.koattymetadata.md)
+
+
+</td><td>
+
+A class for managing metadata with key-value pairs storage. Provides methods to set, get, add, remove, merge, and clone metadata. Values are stored as arrays to support multiple values for a single key. Supports Buffer values and handles their cloning appropriately. Can be serialized to JSON and created from plain objects.
+
+
+</td></tr>
+</tbody></table>
 
 ## Enumerations
 
-|  Enumeration | Description |
-|  --- | --- |
-|  [AppEvent](./koatty_core.appevent.md) | <p>app event</p><p>  AppEvent</p> |
+<table><thead><tr><th>
+
+Enumeration
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[AppEvent](./koatty_core.appevent.md)
+
+
+</td><td>
+
+app event
+
+  AppEvent
+
+
+</td></tr>
+<tr><td>
+
+[ControllerProtocol](./koatty_core.controllerprotocol.md)
+
+
+</td><td>
+
+Protocol types supported by the controller.
+
+
+</td></tr>
+</tbody></table>
 
 ## Functions
 
-|  Function | Description |
-|  --- | --- |
-|  [Component(identifier)](./koatty_core.component.md) | <p>Indicates that an decorated class is a "component".</p> |
-|  [Controller(path, options)](./koatty_core.controller.md) | <p>Indicates that an decorated class is a "controller".</p> |
-|  [createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md) | Create KoattyContext |
-|  [GraphQLController(path, options)](./koatty_core.graphqlcontroller.md) | Indicates that an decorated class is a "graphql controller".  |
-|  [GrpcController(path, options)](./koatty_core.grpccontroller.md) | Indicates that an decorated class is a "grpc controller".  |
-|  [implementsAspectInterface(cls)](./koatty_core.implementsaspectinterface.md) | check is implements Aspect Interface |
-|  [implementsControllerInterface(cls)](./koatty_core.implementscontrollerinterface.md) | check is implements Controller Interface |
-|  [implementsMiddlewareInterface(cls)](./koatty_core.implementsmiddlewareinterface.md) | check is implements Middleware Interface |
-|  [implementsPluginInterface(cls)](./koatty_core.implementsplugininterface.md) | check is implements Plugin Interface |
-|  [implementsServiceInterface(cls)](./koatty_core.implementsserviceinterface.md) | check is implements Service Interface |
-|  [Middleware(identifier)](./koatty_core.middleware.md) | <p>Indicates that an decorated class is a "middleware".</p> |
-|  [Plugin(identifier)](./koatty_core.plugin.md) | <p>Indicates that an decorated class is a "plugin".</p> |
-|  [Service(identifier)](./koatty_core.service.md) | <p>Indicates that an decorated class is a "service".</p> |
-|  [WebSocketController(path, options)](./koatty_core.websocketcontroller.md) | Indicates that an decorated class is a "websocket controller".  |
+<table><thead><tr><th>
+
+Function
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[asyncEvent(event, eventName)](./koatty_core.asyncevent.md)
+
+
+</td><td>
+
+Execute event as async
+
+
+</td></tr>
+<tr><td>
+
+[bindProcessEvent(event, originEventName, targetEventName)](./koatty_core.bindprocessevent.md)
+
+
+</td><td>
+
+Bind event to the process
+
+
+</td></tr>
+<tr><td>
+
+[Controller(path, options)](./koatty_core.controller.md)
+
+
+</td><td>
+
+Controller decorator for registering controller class. Used to mark a class as a Controller and define its routing path.
+
+
+</td></tr>
+<tr><td>
+
+[createKoattyContext(ctx, protocol, req, res)](./koatty_core.createkoattycontext.md)
+
+
+</td><td>
+
+Create Koatty context instance based on protocol type.
+
+
+</td></tr>
+<tr><td>
+
+[GraphQLController(path, options)](./koatty_core.graphqlcontroller.md)
+
+
+</td><td>
+
+GraphQL controller decorator. Define a class as a GraphQL controller.
+
+
+</td></tr>
+<tr><td>
+
+[GrpcController(path, options)](./koatty_core.grpccontroller.md)
+
+
+</td><td>
+
+GrpcController decorator for registering gRPC controller class.
+
+
+</td></tr>
+<tr><td>
+
+[implementsAspectInterface(cls)](./koatty_core.implementsaspectinterface.md)
+
+
+</td><td>
+
+Check if a class implements the IAspect interface.
+
+
+</td></tr>
+<tr><td>
+
+[implementsControllerInterface(cls)](./koatty_core.implementscontrollerinterface.md)
+
+
+</td><td>
+
+Check if a class implements the IController interface.
+
+
+</td></tr>
+<tr><td>
+
+[implementsMiddlewareInterface(cls)](./koatty_core.implementsmiddlewareinterface.md)
+
+
+</td><td>
+
+Check if a class implements the IMiddleware interface.
+
+
+</td></tr>
+<tr><td>
+
+[implementsPluginInterface(cls)](./koatty_core.implementsplugininterface.md)
+
+
+</td><td>
+
+Check if a class implements the IPlugin interface.
+
+
+</td></tr>
+<tr><td>
+
+[implementsServiceInterface(cls)](./koatty_core.implementsserviceinterface.md)
+
+
+</td><td>
+
+Check if a class implements the IService interface.
+
+
+</td></tr>
+<tr><td>
+
+[isPrevent(err)](./koatty_core.isprevent.md)
+
+
+</td><td>
+
+Check is prevent error
+
+
+</td></tr>
+<tr><td>
+
+[Middleware(identifier)](./koatty_core.middleware.md)
+
+
+</td><td>
+
+Middleware decorator, used to mark a class as a middleware component.
+
+
+</td></tr>
+<tr><td>
+
+[parseExp(fn)](./koatty_core.parseexp.md)
+
+
+</td><td>
+
+Convert express middleware for koa
+
+
+</td></tr>
+<tr><td>
+
+[Plugin(identifier)](./koatty_core.plugin.md)
+
+
+</td><td>
+
+Plugin decorator for registering plugin components. The decorated class must have a name ending with "Plugin" suffix.
+
+
+</td></tr>
+<tr><td>
+
+[Service(identifier)](./koatty_core.service.md)
+
+
+</td><td>
+
+Service decorator, used to mark a class as a service component. The decorated class will be registered in the IOC container.
+
+
+</td></tr>
+<tr><td>
+
+[WebSocketController(path, options)](./koatty_core.websocketcontroller.md)
+
+
+</td><td>
+
+WebSocket controller decorator. Define a class as WebSocket controller.
+
+
+</td></tr>
+</tbody></table>
 
 ## Interfaces
 
-|  Interface | Description |
-|  --- | --- |
-|  [IController](./koatty_core.icontroller.md) | Interface for Controller |
-|  [IMiddleware](./koatty_core.imiddleware.md) | Interface for Middleware class |
-|  [InitOptions](./koatty_core.initoptions.md) | <p>InitOptions</p><p> InitOptions</p> |
-|  [IPlugin](./koatty_core.iplugin.md) | Interface for Plugin class |
-|  [IRpcImplementation](./koatty_core.irpcimplementation.md) | <p>gRPC Implementation</p><p>  IRpcImplementation</p> |
-|  [IService](./koatty_core.iservice.md) | Interface for Service class |
-|  [KoattyApplication](./koatty_core.koattyapplication.md) | <p>Koatty Application interface</p><p>  KoattyApplication  {<!-- -->Koa<!-- -->}</p> |
-|  [KoattyContext](./koatty_core.koattycontext.md) | <p>Koatty Context.</p><p>  KoattyContext  {<!-- -->Koa.Context<!-- -->}</p> |
-|  [KoattyRouter](./koatty_core.koattyrouter.md) | <p>Router interface</p><p>  KoattyRouter</p> |
-|  [KoattyServer](./koatty_core.koattyserver.md) | <p>interface Server</p><p>  KoattyServer</p> |
-|  [RouterImplementation](./koatty_core.routerimplementation.md) | <p>RouterImplementation</p><p>  RouterImplementation</p> |
+<table><thead><tr><th>
+
+Interface
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[IContextFactory](./koatty_core.icontextfactory.md)
+
+
+</td><td>
+
+Context factory interface for different protocols
+
+
+</td></tr>
+<tr><td>
+
+[IController](./koatty_core.icontroller.md)
+
+
+</td><td>
+
+Interface for Controller
+
+
+</td></tr>
+<tr><td>
+
+[IControllerOptions](./koatty_core.icontrolleroptions.md)
+
+
+</td><td>
+
+Interface for ControllerOptions
+
+
+</td></tr>
+<tr><td>
+
+[IExtraControllerOptions](./koatty_core.iextracontrolleroptions.md)
+
+
+</td><td>
+
+Interface for extra controller options
+
+
+</td></tr>
+<tr><td>
+
+[IMiddleware](./koatty_core.imiddleware.md)
+
+
+</td><td>
+
+Interface for Middleware class
+
+
+</td></tr>
+<tr><td>
+
+[InitOptions](./koatty_core.initoptions.md)
+
+
+</td><td>
+
+InitOptions
+
+ InitOptions
+
+
+</td></tr>
+<tr><td>
+
+[IPlugin](./koatty_core.iplugin.md)
+
+
+</td><td>
+
+Interface for Plugin class
+
+
+</td></tr>
+<tr><td>
+
+[IRpcImplementation](./koatty_core.irpcimplementation.md)
+
+
+</td><td>
+
+Interface for gRPC method implementations.  IRpcImplementation  Key-value pairs where keys are method names and values are untyped handle call functions.
+
+
+</td></tr>
+<tr><td>
+
+[IService](./koatty_core.iservice.md)
+
+
+</td><td>
+
+Interface for Service class
+
+
+</td></tr>
+<tr><td>
+
+[KoattyApplication](./koatty_core.koattyapplication.md)
+
+
+</td><td>
+
+Interface representing a Koatty application that extends Koa. Defines the structure and capabilities of a Koatty application instance.
+
+ KoattyApplication  Koa
+
+
+</td></tr>
+<tr><td>
+
+[KoattyContext](./koatty_core.koattycontext.md)
+
+
+</td><td>
+
+Koatty Context.
+
+  KoattyContext  {<!-- -->Koa.Context<!-- -->}
+
+
+</td></tr>
+<tr><td>
+
+[KoattyRouter](./koatty_core.koattyrouter.md)
+
+
+</td><td>
+
+Interface for Koatty router
+
+ KoattyRouter  Defines the structure and behavior of a router in Koatty framework. Provides methods for setting routes, loading router configurations, and managing router implementations.
+
+ {<!-- -->any<!-- -->} options - Router configuration options  {<!-- -->any<!-- -->} router - Instance of KoaRouter or custom router implementation  {<!-- -->Function<!-- -->} SetRouter - Method to set router implementation for a route  {<!-- -->Function<!-- -->} LoadRouter - Method to load and register router configurations  {<!-- -->Function<!-- -->} ListRouter - Optional method to get list of registered routers
+
+
+</td></tr>
+<tr><td>
+
+[KoattyServer](./koatty_core.koattyserver.md)
+
+
+</td><td>
+
+Interface for Koatty server instance
+
+ KoattyServer  {<!-- -->any<!-- -->} options - Server configuration options  {<!-- -->NativeServer<!-- -->} server - Native server instance  {<!-- -->number<!-- -->} status - Current server status  {<!-- -->Function<!-- -->} Start - Start the server and return native server instance  {<!-- -->Function<!-- -->} Stop - Stop the server  {<!-- -->Function<!-- -->} RegisterService - Register gRPC service implementation
+
+
+</td></tr>
+<tr><td>
+
+[RouterImplementation](./koatty_core.routerimplementation.md)
+
+
+</td><td>
+
+RouterImplementation
+
+  RouterImplementation
+
+
+</td></tr>
+</tbody></table>
 
 ## Variables
 
-|  Variable | Description |
-|  --- | --- |
-|  [AppEventArr](./koatty_core.appeventarr.md) |  |
-|  [CONTROLLER\_ROUTER](./koatty_core.controller_router.md) |  |
+<table><thead><tr><th>
+
+Variable
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[AppEventArr](./koatty_core.appeventarr.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[CONTROLLER\_ROUTER](./koatty_core.controller_router.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
 
 ## Type Aliases
 
-|  Type Alias | Description |
-|  --- | --- |
-|  [EventHookFunc](./koatty_core.eventhookfunc.md) |  |
-|  [IGraphQLImplementation](./koatty_core.igraphqlimplementation.md) |  |
-|  [IHttpImplementation](./koatty_core.ihttpimplementation.md) |  |
-|  [IRpcServerCall](./koatty_core.irpcservercall.md) |  |
-|  [IRpcServerCallback](./koatty_core.irpcservercallback.md) |  |
-|  [IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md) |  |
-|  [IWebSocket](./koatty_core.iwebsocket.md) |  |
-|  [IWsImplementation](./koatty_core.iwsimplementation.md) |  |
-|  [KoaContext](./koatty_core.koacontext.md) |  |
-|  [KoattyMiddleware](./koatty_core.koattymiddleware.md) | @<!-- -->description: koatty middleware function |
-|  [KoattyNext](./koatty_core.koattynext.md) | KoattyNext |
-|  [NativeServer](./koatty_core.nativeserver.md) |  |
-|  [RequestType](./koatty_core.requesttype.md) |  |
-|  [ResponseType](./koatty_core.responsetype.md) |  |
+<table><thead><tr><th>
 
+Type Alias
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[ComponentType](./koatty_core.componenttype.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[EventHookFunc](./koatty_core.eventhookfunc.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IGraphQLImplementation](./koatty_core.igraphqlimplementation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IHttpImplementation](./koatty_core.ihttpimplementation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IRpcServerCall](./koatty_core.irpcservercall.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IRpcServerCallback](./koatty_core.irpcservercallback.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IRpcServerCallImpl](./koatty_core.irpcservercallimpl.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IWebSocket](./koatty_core.iwebsocket.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[IWsImplementation](./koatty_core.iwsimplementation.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[KoaContext](./koatty_core.koacontext.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[KoattyMiddleware](./koatty_core.koattymiddleware.md)
+
+
+</td><td>
+
+koatty middleware function
+
+
+</td></tr>
+<tr><td>
+
+[KoattyNext](./koatty_core.koattynext.md)
+
+
+</td><td>
+
+KoattyNext
+
+
+</td></tr>
+<tr><td>
+
+[NativeServer](./koatty_core.nativeserver.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ProtocolType](./koatty_core.protocoltype.md)
+
+
+</td><td>
+
+Protocol types supported by Koatty
+
+
+</td></tr>
+<tr><td>
+
+[RequestType](./koatty_core.requesttype.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[ResponseType](./koatty_core.responsetype.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

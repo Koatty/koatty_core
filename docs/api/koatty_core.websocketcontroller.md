@@ -4,24 +4,76 @@
 
 ## WebSocketController() function
 
-Indicates that an decorated class is a "websocket controller". 
+WebSocket controller decorator. Define a class as WebSocket controller.
 
 **Signature:**
 
 ```typescript
-export declare function WebSocketController(path?: string, options?: {
-    [key: string]: any;
-}): ClassDecorator;
+export declare function WebSocketController(path?: string, options?: IExtraControllerOptions): ClassDecorator;
 ```
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  path | string | _(Optional)_ |
-|  options | { \[key: string\]: any; } | _(Optional)_  {<!-- -->\*<!-- -->} |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+path
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ Base path for the WebSocket controller
+
+
+</td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+[IExtraControllerOptions](./koatty_core.iextracontrolleroptions.md)
+
+
+</td><td>
+
+_(Optional)_ WebSocket controller configuration options
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 ClassDecorator
+
+{<!-- -->ClassDecorator<!-- -->} Returns a class decorator function
+
+## Example
+
+
+```typescript
+@WebSocketController('/ws')
+export class MyWSController {}
+```
 

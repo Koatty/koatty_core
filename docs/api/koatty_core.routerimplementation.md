@@ -16,11 +16,120 @@ export interface RouterImplementation
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [implementation?](./koatty_core.routerimplementation.implementation.md) |  | [IHttpImplementation](./koatty_core.ihttpimplementation.md) \| [IRpcImplementation](./koatty_core.irpcimplementation.md) \| [IWsImplementation](./koatty_core.iwsimplementation.md) \| [IGraphQLImplementation](./koatty_core.igraphqlimplementation.md) | _(Optional)_ |
-|  [method?](./koatty_core.routerimplementation.method.md) |  | string | _(Optional)_ |
-|  [path?](./koatty_core.routerimplementation.path.md) |  | string | _(Optional)_ |
-|  [schema?](./koatty_core.routerimplementation.schema.md) |  | GraphQLSchemaDefinition | _(Optional)_ |
-|  [service?](./koatty_core.routerimplementation.service.md) |  | ServiceDefinition | _(Optional)_ |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[implementation?](./koatty_core.routerimplementation.implementation.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[IHttpImplementation](./koatty_core.ihttpimplementation.md) \| [IRpcImplementation](./koatty_core.irpcimplementation.md) \| [IWsImplementation](./koatty_core.iwsimplementation.md) \| [IGraphQLImplementation](./koatty_core.igraphqlimplementation.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[method?](./koatty_core.routerimplementation.method.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[path?](./koatty_core.routerimplementation.path.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[schema?](./koatty_core.routerimplementation.schema.md)
+
+
+</td><td>
+
+
+</td><td>
+
+GraphQLSchemaDefinition
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[service?](./koatty_core.routerimplementation.service.md)
+
+
+</td><td>
+
+
+</td><td>
+
+ServiceDefinition
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+</tbody></table>

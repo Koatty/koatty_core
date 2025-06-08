@@ -17,23 +17,262 @@ export interface KoattyContext extends KoaContext
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [getMetaData](./koatty_core.koattycontext.getmetadata.md) | <code>readonly</code> | (key: string) =&gt; any\[\] | <p>context metadata operation</p><p> Context</p> |
-|  [protocol](./koatty_core.koattycontext.protocol.md) |  | string | <p>protocol</p><p> {<!-- -->string<!-- -->}  KoattyContext</p> |
-|  [requestBody?](./koatty_core.koattycontext.requestbody.md) | <code>readonly</code> | () =&gt; Promise&lt;unknown&gt; | _(Optional)_ Get parsed body(form variable and file object). |
-|  [requestParam?](./koatty_core.koattycontext.requestparam.md) | <code>readonly</code> | () =&gt; unknown | _(Optional)_ Get parsed query-string and path variable(koa ctx.query and ctx.params), and set as an object. |
-|  [rpc?](./koatty_core.koattycontext.rpc.md) |  | { call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; } | <p>_(Optional)_ gRPC ServerImpl</p><p> {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext</p> |
-|  [sendMetadata](./koatty_core.koattycontext.sendmetadata.md) | <code>readonly</code> | (data?: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void | <p>send metadata to http request header. then gRPC request to send metadata</p><p> KoattyContext</p> |
-|  [setMetaData](./koatty_core.koattycontext.setmetadata.md) | <code>readonly</code> | (key: string, value: unknown) =&gt; void |  |
-|  [status](./koatty_core.koattycontext.status.md) |  | number | <p>status</p><p> {<!-- -->number<!-- -->}  KoattyContext</p> |
-|  [websocket?](./koatty_core.koattycontext.websocket.md) |  | [IWebSocket](./koatty_core.iwebsocket.md) | <p>_(Optional)_ WebSocket ServerImpl</p><p> {<!-- -->\*<!-- -->}  KoattyContext</p> |
+<table><thead><tr><th>
+
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[getMetaData](./koatty_core.koattycontext.getmetadata.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(key: string) =&gt; any\[\]
+
+
+</td><td>
+
+context metadata operation
+
+ Context
+
+
+</td></tr>
+<tr><td>
+
+[protocol](./koatty_core.koattycontext.protocol.md)
+
+
+</td><td>
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+protocol
+
+ {<!-- -->string<!-- -->}  KoattyContext
+
+
+</td></tr>
+<tr><td>
+
+[requestBody?](./koatty_core.koattycontext.requestbody.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+() =&gt; Promise&lt;unknown&gt;
+
+
+</td><td>
+
+_(Optional)_ Get parsed body(form variable and file object).
+
+
+</td></tr>
+<tr><td>
+
+[requestParam?](./koatty_core.koattycontext.requestparam.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+() =&gt; unknown
+
+
+</td><td>
+
+_(Optional)_ Get parsed query-string and path variable(koa ctx.query and ctx.params), and set as an object.
+
+
+</td></tr>
+<tr><td>
+
+[rpc?](./koatty_core.koattycontext.rpc.md)
+
+
+</td><td>
+
+
+</td><td>
+
+{ call: [IRpcServerCall](./koatty_core.irpcservercall.md)<!-- -->&lt;any, any&gt;; callback?: [IRpcServerCallback](./koatty_core.irpcservercallback.md)<!-- -->&lt;any&gt;; }
+
+
+</td><td>
+
+_(Optional)_ gRPC ServerImpl
+
+ {<!-- -->{ call: IRpcServerCall<!-- -->&lt;<!-- -->any, any<!-- -->&gt;<!-- -->; callback?: IRpcServerCallback<any>; }<!-- -->}  KoattyContext
+
+
+</td></tr>
+<tr><td>
+
+[sendMetadata](./koatty_core.koattycontext.sendmetadata.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(data?: [KoattyMetadata](./koatty_core.koattymetadata.md)<!-- -->) =&gt; void
+
+
+</td><td>
+
+send metadata to http request header. then gRPC request to send metadata
+
+ KoattyContext
+
+
+</td></tr>
+<tr><td>
+
+[setMetaData](./koatty_core.koattycontext.setmetadata.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(key: string, value: unknown) =&gt; void
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[status](./koatty_core.koattycontext.status.md)
+
+
+</td><td>
+
+
+</td><td>
+
+number
+
+
+</td><td>
+
+status
+
+ {<!-- -->number<!-- -->}  KoattyContext
+
+
+</td></tr>
+<tr><td>
+
+[websocket?](./koatty_core.koattycontext.websocket.md)
+
+
+</td><td>
+
+
+</td><td>
+
+[IWebSocket](./koatty_core.iwebsocket.md)
+
+
+</td><td>
+
+_(Optional)_ WebSocket ServerImpl
+
+ {<!-- -->\*<!-- -->}  KoattyContext
+
+
+</td></tr>
+</tbody></table>
 
 ## Methods
 
-|  Method | Description |
-|  --- | --- |
-|  [throw(status)](./koatty_core.koattycontext.throw.md) | <p>Replace ctx.throw</p><p> {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context</p> |
-|  [throw(status, message)](./koatty_core.koattycontext.throw_1.md) |  |
-|  [throw(message, code, status)](./koatty_core.koattycontext.throw_2.md) |  |
+<table><thead><tr><th>
 
+Method
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[throw(status)](./koatty_core.koattycontext.throw.md)
+
+
+</td><td>
+
+Replace ctx.throw
+
+ {<!-- -->(status: number, message?: string)<!-- -->}  {<!-- -->(message: string, code?: number, status?: HttpStatusCode)<!-- -->}  Context
+
+
+</td></tr>
+<tr><td>
+
+[throw(status, message)](./koatty_core.koattycontext.throw_1.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[throw(message, code, status)](./koatty_core.koattycontext.throw_2.md)
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>

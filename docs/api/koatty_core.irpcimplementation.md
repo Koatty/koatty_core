@@ -4,9 +4,7 @@
 
 ## IRpcImplementation interface
 
-gRPC Implementation
-
-  IRpcImplementation
+Interface for gRPC method implementations.  IRpcImplementation  Key-value pairs where keys are method names and values are untyped handle call functions.
 
 **Signature:**
 

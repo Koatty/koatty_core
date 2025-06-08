@@ -4,7 +4,7 @@
 
 ## Koatty.callback() method
 
-return a request handler callback for http/gRPC/ws server.
+Create a callback function for handling requests.
 
 **Signature:**
 
@@ -14,14 +14,58 @@ callback(protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>): 
 
 ## Parameters
 
-|  Parameter | Type | Description |
-|  --- | --- | --- |
-|  protocol | string | _(Optional)_ |
-|  reqHandler | (ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt; | _(Optional)_ |
+<table><thead><tr><th>
 
+Parameter
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+protocol
+
+
+</td><td>
+
+string
+
+
+</td><td>
+
+_(Optional)_ The protocol type, defaults to "http"
+
+
+</td></tr>
+<tr><td>
+
+reqHandler
+
+
+</td><td>
+
+(ctx: [KoattyContext](./koatty_core.koattycontext.md)<!-- -->) =&gt; Promise&lt;any&gt;
+
+
+</td><td>
+
+_(Optional)_ Optional request handler function for processing requests
+
+
+</td></tr>
+</tbody></table>
 **Returns:**
 
 (req: [RequestType](./koatty_core.requesttype.md)<!-- -->, res: [ResponseType](./koatty_core.responsetype.md)<!-- -->) =&gt; Promise&lt;any&gt;
 
-{<!-- -->\*<!-- -->}  Koatty
+A function that handles incoming requests with the configured middleware stack \`\`\`
 

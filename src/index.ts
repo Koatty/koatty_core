@@ -10,3 +10,4 @@ export * from "./Context";
 export * from "./IApplication";
 export * from "./IContext";
 export * from "./Metadata";
+export * from "./Utils";

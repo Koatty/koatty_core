@@ -14,7 +14,42 @@ export interface IPlugin
 
 ## Properties
 
-|  Property | Modifiers | Type | Description |
-|  --- | --- | --- | --- |
-|  [run](./koatty_core.iplugin.run.md) |  | (options: object, app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->) =&gt; Promise&lt;any&gt; |  |
+<table><thead><tr><th>
 
+Property
+
+
+</th><th>
+
+Modifiers
+
+
+</th><th>
+
+Type
+
+
+</th><th>
+
+Description
+
+
+</th></tr></thead>
+<tbody><tr><td>
+
+[run](./koatty_core.iplugin.run.md)
+
+
+</td><td>
+
+
+</td><td>
+
+(options: object, app: [KoattyApplication](./koatty_core.koattyapplication.md)<!-- -->) =&gt; Promise&lt;any&gt;
+
+
+</td><td>
+
+
+</td></tr>
+</tbody></table>
