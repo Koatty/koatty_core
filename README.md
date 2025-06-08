@@ -10,7 +10,7 @@ Koatty框架核心模块，基于Koa的Node.js应用框架。
 - 基于Koa的轻量级核心
 - 支持HTTP、gRPC、WebSocket、GraphQL多种协议
 - 内置应用生命周期管理
-- 强大的中间件支持
+- 强大的中间件支持（Koa + Express）
 - 灵活的配置管理
 - 完善的错误处理机制
 - 请求追踪和性能监控
