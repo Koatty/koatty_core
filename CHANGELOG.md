@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.17.1](https://github.com/koatty/koatty_core/compare/v1.17.0...v1.17.1) (2025-06-08)
+
+
+### Bug Fixes
+
+* adjust asyncEvent test assertions" ([e598668](https://github.com/koatty/koatty_core/commit/e59866846450bdee78b76ee1209dc49ed5794279))
+* update asyncEvent return type and remove unnecessary return statement ([ea9691d](https://github.com/koatty/koatty_core/commit/ea9691df7f8e9319e857e2474a289e5532f9d868))
+
 ## [1.17.0](https://github.com/koatty/koatty_core/compare/v1.17.0-1...v1.17.0) (2025-06-08)
 
 ## [1.17.0-1](https://github.com/koatty/koatty_core/compare/v1.17.0-0...v1.17.0-1) (2025-06-02)

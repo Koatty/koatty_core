@@ -131,13 +131,12 @@ describe("Utils Functions", () => {
       
       expect(emitter.listenerCount(eventName)).toBe(3);
       
-      const result = await asyncEvent(emitter, eventName);
+      await asyncEvent(emitter, eventName);
       
       expect(listener1).toHaveBeenCalled();
       expect(listener2).toHaveBeenCalled();
       expect(listener3).toHaveBeenCalled();
       expect(emitter.listenerCount(eventName)).toBe(0);
-      expect(result).toBe(emitter);
     });
 
     test("should handle event with no listeners", async () => {
@@ -146,9 +145,8 @@ describe("Utils Functions", () => {
       
       expect(emitter.listenerCount(eventName)).toBe(0);
       
-      const result = await asyncEvent(emitter, eventName);
+      await asyncEvent(emitter, eventName);
       
-      expect(result).toBe(emitter);
       expect(emitter.listenerCount(eventName)).toBe(0);
     });
 
@@ -163,10 +161,9 @@ describe("Utils Functions", () => {
       // Manually add non-function listener (this is unusual but possible)
       (emitter as any)._events[eventName] = [functionListener, nonFunctionListener];
       
-      const result = await asyncEvent(emitter, eventName);
+      await asyncEvent(emitter, eventName);
       
       expect(functionListener).toHaveBeenCalled();
-      expect(result).toBe(emitter);
     });
 
     test("should handle async function errors gracefully", async () => {
