@@ -9,7 +9,7 @@ Execute event as async
 **Signature:**
 
 ```typescript
-export declare function asyncEvent(event: EventEmitter, eventName: string): Promise<EventEmitter<[never]>>;
+export declare function asyncEvent(event: EventEmitter, eventName: string): Promise<void>;
 ```
 
 ## Parameters
@@ -63,5 +63,5 @@ string
 </tbody></table>
 **Returns:**
 
-Promise&lt;EventEmitter&lt;\[never\]&gt;&gt;
+Promise&lt;void&gt;
 
