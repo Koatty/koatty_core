@@ -41,12 +41,12 @@ export function parseExp(fn: Function) {
  * @param {string} eventName
  * @return {*}
  */
-export async function asyncEvent(event: EventEmitter, eventName: string) {
+export async function asyncEvent(event: EventEmitter, eventName: string): Promise<void> {
   const listeners = event.listeners(eventName);
   for (const func of listeners) {
     if (Helper.isFunction(func)) await func();
   }
-  return event.removeAllListeners(eventName);
+  event.removeAllListeners(eventName);
 }
 
 /**
