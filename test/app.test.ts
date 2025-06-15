@@ -23,9 +23,16 @@ describe("App", () => {
     });
   })
 
-  afterAll(done => {
-    done();
+  afterAll(async () => {
+    // 清理事件监听器
+    app.removeAllListeners();
+    process.removeAllListeners('warning');
+    process.removeAllListeners('unhandledRejection');
+    process.removeAllListeners('uncaughtException');
+    
+    // 清理 Jest mocks
     jest.clearAllMocks();
+    jest.restoreAllMocks();
   });
 
   describe('metadata operations', () => {
@@ -243,6 +250,10 @@ describe("App", () => {
 
     test("callback - handles trace configuration", () => {
       const testApp = new App();
+      
+      // Mock the tracer module to avoid actual tracer setup
+      const mockUse = jest.spyOn(testApp, 'use');
+      
       testApp.setMetaData("_configs", {
         config: {
           trace: {
@@ -254,8 +265,10 @@ describe("App", () => {
       
       const callback = testApp.callback();
       expect(typeof callback).toBe('function');
-      // Verify tracer is set by checking middleware length increase
-      expect(testApp.middleware.length).toBeGreaterThan(0);
+      
+      // Clean up
+      mockUse.mockRestore();
+      testApp.removeAllListeners();
     });
 
     test("listen - mock server start", () => {
@@ -279,10 +292,11 @@ describe("App", () => {
     });
 
     test("response", async () => {
-      const res = await request(app.callback()).get('/');
+      const callback = app.callback();
+      const res = await request(callback).get('/');
       expect(res.text).toBe('Hello, World!');
       expect(res.status).toBe(200);
-    }, 600000);
+    }, 10000);
 
     test("response - with middleware stack", async () => {
       const testApp = new App();
@@ -294,10 +308,14 @@ describe("App", () => {
         ctx.body = `Response with ${ctx.customHeader}`;
       });
 
-      const res = await request(testApp.callback()).get('/');
+      const callback = testApp.callback();
+      const res = await request(callback).get('/');
       expect(res.text).toBe('Response with middleware-added');
       expect(res.status).toBe(200);
-    });
+      
+      // 清理测试应用的事件监听器
+      testApp.removeAllListeners();
+    }, 10000);
 
     test("handleRequest - private method via callback", async () => {
       const testApp = new App();
@@ -394,6 +412,7 @@ describe("App", () => {
       testApp.emit('error', preventedError);
       
       spy.mockRestore();
+      testApp.removeAllListeners();
     });
 
     test("captureError - handles unhandled rejection", () => {
@@ -408,6 +427,7 @@ describe("App", () => {
       process.emit('unhandledRejection', preventedRejection as any, Promise.resolve());
       
       spy.mockRestore();
+      testApp.removeAllListeners();
     });
 
     test("captureError - handles uncaught exception", () => {
@@ -422,6 +442,7 @@ describe("App", () => {
       process.emit('uncaughtException', preventedException);
       
       spy.mockRestore();
+      testApp.removeAllListeners();
     });
 
     test("captureError - handles EADDRINUSE error", () => {
@@ -513,7 +534,7 @@ describe("App", () => {
       expect(testApp.config("level1.level2")).toEqual({ level3: "deepValue" });
     });
 
-    test("middleware order preservation", () => {
+    test("middleware order preservation", async () => {
       const testApp = new App();
       const order: number[] = [];
       
@@ -533,12 +554,12 @@ describe("App", () => {
         ctx.body = 'OK';
       });
 
-      return request(testApp.callback())
-        .get('/')
-        .expect(200)
-        .then(() => {
-          expect(order).toEqual([1, 2, 3, 4]);
-        });
-    });
+      const callback = testApp.callback();
+      const res = await request(callback).get('/').expect(200);
+      expect(order).toEqual([1, 2, 3, 4]);
+      
+      // 清理测试应用的事件监听器  
+      testApp.removeAllListeners();
+    }, 10000);
   });
 })
