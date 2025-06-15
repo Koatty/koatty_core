@@ -9,7 +9,7 @@ Middleware decorator, used to mark a class as a middleware component.
 **Signature:**
 
 ```typescript
-export declare function Middleware(identifier?: string): ClassDecorator;
+export declare function Middleware(identifier?: string, options?: Record<string, any>): ClassDecorator;
 ```
 
 ## Parameters
@@ -46,6 +46,22 @@ _(Optional)_ Optional custom identifier for the middleware. If not provided, the
 
 
 </td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+Record&lt;string, any&gt;
+
+
+</td><td>
+
+_(Optional)_ Optional configuration options for the middleware
+
+
+</td></tr>
 </tbody></table>
 **Returns:**
 
@@ -66,6 +82,11 @@ export class LogMiddleware {
       // do something
     }
   }
+}
+
+@Middleware("CustomMiddleware", { priority: 1, enabled: true })
+export class CustomMiddleware {
+  // middleware implementation
 }
 ```
 
