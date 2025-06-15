@@ -161,7 +161,7 @@ export interface KoattyApplication extends Koa {
  */
 export interface KoattyServer {
   options: any;
-  readonly Start: (listenCallback: () => void) => NativeServer;
+  readonly Start: (listenCallback: () => void) => void;
   readonly Stop: (callback?: () => void) => void;
 
   readonly getStatus?: (protocolType?: string, port?: number) => number;
