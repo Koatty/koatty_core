@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/koatty/koatty_core/compare/v1.17.1...v1.18.0) (2025-06-15)
+
+
+### Features
+
+* add support for component options in Middleware, Service, and Plugin decorators ([c93ca5c](https://github.com/koatty/koatty_core/commit/c93ca5c4946a964c95e460f20b240d238acca455))
+* change Start method return type from NativeServer to void in KoattyServer interface ([c0c5ae6](https://github.com/koatty/koatty_core/commit/c0c5ae63e711f983b6c67f350a070c1c5e8bdd3a))
+
+
+### Bug Fixes
+
+* refactor response handling logic in Application class ([9a73840](https://github.com/koatty/koatty_core/commit/9a73840e4aa8a77ec82fec637ac286e7784ca160))
+
 ### [1.17.1](https://github.com/koatty/koatty_core/compare/v1.17.0...v1.17.1) (2025-06-08)
 
 
