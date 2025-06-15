@@ -19,6 +19,11 @@ export type ComponentType = 'COMPONENT' | 'CONTROLLER' | 'MIDDLEWARE' | 'SERVICE
 
 // used to store router 
 export const CONTROLLER_ROUTER = "CONTROLLER_ROUTER";
+// used to store component options
+export const MIDDLEWARE_OPTIONS = "MIDDLEWARE_OPTIONS";
+export const SERVICE_OPTIONS = "SERVICE_OPTIONS";
+export const PLUGIN_OPTIONS = "PLUGIN_OPTIONS";
+
 /**
  * Interface for Controller
  */
@@ -217,6 +222,7 @@ export function GraphQLController(path = "", options?: IControllerOptions): Clas
  * 
  * @param identifier Optional custom identifier for the middleware. If not provided, 
  *                   the class name will be used as identifier
+ * @param options Optional configuration options for the middleware
  * @returns ClassDecorator function that registers the middleware class in IOC container
  * 
  * @example
@@ -231,12 +237,22 @@ export function GraphQLController(path = "", options?: IControllerOptions): Clas
  *     }
  *   }
  * }
+ * 
+ * @Middleware("CustomMiddleware", { priority: 1, enabled: true })
+ * export class CustomMiddleware {
+ *   // middleware implementation
+ * }
  * ```
  */
-export function Middleware(identifier?: string): ClassDecorator {
+export function Middleware(identifier?: string, options?: Record<string, any>): ClassDecorator {
   return (target: Function) => {
     identifier = identifier || IOC.getIdentifier(target);
     IOC.saveClass("MIDDLEWARE", target, identifier);
+    
+    // Save options if provided
+    if (options) {
+      IOC.savePropertyData(MIDDLEWARE_OPTIONS, options, target, identifier);
+    }
   };
 }
 
@@ -245,6 +261,7 @@ export function Middleware(identifier?: string): ClassDecorator {
  * The decorated class will be registered in the IOC container.
  * 
  * @param identifier Optional service identifier. If not provided, will use the class name.
+ * @param options Optional configuration options for the service
  * @returns ClassDecorator
  * @example
  * ```ts
@@ -252,11 +269,22 @@ export function Middleware(identifier?: string): ClassDecorator {
  * export class UserService {
  *   // do something
  * }
+ * 
+ * @Service("CustomService", { scope: "singleton", lazy: false })
+ * export class CustomService {
+ *   // service implementation
+ * }
+ * ```
  */
-export function Service(identifier?: string): ClassDecorator {
+export function Service(identifier?: string, options?: Record<string, any>): ClassDecorator {
   return (target: Function) => {
     identifier = identifier || IOC.getIdentifier(target);
     IOC.saveClass("SERVICE", target, identifier);
+    
+    // Save options if provided
+    if (options) {
+      IOC.savePropertyData(SERVICE_OPTIONS, options, target, identifier);
+    }
   };
 }
 
@@ -265,6 +293,7 @@ export function Service(identifier?: string): ClassDecorator {
  * The decorated class must have a name ending with "Plugin" suffix.
  * 
  * @param identifier Optional custom identifier for the plugin. If not provided, will use class name
+ * @param options Optional configuration options for the plugin
  * @returns ClassDecorator
  * @throws Error if class name doesn't end with "Plugin"
  * 
@@ -274,9 +303,14 @@ export function Service(identifier?: string): ClassDecorator {
  * class MyPlugin {
  *   run(options: object, app: KoattyApplication) {}
  * }
+ * 
+ * @Plugin("AuthPlugin", { enabled: true, priority: 10 })
+ * class AuthPlugin {
+ *   run(options: object, app: KoattyApplication) {}
+ * }
  * ```
  */
-export function Plugin(identifier?: string): ClassDecorator {
+export function Plugin(identifier?: string, options?: Record<string, any>): ClassDecorator {
   return (target: any) => {
     identifier = identifier || IOC.getIdentifier(target);
     // 
@@ -284,6 +318,11 @@ export function Plugin(identifier?: string): ClassDecorator {
       throw Error("Plugin class name must be 'Plugin' suffix.");
     }
     IOC.saveClass("COMPONENT", target, `${identifier}`);
+    
+    // Save options if provided
+    if (options) {
+      IOC.savePropertyData(PLUGIN_OPTIONS, options, target, identifier);
+    }
   };
 }
 
