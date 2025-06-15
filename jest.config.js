@@ -33,4 +33,13 @@ module.exports = {
     'clover',
     'text-summary',
   ], // 收集测试时的覆盖率信息
+  collectCoverageFrom: [
+    'src/**/*.{ts,js}',
+    '!src/**/*.d.ts',
+  ],
+  coverageDirectory: 'coverage',
+  testTimeout: 10000,
+  forceExit: true,
+  detectOpenHandles: true,
+  setupFilesAfterEnv: ['<rootDir>/test/setup.ts']
 };
