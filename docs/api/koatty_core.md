@@ -249,7 +249,7 @@ Check is prevent error
 </td></tr>
 <tr><td>
 
-[Middleware(identifier)](./koatty_core.middleware.md)
+[Middleware(identifier, options)](./koatty_core.middleware.md)
 
 
 </td><td>
@@ -271,7 +271,7 @@ Convert express middleware for koa
 </td></tr>
 <tr><td>
 
-[Plugin(identifier)](./koatty_core.plugin.md)
+[Plugin(identifier, options)](./koatty_core.plugin.md)
 
 
 </td><td>
@@ -282,7 +282,7 @@ Plugin decorator for registering plugin components. The decorated class must hav
 </td></tr>
 <tr><td>
 
-[Service(identifier)](./koatty_core.service.md)
+[Service(identifier, options)](./koatty_core.service.md)
 
 
 </td><td>
@@ -512,6 +512,33 @@ Description
 <tr><td>
 
 [CONTROLLER\_ROUTER](./koatty_core.controller_router.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[MIDDLEWARE\_OPTIONS](./koatty_core.middleware_options.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[PLUGIN\_OPTIONS](./koatty_core.plugin_options.md)
+
+
+</td><td>
+
+
+</td></tr>
+<tr><td>
+
+[SERVICE\_OPTIONS](./koatty_core.service_options.md)
 
 
 </td><td>

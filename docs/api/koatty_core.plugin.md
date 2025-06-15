@@ -9,7 +9,7 @@ Plugin decorator for registering plugin components. The decorated class must hav
 **Signature:**
 
 ```typescript
-export declare function Plugin(identifier?: string): ClassDecorator;
+export declare function Plugin(identifier?: string, options?: Record<string, any>): ClassDecorator;
 ```
 
 ## Parameters
@@ -46,6 +46,22 @@ _(Optional)_ Optional custom identifier for the plugin. If not provided, will us
 
 
 </td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+Record&lt;string, any&gt;
+
+
+</td><td>
+
+_(Optional)_ Optional configuration options for the plugin
+
+
+</td></tr>
 </tbody></table>
 **Returns:**
 
@@ -63,6 +79,11 @@ Error if class name doesn't end with "Plugin"
 ```ts
 @Plugin()
 class MyPlugin {
+  run(options: object, app: KoattyApplication) {}
+}
+
+@Plugin("AuthPlugin", { enabled: true, priority: 10 })
+class AuthPlugin {
   run(options: object, app: KoattyApplication) {}
 }
 ```

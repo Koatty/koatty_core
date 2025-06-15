@@ -9,7 +9,7 @@ Service decorator, used to mark a class as a service component. The decorated cl
 **Signature:**
 
 ```typescript
-export declare function Service(identifier?: string): ClassDecorator;
+export declare function Service(identifier?: string, options?: Record<string, any>): ClassDecorator;
 ```
 
 ## Parameters
@@ -46,6 +46,22 @@ _(Optional)_ Optional service identifier. If not provided, will use the class na
 
 
 </td></tr>
+<tr><td>
+
+options
+
+
+</td><td>
+
+Record&lt;string, any&gt;
+
+
+</td><td>
+
+_(Optional)_ Optional configuration options for the service
+
+
+</td></tr>
 </tbody></table>
 **Returns:**
 
@@ -55,5 +71,16 @@ ClassDecorator
 
 ## Example
 
-\`\`\`<!-- -->ts @<!-- -->Service() export class UserService { // do something }
+
+```ts
+@Service()
+export class UserService {
+  // do something
+}
+
+@Service("CustomService", { scope: "singleton", lazy: false })
+export class CustomService {
+  // service implementation
+}
+```
 
