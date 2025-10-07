@@ -39,8 +39,8 @@ export class Koatty extends Koa implements KoattyApplication {
   public version: string;
   // app options
   public options: InitOptions;
-  public server: KoattyServer;
-  public router: KoattyRouter;
+  public server: KoattyServer | KoattyServer[];
+  public router: KoattyRouter | KoattyRouter[];
   // env var
   public appPath: string;
   public rootPath: string;
@@ -227,6 +227,9 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {NativeServer} The native server instance
    */
   public listen(listenCallback?: any) {//:NativeServer {
+    // initialize trace middleware before server start (support async)
+    this.handleResponse();
+    
     const callbackFuncAndEmit = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
       asyncEvent(this, AppEvent.appStart);
@@ -236,6 +239,14 @@ export class Koatty extends Koa implements KoattyApplication {
     // binding event "appStop"
     Logger.Log('Koatty', '', 'Bind App Stop event ...');
     bindProcessEvent(this, 'appStop');
+    if (Array.isArray(this.server)) {
+      const serverList = this.server;
+      const servers = serverList.map((srv, index) => {
+        const callback = index === serverList.length - 1 ? callbackFuncAndEmit : undefined;
+        return srv.Start(callback);
+      });
+      return servers as any;
+    }
     const server = this.server.Start(callbackFuncAndEmit);
     return server as any;
   }
@@ -249,7 +260,8 @@ export class Koatty extends Koa implements KoattyApplication {
    * ```
    */
   callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
-    this.handleResponse();
+    // Note: handleResponse() should be called in listen() before callback()
+    // This ensures middleware is initialized before requests are handled
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }
@@ -294,9 +306,9 @@ export class Koatty extends Koa implements KoattyApplication {
    * @private
    * @returns {void}
    */
-  private handleResponse() {
+  private handleResponse(): void {
     if (this.handledResponse) return;
-    const options = this.config('trace')?? {};
+    const options = this.config('trace') ?? {};
     // used trace middleware
     const tracer = Trace(options, <any>this);
     this.middleware.unshift(tracer);
