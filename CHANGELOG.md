@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-0](https://github.com/koatty/koatty_core/compare/v1.18.0...v1.19.0-0) (2025-10-07)
+
+
+### Features
+
+* change Start method return type from void to NativeServer in KoattyServer interface ([5c1d9db](https://github.com/koatty/koatty_core/commit/5c1d9dbb8631c36deab0a2e52cf6e9eeb7db01e1))
+* support multiple servers and routers, improve response handling initialization ([50f019b](https://github.com/koatty/koatty_core/commit/50f019bcf8fc1f66165b425bfffb7b70dac6501d))
+
 ## [1.18.0](https://github.com/koatty/koatty_core/compare/v1.17.1...v1.18.0) (2025-06-15)
 
 
