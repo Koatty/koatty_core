@@ -327,10 +327,12 @@ string
 
 </td><td>
 
-[KoattyRouter](./koatty_core.koattyrouter.md)
+[KoattyRouter](./koatty_core.koattyrouter.md) \| Record&lt;string, [KoattyRouter](./koatty_core.koattyrouter.md)<!-- -->&gt;
 
 
 </td><td>
+
+Router instance - Single protocol: KoattyRouter instance - Multi-protocol: Record<!-- -->&lt;<!-- -->string, KoattyRouter<!-- -->&gt; (router dictionary with protocol as key)
 
 
 </td></tr>
@@ -348,6 +350,8 @@ string
 
 
 </td><td>
+
+Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
 
 
 </td></tr>

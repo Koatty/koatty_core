@@ -4,9 +4,7 @@
 
 ## KoattyServer interface
 
-Interface for Koatty server instance
-
- KoattyServer  {<!-- -->any<!-- -->} options - Server configuration options  {<!-- -->NativeServer<!-- -->} server - Native server instance  {<!-- -->number<!-- -->} status - Current server status  {<!-- -->Function<!-- -->} Start - Start the server and return native server instance  {<!-- -->Function<!-- -->} Stop - Stop the server  {<!-- -->Function<!-- -->} RegisterService - Register gRPC service implementation
+Interface for Koatty server instance - single protocol: KoattyServer instance - multi protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)  KoattyServer  {<!-- -->any<!-- -->} options - Server configuration options  {<!-- -->NativeServer<!-- -->} server - Native server instance  {<!-- -->number<!-- -->} status - Current server status  {<!-- -->Function<!-- -->} Start - Start the server and return native server instance  {<!-- -->Function<!-- -->} Stop - Stop the server  {<!-- -->Function<!-- -->} RegisterService - Register gRPC service implementation
 
 **Signature:**
 
@@ -39,6 +37,27 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[getAllServers?](./koatty_core.koattyserver.getallservers.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+() =&gt; Map&lt;string, [KoattyServer](./koatty_core.koattyserver.md)<!-- -->&gt;
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
 [getNativeServer?](./koatty_core.koattyserver.getnativeserver.md)
 
 
@@ -50,6 +69,27 @@ Description
 </td><td>
 
 (protocolType?: string, port?: number) =&gt; [NativeServer](./koatty_core.nativeserver.md)
+
+
+</td><td>
+
+_(Optional)_
+
+
+</td></tr>
+<tr><td>
+
+[getServer?](./koatty_core.koattyserver.getserver.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(protocolType?: string, port?: number) =&gt; [KoattyServer](./koatty_core.koattyserver.md) \| undefined
 
 
 </td><td>
@@ -113,7 +153,7 @@ any
 
 </td><td>
 
-_(Optional)_ service register(exp: gRPC)
+_(Optional)_
 
 
 </td></tr>

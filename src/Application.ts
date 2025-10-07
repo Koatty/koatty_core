@@ -32,26 +32,38 @@ import { asyncEvent, bindProcessEvent, isPrevent, parseExp } from "./Utils";
  */
 export class Koatty extends Koa implements KoattyApplication {
   // runtime env mode
-  public env: string = "production";
+  env: string = "production";
   // app name
-  public name: string;
+  name: string;
   // app version
-  public version: string;
+  version: string;
   // app options
-  public options: InitOptions;
-  public server: KoattyServer | KoattyServer[];
-  public router: KoattyRouter | KoattyRouter[];
-  // env var
-  public appPath: string;
-  public rootPath: string;
-  // koatty framework path
-  public koattyPath: string;
-  public logsPath: string;
-  public appDebug: boolean;
+  options: InitOptions;
+  /**
+   * Server instance
+   * - Single protocol: KoattyServer instance
+   * - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+   */
+  server: KoattyServer;
 
-  public context: KoattyContext;
+  /**
+   * Router instance
+   * - Single protocol: KoattyRouter instance
+   * - Multi-protocol: Record<string, KoattyRouter> (router dictionary with protocol as key)
+   */
+  router: KoattyRouter | Record<string, KoattyRouter>;
+  // env var
+  appPath: string;
+  rootPath: string;
+  // koatty framework path
+  koattyPath: string;
+  logsPath: string;
+  appDebug: boolean;
+
+  context: KoattyContext;
   private handledResponse: boolean = false;
   private metadata: KoattyMetadata;
+  private contextPrototypes: Map<string, any> = new Map();
   ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
@@ -103,7 +115,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * Initialize application.
    * This method can be overridden in subclasses to perform initialization tasks.
    */
-  public init(): void { }
+  init(): void { }
 
   /**
    * Set metadata value by key.
@@ -142,7 +154,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {any} Returns the result of adding the middleware
    * @throws {Error} When the parameter is not a function
    */
-  public use(fn: Function): any {
+  use(fn: Function): any {
     if (!Helper.isFunction(fn)) {
       Logger.Error('The parameter is not a function.');
       return;
@@ -158,7 +170,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @returns {any} Returns the result of middleware execution
    * @throws {Error} When parameter is not a function
    */
-  public useExp(fn: Function): any {
+  useExp(fn: Function): any {
     if (!Helper.isFunction(fn)) {
       Logger.Error('The parameter is not a function.');
       return;
@@ -182,7 +194,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * // Get all configs of specific type
    * app.config(undefined, 'middleware');
    */
-  public config(name: string, type = 'config') {
+  config(name: string, type = 'config') {
     try {
       const caches = this.getMetaData('_configs')[0] || {};
       caches[type] = caches[type] || {};
@@ -202,13 +214,28 @@ export class Koatty extends Koa implements KoattyApplication {
   /**
    * Create a Koatty context object.
    * 
+   * Creates a context for the incoming request using a protocol-specific prototype.
+   * This ensures that middleware can define protocol-specific properties (like requestParam)
+   * without conflicts between different protocols.
+   * 
+   * Implementation strategy:
+   * 1. Temporarily replaces app.context with protocol-specific prototype
+   * 2. Calls Koa's super.createContext() to maintain full compatibility
+   * 3. Restores original app.context in finally block
+   * 
+   * This approach:
+   * - Maintains full Koa compatibility (all Koa features work)
+   * - Provides protocol isolation (each protocol has independent prototype)
+   * - Has minimal performance overhead (only reference swapping)
+   * - Is safe for concurrent requests (synchronous operation in Node.js event loop)
+   * 
    * @param {RequestType} req Request object
    * @param {ResponseType} res Response object
-   * @param {string} [protocol='http'] Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'grpc'
+   * @param {string} [protocol='http'] Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'graphql'
    * @returns {any} Koatty context object
    * @public
    */
-  public createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
+  createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
     const resp = ['ws', 'wss', 'grpc'].includes(protocol) ?
       new ServerResponse(<IncomingMessage>req) : res;
     // create context
@@ -226,10 +253,7 @@ export class Koatty extends Koa implements KoattyApplication {
    * @param {Function} [listenCallback] Optional callback function to be executed after server starts
    * @returns {NativeServer} The native server instance
    */
-  public listen(listenCallback?: any) {//:NativeServer {
-    // initialize trace middleware before server start (support async)
-    this.handleResponse();
-    
+  listen(listenCallback?: any) {//:NativeServer {
     const callbackFuncAndEmit = () => {
       Logger.Log('Koatty', '', 'Emit App Start ...');
       asyncEvent(this, AppEvent.appStart);
@@ -239,14 +263,8 @@ export class Koatty extends Koa implements KoattyApplication {
     // binding event "appStop"
     Logger.Log('Koatty', '', 'Bind App Stop event ...');
     bindProcessEvent(this, 'appStop');
-    if (Array.isArray(this.server)) {
-      const serverList = this.server;
-      const servers = serverList.map((srv, index) => {
-        const callback = index === serverList.length - 1 ? callbackFuncAndEmit : undefined;
-        return srv.Start(callback);
-      });
-      return servers as any;
-    }
+    
+    // Start server (MultiProtocolServer handles multiple protocols internally)
     const server = this.server.Start(callbackFuncAndEmit);
     return server as any;
   }
@@ -260,8 +278,9 @@ export class Koatty extends Koa implements KoattyApplication {
    * ```
    */
   callback(protocol = "http", reqHandler?: (ctx: KoattyContext) => Promise<any>) {
-    // Note: handleResponse() should be called in listen() before callback()
-    // This ensures middleware is initialized before requests are handled
+    // Ensure trace middleware is initialized (idempotent operation)
+    this.handleResponse();
+    
     if (reqHandler) {
       this.middleware.push(reqHandler);
     }

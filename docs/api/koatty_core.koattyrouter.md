@@ -6,7 +6,7 @@
 
 Interface for Koatty router
 
- KoattyRouter  Defines the structure and behavior of a router in Koatty framework. Provides methods for setting routes, loading router configurations, and managing router implementations.
+ KoattyRouter  Defines the structure and behavior of a router in Koatty framework. Provides methods for setting routes, loading router configurations, and managing router implementations. - single protocol: KoattyRouter instance - multi protocol: Record<!-- -->&lt;<!-- -->string, KoattyRouter<!-- -->&gt; (router dictionary with protocol as key)
 
  {<!-- -->any<!-- -->} options - Router configuration options  {<!-- -->any<!-- -->} router - Instance of KoaRouter or custom router implementation  {<!-- -->Function<!-- -->} SetRouter - Method to set router implementation for a route  {<!-- -->Function<!-- -->} LoadRouter - Method to load and register router configurations  {<!-- -->Function<!-- -->} ListRouter - Optional method to get list of registered routers
 

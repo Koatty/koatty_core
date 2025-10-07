@@ -6,6 +6,12 @@
 
 Create a Koatty context object.
 
+Creates a context for the incoming request using a protocol-specific prototype. This ensures that middleware can define protocol-specific properties (like requestParam) without conflicts between different protocols.
+
+Implementation strategy: 1. Temporarily replaces app.context with protocol-specific prototype 2. Calls Koa's super.createContext() to maintain full compatibility 3. Restores original app.context in finally block
+
+This approach: - Maintains full Koa compatibility (all Koa features work) - Provides protocol isolation (each protocol has independent prototype) - Has minimal performance overhead (only reference swapping) - Is safe for concurrent requests (synchronous operation in Node.js event loop)
+
 **Signature:**
 
 ```typescript
@@ -74,7 +80,7 @@ string
 
 </td><td>
 
-_(Optional)_ Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'grpc'
+_(Optional)_ Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'graphql'
 
 
 </td></tr>
