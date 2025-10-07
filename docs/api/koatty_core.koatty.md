@@ -254,10 +254,12 @@ string
 
 </td><td>
 
-[KoattyRouter](./koatty_core.koattyrouter.md)
+[KoattyRouter](./koatty_core.koattyrouter.md) \| Record&lt;string, [KoattyRouter](./koatty_core.koattyrouter.md)<!-- -->&gt;
 
 
 </td><td>
+
+Router instance - Single protocol: KoattyRouter instance - Multi-protocol: Record<!-- -->&lt;<!-- -->string, KoattyRouter<!-- -->&gt; (router dictionary with protocol as key)
 
 
 </td></tr>
@@ -275,6 +277,8 @@ string
 
 
 </td><td>
+
+Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
 
 
 </td></tr>
@@ -354,6 +358,12 @@ Get configuration value by name and type.
 </td><td>
 
 Create a Koatty context object.
+
+Creates a context for the incoming request using a protocol-specific prototype. This ensures that middleware can define protocol-specific properties (like requestParam) without conflicts between different protocols.
+
+Implementation strategy: 1. Temporarily replaces app.context with protocol-specific prototype 2. Calls Koa's super.createContext() to maintain full compatibility 3. Restores original app.context in finally block
+
+This approach: - Maintains full Koa compatibility (all Koa features work) - Provides protocol isolation (each protocol has independent prototype) - Has minimal performance overhead (only reference swapping) - Is safe for concurrent requests (synchronous operation in Node.js event loop)
 
 
 </td></tr>

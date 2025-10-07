@@ -45,8 +45,19 @@ export interface KoattyApplication extends Koa {
 
   options: InitOptions;
 
-  server: KoattyServer | KoattyServer[];
-  router: KoattyRouter | KoattyRouter[];
+  /**
+   * Server instance
+   * - Single protocol: KoattyServer instance
+   * - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+   */
+  server: KoattyServer;
+
+  /**
+   * Router instance
+   * - Single protocol: KoattyRouter instance
+   * - Multi-protocol: Record<string, KoattyRouter> (router dictionary with protocol as key)
+   */
+  router: KoattyRouter | Record<string, KoattyRouter>;
 
   appPath: string;
   rootPath: string;
@@ -150,7 +161,8 @@ export interface KoattyApplication extends Koa {
 
 /**
  * Interface for Koatty server instance
- * 
+ * - single protocol: KoattyServer instance
+ * - multi protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
  * @interface KoattyServer
  * @property {any} options - Server configuration options
  * @property {NativeServer} server - Native server instance
@@ -163,14 +175,12 @@ export interface KoattyServer {
   options: any;
   readonly Start: (listenCallback: () => void) => NativeServer;
   readonly Stop: (callback?: () => void) => void;
-
   readonly getStatus?: (protocolType?: string, port?: number) => number;
   readonly getNativeServer?: (protocolType?: string, port?: number) => NativeServer;
-  /**
-   * service register(exp: gRPC)
-   * @param {ServiceImplementation} impl
-   */
   readonly RegisterService?: (impl: any) => void;
+  // multi protocol
+  readonly getServer?: (protocolType?: string, port?: number) => KoattyServer | undefined;
+  readonly getAllServers?: () => Map<string, KoattyServer>;
 }
 
 /**
@@ -220,6 +230,8 @@ export interface RouterImplementation {
  * Defines the structure and behavior of a router in Koatty framework.
  * Provides methods for setting routes, loading router configurations,
  * and managing router implementations.
+ * - single protocol: KoattyRouter instance
+ * - multi protocol: Record<string, KoattyRouter> (router dictionary with protocol as key)
  * 
  * @property {any} options - Router configuration options
  * @property {any} router - Instance of KoaRouter or custom router implementation

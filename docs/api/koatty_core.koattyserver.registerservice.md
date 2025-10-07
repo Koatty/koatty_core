@@ -4,8 +4,6 @@
 
 ## KoattyServer.RegisterService property
 
-service register(exp: gRPC)
-
 **Signature:**
 
 ```typescript

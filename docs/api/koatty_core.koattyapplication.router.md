@@ -4,8 +4,10 @@
 
 ## KoattyApplication.router property
 
+Router instance - Single protocol: KoattyRouter instance - Multi-protocol: Record<!-- -->&lt;<!-- -->string, KoattyRouter<!-- -->&gt; (router dictionary with protocol as key)
+
 **Signature:**
 
 ```typescript
-router: KoattyRouter;
+router: KoattyRouter | Record<string, KoattyRouter>;
 ```
