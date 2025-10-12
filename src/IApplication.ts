@@ -48,9 +48,9 @@ export interface KoattyApplication extends Koa {
   /**
    * Server instance
    * - Single protocol: KoattyServer instance
-   * - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+   * - Multi-protocol: KoattyServer[]
    */
-  server: KoattyServer;
+  server: KoattyServer | KoattyServer[];
 
   /**
    * Router instance

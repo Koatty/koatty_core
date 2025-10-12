@@ -42,9 +42,9 @@ export class Koatty extends Koa implements KoattyApplication {
   /**
    * Server instance
    * - Single protocol: KoattyServer instance
-   * - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+   * - Multi-protocol: KoattyServer[]
    */
-  server: KoattyServer;
+  server: KoattyServer | KoattyServer[];
 
   /**
    * Router instance
@@ -264,9 +264,55 @@ export class Koatty extends Koa implements KoattyApplication {
     Logger.Log('Koatty', '', 'Bind App Stop event ...');
     bindProcessEvent(this, 'appStop');
     
-    // Start server (MultiProtocolServer handles multiple protocols internally)
-    const server = this.server.Start(callbackFuncAndEmit);
-    return server as any;
+    // Start server(s)
+    if (Array.isArray(this.server)) {
+      // Multi-protocol: start all servers
+      const serverArray = this.server;
+      const servers = serverArray.map((srv, index) => {
+        const isLast = index === serverArray.length - 1;
+        return srv.Start(isLast ? callbackFuncAndEmit : undefined);
+      });
+      return servers as any;
+    } else {
+      // Single protocol: start single server
+      const server = this.server.Start(callbackFuncAndEmit);
+      return server as any;
+    }
+  }
+
+  /**
+   * Stop all servers gracefully.
+   * - For single protocol: stops the single server
+   * - For multi-protocol: stops all servers sequentially
+   * 
+   * @param {Function} [callback] Optional callback function to be executed after all servers stop
+   * @returns {void}
+   */
+  stop(callback?: () => void): void {
+    if (Array.isArray(this.server)) {
+      // Multi-protocol: stop all servers
+      let stoppedCount = 0;
+      const totalServers = this.server.length;
+      
+      this.server.forEach((srv, index) => {
+        srv.Stop(() => {
+          stoppedCount++;
+          Logger.Log('Koatty', '', `Server ${index + 1}/${totalServers} stopped`);
+          
+          // Call callback only after all servers are stopped
+          if (stoppedCount === totalServers) {
+            Logger.Log('Koatty', '', 'All servers stopped');
+            callback?.();
+          }
+        });
+      });
+    } else {
+      // Single protocol: stop single server
+      this.server.Stop(() => {
+        Logger.Log('Koatty', '', 'Server stopped');
+        callback?.();
+      });
+    }
   }
 
   /**
