@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-3](https://github.com/koatty/koatty_core/compare/v1.19.0-2...v1.19.0-3) (2025-10-12)
+
+
+### Features
+
+* add stop method and update server type to support single/multi-protocol with graceful shutdown ([60dfdd5](https://github.com/koatty/koatty_core/commit/60dfdd5b32ab5137c8ebe1dad0da68ee1f5058ce))
+
 ## [1.19.0-2](https://github.com/koatty/koatty_core/compare/v1.19.0-1...v1.19.0-2) (2025-10-12)
 
 
