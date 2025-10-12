@@ -4,10 +4,10 @@
 
 ## KoattyApplication.server property
 
-Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer\[\]
 
 **Signature:**
 
 ```typescript
-server: KoattyServer;
+server: KoattyServer | KoattyServer[];
 ```

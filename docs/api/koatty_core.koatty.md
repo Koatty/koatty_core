@@ -273,12 +273,12 @@ Router instance - Single protocol: KoattyRouter instance - Multi-protocol: Recor
 
 </td><td>
 
-[KoattyServer](./koatty_core.koattyserver.md)
+[KoattyServer](./koatty_core.koattyserver.md) \| [KoattyServer](./koatty_core.koattyserver.md)<!-- -->\[\]
 
 
 </td><td>
 
-Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer\[\]
 
 
 </td></tr>
@@ -422,6 +422,20 @@ Since Koa.listen returns an http.Server type, the return value must be defined a
 </td><td>
 
 Set metadata value by key.
+
+
+</td></tr>
+<tr><td>
+
+[stop(callback)](./koatty_core.koatty.stop.md)
+
+
+</td><td>
+
+
+</td><td>
+
+Stop all servers gracefully. - For single protocol: stops the single server - For multi-protocol: stops all servers sequentially
 
 
 </td></tr>

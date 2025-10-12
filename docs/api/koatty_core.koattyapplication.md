@@ -346,12 +346,12 @@ Router instance - Single protocol: KoattyRouter instance - Multi-protocol: Recor
 
 </td><td>
 
-[KoattyServer](./koatty_core.koattyserver.md)
+[KoattyServer](./koatty_core.koattyserver.md) \| [KoattyServer](./koatty_core.koattyserver.md)<!-- -->\[\]
 
 
 </td><td>
 
-Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer instance (MultiProtocolServer manages multiple protocols internally)
+Server instance - Single protocol: KoattyServer instance - Multi-protocol: KoattyServer\[\]
 
 
 </td></tr>

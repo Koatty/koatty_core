@@ -146,6 +146,16 @@ export interface KoattyApplication extends Koa {
   readonly listen: (listenCallback?: any) => any;
 
   /**
+   * Stop all servers gracefully.
+   * - For single protocol: stops the single server
+   * - For multi-protocol: stops all servers sequentially
+   * 
+   * @param {Function} [callback] Optional callback function to be executed after all servers stop
+   * @returns {void}
+   */
+  readonly stop: (callback?: () => void) => void;
+
+  /**
    * Create a callback function for handling requests.
    * 
    * @param protocol - The protocol type, defaults to "http"
