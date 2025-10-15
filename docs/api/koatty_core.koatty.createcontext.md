@@ -6,11 +6,13 @@
 
 Create a Koatty context object.
 
-Creates a context for the incoming request using a protocol-specific prototype. This ensures that middleware can define protocol-specific properties (like requestParam) without conflicts between different protocols.
+Creates a context for the incoming request using a protocol-specific factory. This ensures that middleware can define protocol-specific properties (like requestParam) without conflicts between different protocols.
 
-Implementation strategy: 1. Temporarily replaces app.context with protocol-specific prototype 2. Calls Koa's super.createContext() to maintain full compatibility 3. Restores original app.context in finally block
+Implementation strategy: 1. Calls Koa's super.createContext() to create base context from app.context prototype 2. Passes the context to createKoattyContext() with protocol information 3. Uses ContextFactory pattern to add protocol-specific properties to the instance
 
-This approach: - Maintains full Koa compatibility (all Koa features work) - Provides protocol isolation (each protocol has independent prototype) - Has minimal performance overhead (only reference swapping) - Is safe for concurrent requests (synchronous operation in Node.js event loop)
+Protocol isolation approach: - All contexts share the same app.context prototype (Koa standard behavior) - Protocol-specific properties (rpc, websocket, graphql, etc.) are defined on the context INSTANCE using Helper.define(), not on the prototype - Each request creates a fresh context instance via Object.create(koaContext) - This provides instance-level isolation without prototype manipulation
+
+Thread safety: - Context creation is synchronous and occurs within the Node.js event loop - Each request gets its own context instance - AsyncLocalStorage is used to maintain context across async operations
 
 **Signature:**
 
@@ -48,7 +50,7 @@ req
 
 </td><td>
 
-Request object
+Request object (HTTP IncomingMessage, gRPC call, WS request, etc.)
 
 
 </td></tr>
@@ -64,7 +66,7 @@ res
 
 </td><td>
 
-Response object
+Response object (HTTP ServerResponse, gRPC callback, WS socket, etc.)
 
 
 </td></tr>
@@ -80,7 +82,7 @@ string
 
 </td><td>
 
-_(Optional)_ Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'graphql'
+_(Optional)_ Protocol type: 'http' \| 'https' \| 'ws' \| 'wss' \| 'grpc' \| 'graphql'
 
 
 </td></tr>
@@ -89,5 +91,5 @@ _(Optional)_ Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'graphql'
 
 any
 
-{<!-- -->any<!-- -->} Koatty context object
+{<!-- -->any<!-- -->} Koatty context object with protocol-specific properties
 

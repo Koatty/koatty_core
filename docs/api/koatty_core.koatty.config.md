@@ -4,12 +4,12 @@
 
 ## Koatty.config() method
 
-Get configuration value by name and type.
+Get or set configuration value by name and type.
 
 **Signature:**
 
 ```typescript
-config(name: string, type?: string): any;
+config(name?: string, type?: string, value?: any): any;
 ```
 
 ## Parameters
@@ -42,7 +42,7 @@ string
 
 </td><td>
 
-Configuration key name, support dot notation (e.g. 'app.port')
+_(Optional)_ Configuration key name, support dot notation (e.g. 'app.port')
 
 
 </td></tr>
@@ -62,6 +62,22 @@ _(Optional)_ Configuration type, defaults to 'config'
 
 
 </td></tr>
+<tr><td>
+
+value
+
+
+</td><td>
+
+any
+
+
+</td><td>
+
+_(Optional)_ Configuration value to set. If provided, sets the config value
+
+
+</td></tr>
 </tbody></table>
 **Returns:**
 
@@ -76,4 +92,10 @@ any
 // Get nested config app.config('database.host');
 
 // Get all configs of specific type app.config(undefined, 'middleware');
+
+// Set single level config app.config('port', 'config', 3000);
+
+// Set nested config app.config('database.host', 'config', 'localhost');
+
+// Set entire config type app.config(undefined, 'middleware', { list: \['trace'\] }<!-- -->);
 

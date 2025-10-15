@@ -117,6 +117,50 @@ Description
 </th></tr></thead>
 <tbody><tr><td>
 
+[assertGraphQLContext(ctx)](./koatty_core.assertgraphqlcontext.md)
+
+
+</td><td>
+
+Advanced type guard for GraphQL context
+
+
+</td></tr>
+<tr><td>
+
+[assertGrpcContext(ctx)](./koatty_core.assertgrpccontext.md)
+
+
+</td><td>
+
+Advanced type guard for gRPC context
+
+
+</td></tr>
+<tr><td>
+
+[assertHttpContext(ctx)](./koatty_core.asserthttpcontext.md)
+
+
+</td><td>
+
+Advanced type guard for HTTP context
+
+
+</td></tr>
+<tr><td>
+
+[assertWebSocketContext(ctx)](./koatty_core.assertwebsocketcontext.md)
+
+
+</td><td>
+
+Advanced type guard for WebSocket context
+
+
+</td></tr>
+<tr><td>
+
 [asyncEvent(event, eventName)](./koatty_core.asyncevent.md)
 
 
@@ -172,12 +216,45 @@ GraphQL controller decorator. Define a class as a GraphQL controller.
 </td></tr>
 <tr><td>
 
+[graphqlMiddleware(handler)](./koatty_core.graphqlmiddleware.md)
+
+
+</td><td>
+
+Create type-safe GraphQL middleware
+
+
+</td></tr>
+<tr><td>
+
 [GrpcController(path, options)](./koatty_core.grpccontroller.md)
 
 
 </td><td>
 
 GrpcController decorator for registering gRPC controller class.
+
+
+</td></tr>
+<tr><td>
+
+[grpcMiddleware(handler)](./koatty_core.grpcmiddleware.md)
+
+
+</td><td>
+
+Create type-safe gRPC middleware
+
+
+</td></tr>
+<tr><td>
+
+[httpMiddleware(handler)](./koatty_core.httpmiddleware.md)
+
+
+</td><td>
+
+Create type-safe HTTP middleware
 
 
 </td></tr>
@@ -238,12 +315,67 @@ Check if a class implements the IService interface.
 </td></tr>
 <tr><td>
 
+[isGraphQLProtocol(ctx)](./koatty_core.isgraphqlprotocol.md)
+
+
+</td><td>
+
+Check if context is GraphQL protocol
+
+
+</td></tr>
+<tr><td>
+
+[isGrpcProtocol(ctx)](./koatty_core.isgrpcprotocol.md)
+
+
+</td><td>
+
+Check if context is gRPC protocol
+
+
+</td></tr>
+<tr><td>
+
+[isHttpProtocol(ctx)](./koatty_core.ishttpprotocol.md)
+
+
+</td><td>
+
+Check if context is HTTP or HTTPS protocol
+
+
+</td></tr>
+<tr><td>
+
 [isPrevent(err)](./koatty_core.isprevent.md)
 
 
 </td><td>
 
 Check is prevent error
+
+
+</td></tr>
+<tr><td>
+
+[isWebSocketProtocol(ctx)](./koatty_core.iswebsocketprotocol.md)
+
+
+</td><td>
+
+Check if context is WebSocket protocol
+
+
+</td></tr>
+<tr><td>
+
+[matchProtocol(ctx, protocols)](./koatty_core.matchprotocol.md)
+
+
+</td><td>
+
+Check if context matches any of the specified protocols
 
 
 </td></tr>
@@ -282,6 +414,28 @@ Plugin decorator for registering plugin components. The decorated class must hav
 </td></tr>
 <tr><td>
 
+[protocolMiddleware(protocol, middleware)](./koatty_core.protocolmiddleware.md)
+
+
+</td><td>
+
+Wrap middleware to only execute on specific protocol(s)
+
+
+</td></tr>
+<tr><td>
+
+[protocolRouter(handlers, defaultHandler)](./koatty_core.protocolrouter.md)
+
+
+</td><td>
+
+Create a middleware that executes different handlers based on protocol
+
+
+</td></tr>
+<tr><td>
+
 [Service(identifier, options)](./koatty_core.service.md)
 
 
@@ -302,6 +456,17 @@ WebSocket controller decorator. Define a class as WebSocket controller.
 
 
 </td></tr>
+<tr><td>
+
+[wsMiddleware(handler)](./koatty_core.wsmiddleware.md)
+
+
+</td><td>
+
+Create type-safe WebSocket middleware
+
+
+</td></tr>
 </tbody></table>
 
 ## Interfaces
@@ -318,6 +483,39 @@ Description
 
 </th></tr></thead>
 <tbody><tr><td>
+
+[GraphQLContext](./koatty_core.graphqlcontext.md)
+
+
+</td><td>
+
+GraphQL Context
+
+
+</td></tr>
+<tr><td>
+
+[GrpcContext](./koatty_core.grpccontext.md)
+
+
+</td><td>
+
+gRPC Context
+
+
+</td></tr>
+<tr><td>
+
+[HttpContext](./koatty_core.httpcontext.md)
+
+
+</td><td>
+
+HTTP/HTTPS Context
+
+
+</td></tr>
+<tr><td>
 
 [IContextFactory](./koatty_core.icontextfactory.md)
 
@@ -369,6 +567,17 @@ Interface for extra controller options
 </td><td>
 
 Interface for Middleware class
+
+
+</td></tr>
+<tr><td>
+
+[IMiddlewareOptions](./koatty_core.imiddlewareoptions.md)
+
+
+</td><td>
+
+Middleware configuration options
 
 
 </td></tr>
@@ -480,6 +689,17 @@ Interface for Koatty server instance - single protocol: KoattyServer instance - 
 RouterImplementation
 
   RouterImplementation
+
+
+</td></tr>
+<tr><td>
+
+[WebSocketContext](./koatty_core.websocketcontext.md)
+
+
+</td><td>
+
+WebSocket Context
 
 
 </td></tr>
