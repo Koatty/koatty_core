@@ -67,6 +67,18 @@ export class Koatty extends Koa implements KoattyApplication {
   ctxStorage: AsyncLocalStorage<unknown>;
 
   /**
+   * Protocol-specific middleware stacks
+   * Key: protocol name ('http', 'grpc', 'ws', etc.)
+   * Value: middleware function array for that protocol
+   */
+  private middlewareStacks: Map<string, Function[]> = new Map();
+  
+  /**
+   * Flag to track if a protocol stack has been initialized
+   */
+  private initializedProtocols: Set<string> = new Set();
+
+  /**
    * Protected constructor for the Application class.
    * Initializes a new instance with configuration options and sets up the application environment.
    * 
@@ -214,25 +226,31 @@ export class Koatty extends Koa implements KoattyApplication {
   /**
    * Create a Koatty context object.
    * 
-   * Creates a context for the incoming request using a protocol-specific prototype.
+   * Creates a context for the incoming request using a protocol-specific factory.
    * This ensures that middleware can define protocol-specific properties (like requestParam)
    * without conflicts between different protocols.
    * 
    * Implementation strategy:
-   * 1. Temporarily replaces app.context with protocol-specific prototype
-   * 2. Calls Koa's super.createContext() to maintain full compatibility
-   * 3. Restores original app.context in finally block
+   * 1. Calls Koa's super.createContext() to create base context from app.context prototype
+   * 2. Passes the context to createKoattyContext() with protocol information
+   * 3. Uses ContextFactory pattern to add protocol-specific properties to the instance
    * 
-   * This approach:
-   * - Maintains full Koa compatibility (all Koa features work)
-   * - Provides protocol isolation (each protocol has independent prototype)
-   * - Has minimal performance overhead (only reference swapping)
-   * - Is safe for concurrent requests (synchronous operation in Node.js event loop)
+   * Protocol isolation approach:
+   * - All contexts share the same app.context prototype (Koa standard behavior)
+   * - Protocol-specific properties (rpc, websocket, graphql, etc.) are defined on the 
+   *   context INSTANCE using Helper.define(), not on the prototype
+   * - Each request creates a fresh context instance via Object.create(koaContext)
+   * - This provides instance-level isolation without prototype manipulation
    * 
-   * @param {RequestType} req Request object
-   * @param {ResponseType} res Response object
-   * @param {string} [protocol='http'] Protocol type, supports 'http', 'ws', 'wss', 'grpc', 'graphql'
-   * @returns {any} Koatty context object
+   * Thread safety:
+   * - Context creation is synchronous and occurs within the Node.js event loop
+   * - Each request gets its own context instance
+   * - AsyncLocalStorage is used to maintain context across async operations
+   * 
+   * @param {RequestType} req Request object (HTTP IncomingMessage, gRPC call, WS request, etc.)
+   * @param {ResponseType} res Response object (HTTP ServerResponse, gRPC callback, WS socket, etc.)
+   * @param {string} [protocol='http'] Protocol type: 'http' | 'https' | 'ws' | 'wss' | 'grpc' | 'graphql'
+   * @returns {any} Koatty context object with protocol-specific properties
    * @public
    */
   createContext(req: RequestType, res: ResponseType, protocol = "http"): any {
@@ -278,6 +296,35 @@ export class Koatty extends Koa implements KoattyApplication {
       const server = this.server.Start(callbackFuncAndEmit);
       return server as any;
     }
+  }
+
+  /**
+   * Get middleware stack for specific protocol
+   * @param protocol Protocol name
+   * @returns Middleware array or undefined
+   */
+  getProtocolMiddleware(protocol: string): Function[] | undefined {
+    return this.middlewareStacks.get(protocol);
+  }
+
+  /**
+   * Get middleware stack statistics
+   * @returns Statistics object
+   */
+  getMiddlewareStats(): { 
+    global: number; 
+    protocols: Record<string, number> 
+  } {
+    const stats: any = {
+      global: this.middleware.length,
+      protocols: {}
+    };
+    
+    for (const [protocol, stack] of this.middlewareStacks) {
+      stats.protocols[protocol] = stack.length;
+    }
+    
+    return stats;
   }
 
   /**
@@ -327,19 +374,32 @@ export class Koatty extends Koa implements KoattyApplication {
     // Ensure trace middleware is initialized (idempotent operation)
     this.handleResponse();
     
-    if (reqHandler) {
-      this.middleware.push(reqHandler);
+    // Get or create protocol-specific middleware stack
+    let protocolMiddleware = this.middlewareStacks.get(protocol);
+    
+    if (!protocolMiddleware) {
+      // First time for this protocol: copy global middleware
+      protocolMiddleware = [...this.middleware];
+      this.middlewareStacks.set(protocol, protocolMiddleware);
+      this.initializedProtocols.add(protocol);
     }
-    const fn = koaCompose(this.middleware);
+    
+    // Add protocol-specific handler to its own stack
+    if (reqHandler) {
+      protocolMiddleware.push(reqHandler);
+    }
+    
+    // Compose middleware for this protocol only
+    const fn = koaCompose(protocolMiddleware as any);
     if (!this.listenerCount('error')) this.on('error', this.onerror);
 
     return (req: RequestType, res: ResponseType) => {
       const ctx: any = this.createContext(req, res, protocol);
       if (!this.ctxStorage) {
-        return this.handleRequest(ctx, fn);
+        return this.handleRequest(ctx, fn as any);
       }
       return this.ctxStorage.run(ctx, async () => {
-        return this.handleRequest(ctx, fn);
+        return this.handleRequest(ctx, fn as any);
       });
     }
   }

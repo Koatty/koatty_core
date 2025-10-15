@@ -41,6 +41,36 @@ export interface IController {
 export type KoattyMiddleware = (ctx: KoattyContext, next: KoattyNext) => Promise<any>;
 
 /**
+ * Middleware configuration options
+ */
+export interface IMiddlewareOptions {
+  /**
+   * Protocol(s) this middleware applies to
+   * If not specified, applies to all protocols
+   * @example 'http'
+   * @example ['http', 'https']
+   */
+  protocol?: string | string[];
+  
+  /**
+   * Middleware priority (lower number = higher priority)
+   * @default 50
+   */
+  priority?: number;
+  
+  /**
+   * Whether this middleware is enabled
+   * @default true
+   */
+  enabled?: boolean;
+  
+  /**
+   * Additional custom options
+   */
+  [key: string]: any;
+}
+
+/**
  * Interface for Middleware class
  */
 export interface IMiddleware {
@@ -238,13 +268,13 @@ export function GraphQLController(path = "", options?: IControllerOptions): Clas
  *   }
  * }
  * 
- * @Middleware("CustomMiddleware", { priority: 1, enabled: true })
- * export class CustomMiddleware {
- *   // middleware implementation
+ * @Middleware("HttpBodyParser", { protocol: ['http', 'https'], priority: 10 })
+ * export class HttpBodyParser {
+ *   // Only applies to HTTP/HTTPS protocols
  * }
  * ```
  */
-export function Middleware(identifier?: string, options?: Record<string, any>): ClassDecorator {
+export function Middleware(identifier?: string, options?: IMiddlewareOptions): ClassDecorator {
   return (target: Function) => {
     identifier = identifier || IOC.getIdentifier(target);
     IOC.saveClass("MIDDLEWARE", target, identifier);
