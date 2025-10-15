@@ -9,7 +9,7 @@ Middleware decorator, used to mark a class as a middleware component.
 **Signature:**
 
 ```typescript
-export declare function Middleware(identifier?: string, options?: Record<string, any>): ClassDecorator;
+export declare function Middleware(identifier?: string, options?: IMiddlewareOptions): ClassDecorator;
 ```
 
 ## Parameters
@@ -53,7 +53,7 @@ options
 
 </td><td>
 
-Record&lt;string, any&gt;
+[IMiddlewareOptions](./koatty_core.imiddlewareoptions.md)
 
 
 </td><td>
@@ -84,9 +84,9 @@ export class LogMiddleware {
   }
 }
 
-@Middleware("CustomMiddleware", { priority: 1, enabled: true })
-export class CustomMiddleware {
-  // middleware implementation
+@Middleware("HttpBodyParser", { protocol: ['http', 'https'], priority: 10 })
+export class HttpBodyParser {
+  // Only applies to HTTP/HTTPS protocols
 }
 ```
 
