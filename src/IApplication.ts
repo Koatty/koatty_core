@@ -180,7 +180,7 @@ export interface KoattyApplication extends Koa {
    * @param {string} protocol - The protocol type (e.g., 'http', 'grpc', 'ws')
    * @returns {Function[] | undefined} Array of middleware functions for the protocol, or undefined if not found
    */
-  readonly getProtocolMiddleware?: (protocol: string) => Function[] | undefined;
+  readonly getProtocolMiddleware: (protocol: string) => Function[] | undefined;
 
   /**
    * Get middleware stack statistics.
@@ -189,7 +189,7 @@ export interface KoattyApplication extends Koa {
    *   - global: Number of global middleware
    *   - protocols: Object with protocol names as keys and middleware counts as values
    */
-  readonly getMiddlewareStats?: () => {
+  readonly getMiddlewareStats: () => {
     global: number;
     protocols: Record<string, number>;
   };
