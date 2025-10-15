@@ -106,9 +106,10 @@ export interface KoattyApplication extends Koa {
   readonly useExp: (fn: Function) => any;
 
   /**
-   * Get configuration value by name and type.
-   * @param {string} name Configuration key name, support dot notation (e.g. 'app.port')
+   * Get or set configuration value by name and type.
+   * @param {string} [name] Configuration key name, support dot notation (e.g. 'app.port')
    * @param {string} [type='config'] Configuration type, defaults to 'config'
+   * @param {any} [value] Configuration value to set. If provided, sets the config value
    * @returns {any} Configuration value or null if error occurs
    * 
    * @example
@@ -120,8 +121,14 @@ export interface KoattyApplication extends Koa {
    * 
    * // Get all configs of specific type
    * app.config(undefined, 'middleware');
+   * 
+   * // Set single level config
+   * app.config('port', 'config', 3000);
+   * 
+   * // Set nested config
+   * app.config('database.host', 'config', 'localhost');
    */
-  readonly config: (name: string, type?: string) => any;
+  readonly config: (name?: string, type?: string, value?: any) => any;
 
   /**
    * Create a Koatty context object.
@@ -165,6 +172,26 @@ export interface KoattyApplication extends Koa {
    */
   readonly callback: (protocol?: string, reqHandler?: (ctx: KoattyContext) => Promise<any>) => {
     (req: RequestType, res: ResponseType): Promise<any>
+  };
+
+  /**
+   * Get protocol-specific middleware stack.
+   * 
+   * @param {string} protocol - The protocol type (e.g., 'http', 'grpc', 'ws')
+   * @returns {Function[] | undefined} Array of middleware functions for the protocol, or undefined if not found
+   */
+  readonly getProtocolMiddleware?: (protocol: string) => Function[] | undefined;
+
+  /**
+   * Get middleware stack statistics.
+   * 
+   * @returns {{ global: number; protocols: Record<string, number> }} Statistics object containing:
+   *   - global: Number of global middleware
+   *   - protocols: Object with protocol names as keys and middleware counts as values
+   */
+  readonly getMiddlewareStats?: () => {
+    global: number;
+    protocols: Record<string, number>;
   };
 
 }
