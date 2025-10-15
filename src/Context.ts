@@ -427,6 +427,10 @@ export function createKoattyContext(ctx: KoaContext, protocol: string,
  * @returns {KoattyContext} The extended context object with additional properties and methods.
  */
 function initBaseContext(ctx: KoaContext, protocol: ProtocolType): KoattyContext {
+  // Create a new object with ctx as prototype
+  // This provides instance-level isolation while sharing the Koa context prototype
+  // Note: All protocol contexts share the same prototype chain (app.context)
+  // Protocol-specific properties are defined on THIS instance, not the prototype
   const context: KoattyContext = Object.create(ctx);
   
   // Define protocol

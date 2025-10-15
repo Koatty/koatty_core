@@ -135,3 +135,129 @@ export interface KoattyContext extends KoaContext {
    */
   readonly requestBody?: () => Promise<unknown>;
 }
+
+/**
+ * HTTP/HTTPS Context
+ */
+export interface HttpContext extends KoattyContext {
+  protocol: 'http' | 'https';
+  requestParam?: () => unknown;
+  requestBody?: () => Promise<unknown>;
+}
+
+/**
+ * gRPC Context
+ */
+export interface GrpcContext extends KoattyContext {
+  protocol: 'grpc';
+  rpc: NonNullable<KoattyContext['rpc']>;
+}
+
+/**
+ * WebSocket Context
+ */
+export interface WebSocketContext extends KoattyContext {
+  protocol: 'ws' | 'wss';
+  websocket: NonNullable<KoattyContext['websocket']>;
+}
+
+/**
+ * GraphQL Context
+ */
+export interface GraphQLContext extends KoattyContext {
+  protocol: 'graphql';
+  graphql: {
+    query: string;
+    variables: Record<string, any>;
+    operationName: string | null;
+    schema: any;
+    rootValue: any;
+    contextValue: KoattyContext;
+  };
+  requestParam?: () => unknown;
+  requestBody?: () => Promise<unknown>;
+}
+
+/**
+ * Advanced type guard for HTTP context
+ */
+export function assertHttpContext(ctx: KoattyContext): asserts ctx is HttpContext {
+  if (ctx.protocol !== 'http' && ctx.protocol !== 'https') {
+    throw new Error(`Expected HTTP/HTTPS context, got ${ctx.protocol}`);
+  }
+}
+
+/**
+ * Advanced type guard for gRPC context
+ */
+export function assertGrpcContext(ctx: KoattyContext): asserts ctx is GrpcContext {
+  if (ctx.protocol !== 'grpc' || !ctx.rpc) {
+    throw new Error(`Expected gRPC context with rpc property, got ${ctx.protocol}`);
+  }
+}
+
+/**
+ * Advanced type guard for WebSocket context
+ */
+export function assertWebSocketContext(ctx: KoattyContext): asserts ctx is WebSocketContext {
+  if ((ctx.protocol !== 'ws' && ctx.protocol !== 'wss') || !ctx.websocket) {
+    throw new Error(`Expected WebSocket context with websocket property, got ${ctx.protocol}`);
+  }
+}
+
+/**
+ * Advanced type guard for GraphQL context
+ */
+export function assertGraphQLContext(ctx: KoattyContext): asserts ctx is GraphQLContext {
+  if (ctx.protocol !== 'graphql' || !(ctx as any).graphql) {
+    throw new Error(`Expected GraphQL context with graphql property, got ${ctx.protocol}`);
+  }
+}
+
+/**
+ * Create type-safe HTTP middleware
+ */
+export function httpMiddleware(
+  handler: (ctx: HttpContext, next: KoattyNext) => Promise<any>
+): (ctx: KoattyContext, next: KoattyNext) => Promise<any> {
+  return async (ctx: KoattyContext, next: KoattyNext) => {
+    assertHttpContext(ctx);
+    return handler(ctx, next);
+  };
+}
+
+/**
+ * Create type-safe gRPC middleware
+ */
+export function grpcMiddleware(
+  handler: (ctx: GrpcContext, next: KoattyNext) => Promise<any>
+): (ctx: KoattyContext, next: KoattyNext) => Promise<any> {
+  return async (ctx: KoattyContext, next: KoattyNext) => {
+    assertGrpcContext(ctx);
+    return handler(ctx, next);
+  };
+}
+
+/**
+ * Create type-safe WebSocket middleware
+ */
+export function wsMiddleware(
+  handler: (ctx: WebSocketContext, next: KoattyNext) => Promise<any>
+): (ctx: KoattyContext, next: KoattyNext) => Promise<any> {
+  return async (ctx: KoattyContext, next: KoattyNext) => {
+    assertWebSocketContext(ctx);
+    return handler(ctx, next);
+  };
+}
+
+/**
+ * Create type-safe GraphQL middleware
+ */
+export function graphqlMiddleware(
+  handler: (ctx: GraphQLContext, next: KoattyNext) => Promise<any>
+): (ctx: KoattyContext, next: KoattyNext) => Promise<any> {
+  return async (ctx: KoattyContext, next: KoattyNext) => {
+    assertGraphQLContext(ctx);
+    return handler(ctx, next);
+  };
+}
