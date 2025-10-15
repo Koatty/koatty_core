@@ -105,12 +105,12 @@ Create a callback function for handling requests.
 
 </td><td>
 
-(name: string, type?: string) =&gt; any
+(name?: string, type?: string, value?: any) =&gt; any
 
 
 </td><td>
 
-Get configuration value by name and type.
+Get or set configuration value by name and type.
 
 
 </td></tr>
@@ -187,6 +187,48 @@ string
 </td><td>
 
 Get metadata by key from application instance
+
+
+</td></tr>
+<tr><td>
+
+[getMiddlewareStats?](./koatty_core.koattyapplication.getmiddlewarestats.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+() =&gt; { global: number; protocols: Record&lt;string, number&gt;; }
+
+
+</td><td>
+
+_(Optional)_ Get middleware stack statistics.
+
+
+</td></tr>
+<tr><td>
+
+[getProtocolMiddleware?](./koatty_core.koattyapplication.getprotocolmiddleware.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(protocol: string) =&gt; Function\[\] \| undefined
+
+
+</td><td>
+
+_(Optional)_ Get protocol-specific middleware stack.
 
 
 </td></tr>

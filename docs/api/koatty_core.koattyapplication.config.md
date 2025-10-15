@@ -4,12 +4,12 @@
 
 ## KoattyApplication.config property
 
-Get configuration value by name and type.
+Get or set configuration value by name and type.
 
 **Signature:**
 
 ```typescript
-readonly config: (name: string, type?: string) => any;
+readonly config: (name?: string, type?: string, value?: any) => any;
 ```
 
 ## Example
@@ -19,4 +19,8 @@ readonly config: (name: string, type?: string) => any;
 // Get nested config app.config('database.host');
 
 // Get all configs of specific type app.config(undefined, 'middleware');
+
+// Set single level config app.config('port', 'config', 3000);
+
+// Set nested config app.config('database.host', 'config', 'localhost');
 
