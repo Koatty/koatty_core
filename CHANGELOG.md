@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-5](https://github.com/koatty/koatty_core/compare/v1.19.0-4...v1.19.0-5) (2025-10-15)
+
+
+### Features
+
+* enhance config method to support setter functionality and add middleware stats utilities ([de426fe](https://github.com/koatty/koatty_core/commit/de426fe3402d53567fb1865b652e9a8119870260))
+
 ## [1.19.0-4](https://github.com/koatty/koatty_core/compare/v1.19.0-3...v1.19.0-4) (2025-10-15)
 
 
