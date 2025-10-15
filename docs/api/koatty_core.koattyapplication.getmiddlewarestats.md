@@ -9,7 +9,7 @@ Get middleware stack statistics.
 **Signature:**
 
 ```typescript
-readonly getMiddlewareStats?: () => {
+readonly getMiddlewareStats: () => {
         global: number;
         protocols: Record<string, number>;
     };

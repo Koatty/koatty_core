@@ -192,7 +192,7 @@ Get metadata by key from application instance
 </td></tr>
 <tr><td>
 
-[getMiddlewareStats?](./koatty_core.koattyapplication.getmiddlewarestats.md)
+[getMiddlewareStats](./koatty_core.koattyapplication.getmiddlewarestats.md)
 
 
 </td><td>
@@ -207,13 +207,13 @@ Get metadata by key from application instance
 
 </td><td>
 
-_(Optional)_ Get middleware stack statistics.
+Get middleware stack statistics.
 
 
 </td></tr>
 <tr><td>
 
-[getProtocolMiddleware?](./koatty_core.koattyapplication.getprotocolmiddleware.md)
+[getProtocolMiddleware](./koatty_core.koattyapplication.getprotocolmiddleware.md)
 
 
 </td><td>
@@ -228,7 +228,7 @@ _(Optional)_ Get middleware stack statistics.
 
 </td><td>
 
-_(Optional)_ Get protocol-specific middleware stack.
+Get protocol-specific middleware stack.
 
 
 </td></tr>
