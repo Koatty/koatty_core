@@ -378,6 +378,27 @@ Set metadata value by key.
 </td></tr>
 <tr><td>
 
+[stop](./koatty_core.koattyapplication.stop.md)
+
+
+</td><td>
+
+`readonly`
+
+
+</td><td>
+
+(callback?: () =&gt; void) =&gt; void
+
+
+</td><td>
+
+Stop all servers gracefully. - For single protocol: stops the single server - For multi-protocol: stops all servers sequentially
+
+
+</td></tr>
+<tr><td>
+
 [use](./koatty_core.koattyapplication.use.md)
 
 
