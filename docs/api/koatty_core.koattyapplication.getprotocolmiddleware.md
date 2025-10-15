@@ -9,5 +9,5 @@ Get protocol-specific middleware stack.
 **Signature:**
 
 ```typescript
-readonly getProtocolMiddleware?: (protocol: string) => Function[] | undefined;
+readonly getProtocolMiddleware: (protocol: string) => Function[] | undefined;
 ```
