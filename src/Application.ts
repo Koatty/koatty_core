@@ -191,9 +191,10 @@ export class Koatty extends Koa implements KoattyApplication {
   }
 
   /**
-   * Get configuration value by name and type.
+   * Get or set configuration value by name and type.
    * @param {string} name Configuration key name, support dot notation (e.g. 'app.port')
    * @param {string} [type='config'] Configuration type, defaults to 'config'
+   * @param {any} [value] Configuration value to set. If provided, sets the config value
    * @returns {any} Configuration value or null if error occurs
    * 
    * @example
@@ -205,11 +206,43 @@ export class Koatty extends Koa implements KoattyApplication {
    * 
    * // Get all configs of specific type
    * app.config(undefined, 'middleware');
+   * 
+   * // Set single level config
+   * app.config('port', 'config', 3000);
+   * 
+   * // Set nested config
+   * app.config('database.host', 'config', 'localhost');
+   * 
+   * // Set entire config type
+   * app.config(undefined, 'middleware', { list: ['trace'] });
    */
-  config(name: string, type = 'config') {
+  config(name?: string, type = 'config', value?: any) {
     try {
       const caches = this.getMetaData('_configs')[0] || {};
       caches[type] = caches[type] || {};
+      
+      // If value is provided, set configuration
+      if (value !== undefined) {
+        if (name === undefined) {
+          // Set entire config type
+          caches[type] = value;
+        } else if (Helper.isString(name)) {
+          const keys = name.split('.');
+          if (keys.length === 1) {
+            // Set single level
+            caches[type][name] = value;
+          } else {
+            // Set nested config
+            caches[type][keys[0]] = caches[type][keys[0]] || {};
+            caches[type][keys[0]][keys[1]] = value;
+          }
+        } else {
+          caches[type][name] = value;
+        }
+        return value;
+      }
+      
+      // Get configuration
       if (name === undefined) return caches[type];
 
       if (Helper.isString(name)) {
