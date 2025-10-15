@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-6](https://github.com/koatty/koatty_core/compare/v1.19.0-5...v1.19.0-6) (2025-10-15)
+
+
+### Features
+
+* make getProtocolMiddleware and getMiddlewareStats required methods in KoattyApplication interface ([9e3916a](https://github.com/koatty/koatty_core/commit/9e3916a445fd680e4be61f5e29faeb7d2cfe94c2))
+
 ## [1.19.0-5](https://github.com/koatty/koatty_core/compare/v1.19.0-4...v1.19.0-5) (2025-10-15)
 
 
