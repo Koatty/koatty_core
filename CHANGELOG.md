@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0-4](https://github.com/koatty/koatty_core/compare/v1.19.0-3...v1.19.0-4) (2025-10-15)
+
+
+### Features
+
+* add config setter functionality to support dynamic configuration updates ([93e10a0](https://github.com/koatty/koatty_core/commit/93e10a0f8490824dfc8d9c6c881c44b3fbe9f0d5))
+* add protocol-specific middleware stacks and type-safe context guards ([6a8d213](https://github.com/koatty/koatty_core/commit/6a8d2130d31fb4431b2c2e329e0683235043c3c6))
+
 ## [1.19.0-3](https://github.com/koatty/koatty_core/compare/v1.19.0-2...v1.19.0-3) (2025-10-12)
 
 
